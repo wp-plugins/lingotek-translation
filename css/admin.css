@@ -1,0 +1,77 @@
+/* progress dialog */
+#lingotek-progressbar {
+	margin: 20px;
+	height: 2em;
+	background-color: #dddddd;
+}
+
+#lingotek-progressbar .ui-progressbar-value {
+	margin: -1px;
+	height: 100%;
+	background-color: #0074a2;
+}
+
+#lingotek-progressdialog .ui-dialog-titlebar-close {
+	display: none;
+}
+
+/* icons color */
+.lingotek-color {
+	color: #ff7b12; /* lingotek color */
+}
+a.lingotek-color {
+	color: #ff7b12; /* lingotek color */
+}
+
+a.lingotek-color:hover {
+	color: #ffab42; /* lighter orange */
+}
+
+a.dashicons {
+  cursor: pointer;
+}
+
+/* content type configuration */
+.lingotek-content .column-name, .lingotek-content .column-profile {
+	width: 25%;
+}
+
+.sources-name {
+	margin: 0 0 0 20px;
+}
+
+.sources-profile {
+	margin: 0;
+}
+
+.content-type-name, .content-type-profile {
+	margin-bottom: 6px;
+}
+
+.content-type-name, .sources-name li, .lingotek-content .dashicons {
+	line-height: 28px;
+	height: 28px;
+	padding: 2px;
+	vertical-align: middle;
+}
+
+.content-type-fields li {
+	display: inline-block;
+	width: 150px;
+}
+
+.pref-statuses li {
+	display: inline-block;
+	padding-right: 15px;
+}
+
+.lingotek-bordered {
+	border: 1px solid #e5e5e5;
+}
+
+
+/* utilities */
+
+#utility_delete_documents {
+	margin-left: 20px;
+}
