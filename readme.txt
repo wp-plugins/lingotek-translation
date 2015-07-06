@@ -1,5 +1,5 @@
 === Lingotek Translation ===
-Contributors: Chouby, msmith, erichie
+Contributors: smithworx, erichie, Chouby
 Donate link: http://lingotek.com/
 Tags: Lingotek, lingotek, multilingual, bilingual, translate, translation, language, multilanguage, international, localization
 Requires at least: 3.8
