@@ -8,7 +8,7 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Lingotek Translation offers convenient cloud-based localization and translation WordPress.
+Lingotek Translation offers convenient cloud-based localization and translation for WordPress.
 
 == Description ==
 
@@ -20,17 +20,11 @@ Make your WordPress website content truly multilingual. The power to translate i
 
 WordPress administrators use Translation Profiles to categorize content by its relative value. You associate each content type with a Translation Profile, and the plugin carries out the appropriate workflow:
 
-= Professional =
+* __Professional__ - The plugin enables you to use your own translation agency or tap into Lingotek's marketplace of more than 5,000+ in-country translators. Don't have time to manage your own translation project? Let Lingotek take care of it for you. The plugin fully automates file transfer between Wordpress and Lingotek. You'll have full visibility into the translation process every step of the way. And once the translations are completed, they'll automatically download and publish to your website according to the preferences you've set.
 
-The plugin enables you to use your own translation agency or tap into Lingotek's marketplace of more than 5,000+ in-country translators. Don't have time to manage your own translation project? Let Lingotek take care of it for you. The plugin fully automates file transfer between Wordpress and Lingotek. You'll have full visibility into the translation process every step of the way. And once the translations are completed, they'll automatically download and publish to your website according to the preferences you've set.
+* __Community__ - If you're looking to save money by avoiding professional translation, you can take the do-it-yourself approach and have your bilingual employees, partners and/or users perform translations right within Wordpress. The plugin integrates with and provides use of the Lingotek Workbench, a professional-grade text editor used for translating, reviewing, and post-editing multilingual content.
 
-= Community =
-
-If you're looking to save money by avoiding professional translation, you can take the do-it-yourself approach and have your bilingual employees, partners and/or users perform translations right within Wordpress. The plugin integrates with and provides use of the Lingotek Workbench, a professional-grade text editor used for translating, reviewing, and post-editing multilingual content.
-
-= Free Automatic =
-
-Machine translation is an excellent option if you're on a tight budget, looking for near-instant results, and are okay with less-than-perfect quality. The plugin allows you to quickly and automatically translate your site by providing use of the commercial API for Microsoft Translator (the cost is covered by Lingotek for up to 100,000 words). Machine translations can be post-edited at any time using the Lingotek Workbench.
+* __Free Automatic__ - Machine translation is an excellent option if you're on a tight budget, looking for near-instant results, and are okay with less-than-perfect quality. The plugin allows you to quickly and automatically translate your site by providing use of the commercial API for Microsoft Translator (the cost is covered by Lingotek for up to 100,000 words). Machine translations can be post-edited at any time using the Lingotek Workbench.
 
 = Cloud-Based Translation Management System =
 
