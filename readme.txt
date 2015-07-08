@@ -86,9 +86,9 @@ Visit the [Lingotek documentation site](https://lingotek.atlassian.net/wiki/disp
 
 == Changelog ==
 
-= 1.0 (2015-06-22) =
+= 1.0 (2015-07-06) =
 
-* Released on June 22, 2015
+* Released on July 6, 2015
 
 == Upgrade Notice ==
 
