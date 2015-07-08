@@ -1,18 +1,16 @@
 === Lingotek Translation ===
-Contributors: Chouby, msmith, erichie
+Contributors: Chouby, smithworx, erichie
 Donate link: http://lingotek.com/
-Tags: Lingotek, lingotek, multilingual, bilingual, translate, translation, language, multilanguage, international, localization
+Tags: automation, bilingual, international, language, Lingotek, localization, multilanguage, multilingual, translate, translation
 Requires at least: 3.8
 Tested up to: 4.2
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Lingotek Translation offers convenient cloud-based localization and translation solutions for your WordPress content.
+Lingotek Translation offers convenient cloud-based localization and translation WordPress.
 
 == Description ==
-
-Lingotek offers convenient cloud-based localization and translation.
 
 Lingotek Translation simplifies the process of creating and maintaining your WordPress multilingual website. Features include machine, professional, and community translation solutions that ease the manual burden of launching in new markets while improving language consistency, cutting costs, and enabling you to deliver your brand to consumers abroad in the quickest and most effective way possible.
 
