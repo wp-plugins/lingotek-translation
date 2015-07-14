@@ -1,10 +1,10 @@
 === Lingotek Translation ===
-Contributors: Chouby, smithworx, erichie
+Contributors: chouby, smithworx, erichie
 Donate link: http://lingotek.com/
 Tags: automation, bilingual, international, language, Lingotek, localization, multilanguage, multilingual, translate, translation
 Requires at least: 3.8
 Tested up to: 4.2
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Lingotek Translation offers convenient cloud-based localization and translation 
 
 == Description ==
 
-Lingotek Translation simplifies the process of creating and maintaining your WordPress multilingual website. Features include machine, professional, and community translation solutions that ease the manual burden of launching in new markets while improving language consistency, cutting costs, and enabling you to deliver your brand to consumers abroad in the quickest and most effective way possible.
+Lingotek Translation offers convenient cloud-based localization and translation for WordPress by simplifying the process of creating and maintaining your multilingual website. Features include machine, professional, and community translation solutions that ease the manual burden of launching in new markets while improving language consistency, cutting costs, and enabling you to deliver your brand to consumers abroad in the quickest and most effective way possible.
 
 Make your WordPress website content truly multilingual. The power to translate is now inside WordPress!
 
@@ -80,9 +80,13 @@ Visit the [Lingotek documentation site](https://lingotek.atlassian.net/wiki/disp
 
 == Changelog ==
 
+= 1.0.1 (2015-07-14) =
+
+* Added pointer, updated FAQs, and minor content updates
+
 = 1.0 (2015-07-06) =
 
-* Released on July 6, 2015
+* Initial release on July 6, 2015
 
 == Upgrade Notice ==
 

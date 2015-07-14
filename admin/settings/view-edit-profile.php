@@ -117,6 +117,9 @@ unset($settings['secondary_filter_id']['options'][$primary_filter_id]);
 <table class="form-table"><?php
 	unset($settings['upload']); // we don't want this for target languages
 	unset($settings['project_id']); // FIXME disable the possibility to have a different project per target language for now
+	// Filters not needed for target languages
+	unset($settings['primary_filter_id']);
+	unset($settings['secondary_filter_id']);
 
 	foreach ($this->pllm->get_languages_list() as $language) { ?>
 	<tr>
