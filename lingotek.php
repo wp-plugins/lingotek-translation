@@ -111,7 +111,9 @@ class Lingotek {
 		add_filter('pll_flag_title', array(&$this, 'pll_flag_title'), 10, 3);
 
 		// adds a pointer upon plugin activation to draw attention to Lingotek
-		add_action('init', array(&$this, 'lingotek_activation_pointer'));
+		if (!get_option('lingotek_token')) {
+			add_action('init', array(&$this, 'lingotek_activation_pointer'));
+		}
 	}
 
 	/**

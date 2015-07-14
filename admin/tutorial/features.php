@@ -35,6 +35,6 @@
 		<img src="<?php echo LINGOTEK_URL . '/admin/tutorial/img/professional-translation.png'; ?>">
 		<h3><?php _e( 'Request professional translation', 'wp-lingotek'); ?></h3>
 		<p><?php _e( "Use your own translation agency or tap into Lingotek's network of more than 5,000+ in-country translators. Content transfer is fully automated between WordPress and Lingotek. You'll have full visibility into the translation process every step of the way. And once the translations are completed, they'll automatically download and publish to your website according to the preferences you've set.", 'wp-lingotek'); ?></p>
-		<a href="http://www.lingotek.com/wordpress/translation_bid" class="button button-primary" role="button"><?php _e('Request Translation', 'wp-lingotek'); ?></a>
+		<a href="http://www.lingotek.com/wordpress/request-professional-translation" class="button button-primary" target="_blank"><?php _e('Request Translation', 'wp-lingotek'); ?></a>
 	</div>
 </div>
