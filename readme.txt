@@ -4,7 +4,7 @@ Donate link: http://lingotek.com/
 Tags: automation, bilingual, international, language, Lingotek, localization, multilanguage, multilingual, translate, translation
 Requires at least: 3.8
 Tested up to: 4.2
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,9 +80,13 @@ Visit the [Lingotek documentation site](https://lingotek.atlassian.net/wiki/disp
 
 == Changelog ==
 
+= 1.0.1 (2015-07-14) =
+
+* Added pointer, updated FAQs, and minor content updates
+
 = 1.0 (2015-07-06) =
 
-* Released on July 6, 2015
+* Initial release on July 6, 2015
 
 == Upgrade Notice ==
 
