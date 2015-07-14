@@ -24,15 +24,7 @@ $setting_details = array(
       'future' => __('Scheduled', 'wp-lingotek'),
       'private' => __('Privately Published', 'wp-lingotek'),
     )
-  ),
-  'delete_document_from_tms' => array(
-    'type' => 'checkboxes',
-    'label' => __('Disassociation', 'wp-lingotek'),
-    'description' => __('Your documents will remain in your WordPress site but will be deleted from the Lingotek TMS if this option is checked.', 'wp-lingotek'),
-    'values' => array(
-      'delete' => __('Delete documents from Lingotek TMS when disassociating.', 'wp-lingotek'),
-    )
-  ),
+  )
 );
 
 $page_key = $this->plugin_slug . '_settings&sm=preferences';
@@ -41,12 +33,7 @@ if (!empty($_POST)) {
   check_admin_referer($page_key, '_wpnonce_' . $page_key);
   $options = array();
   foreach ($setting_details as $key => $setting) {
-    if (isset($_POST[$key])) {
-      $options[$key] = $_POST[$key];
-    }
-    else {
-      $options[$key] = null;
-    }
+    $options[$key] = $_POST[$key];
   }
   update_option('lingotek_prefs', $options);
 

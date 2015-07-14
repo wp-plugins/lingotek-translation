@@ -109,9 +109,6 @@ class Lingotek {
 
 		// flag title
 		add_filter('pll_flag_title', array(&$this, 'pll_flag_title'), 10, 3);
-
-		// adds a pointer upon plugin activation to draw attention to Lingotek
-		add_action('init', array(&$this, 'lingotek_activation_pointer'));
 	}
 
 	/**
@@ -503,40 +500,6 @@ class Lingotek {
 			}
 			error_log($log_string);
 		}
-	}
-
-	/*
-	 * Creates a pointer to draw attention to the new Lingotek menu item upon plugin activation
-	 * code borrowed from Polylang
-	 * @since 1.0.1
-	 */
-	public function lingotek_activation_pointer() {
-		$content = __('You’ve just installed Lingotek Translation! Click below to activate your account and automatically translate your website for free!', 'wp-lingotek');
-
-		$buttons = array(
-			array(
-				'label' => __('Close')
-			),
-			array(
-				'label' => __('Activate Account', 'wp-lingotek'),
-				'link' => admin_url('admin.php?page=' . $this->plugin_slug . '_settings&connect=new'),
-			)
-		);
-
-		$args = array(
-			'pointer' => 'wp-lingotek',
-			'id' => 'toplevel_page_wp-lingotek',
-			'position' => array(
-				'edge' => 'bottom',
-				'align' => 'left',
-			),
-			'width' => 380,
-			'title' => __('Congratulations!', 'wp-lingotek'),
-			'content' => $content,
-			'buttons' => $buttons
-		);
-
-		new Lingotek_Pointer($args);
 	}
 }
 

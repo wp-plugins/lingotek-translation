@@ -51,8 +51,8 @@ shuffle($people);
 
 	foreach($people as $person_key=>$person){
 		printf('<li class="wp-person" id="wp-person-%s">
-		<a href="%s" target="_blank"><img src="%s?s=60&d=mm&r=G" srcset="%s?s=120&d=mm&r=G 2x" class="gravatar" alt="%s"></a>
-		<a class="web" href="%s" target="_blank">%s</a>
+		<a href="%s"><img src="%s?s=60&d=mm&r=G" srcset="%s?s=120&d=mm&r=G 2x" class="gravatar" alt="%s"></a>
+		<a class="web" href="%s">%s</a>
 		<span class="title">%s</span>
 	</li>',$person_key,$person['url'],$person['image_url'],$person['image_url'],$person['name'],$person['url'],$person['name'],$person['title']);
 	}

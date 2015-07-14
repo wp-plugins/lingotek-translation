@@ -132,10 +132,7 @@ class Lingotek_Model {
 				'publish' => 1,
 				'future' => 1,
 				'private' => 0,
-			),
-			'delete_document_from_tms' => array(
-				'delete' => 1,
-			),
+			)
 		);
 		$prefs = get_option('lingotek_prefs', $default);
 		return $prefs;

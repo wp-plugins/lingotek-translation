@@ -101,16 +101,10 @@ abstract class Lingotek_Group {
 	 *
 	 * @param bool $delete whether to delete the Lingotek document or not
 	 */
-	public function disassociate() {
+	public function disassociate($delete = true) {
 		$client = new Lingotek_API();
-		$prefs = Lingotek_Model::get_prefs();
 
-		if ($prefs['delete_document_from_tms']) {
-			$client->delete_document($this->document_id);
-			unset($this->desc_array['lingotek']);
-			$this->save();
-		}
-		else {
+		if (!$delete || $client->delete_document($this->document_id)) {
 			unset($this->desc_array['lingotek']);
 			$this->save();
 		}

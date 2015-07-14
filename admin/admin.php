@@ -276,10 +276,10 @@ class Lingotek_Admin {
 	            foreach ($api_data->entities as $project) {
 	                $projects[$project->properties->id] = $project->properties->title;
 	            }
-	            if ($api_data->properties->total == 1) {
-	                if (!$project->properties->callback_url) {
-	                    $client->update_callback_url($project->properties->id);
-	                }
+	            if($update_first_project_callback){
+	            	$client = new Lingotek_API();
+	            	$project_id = current(array_keys($projects));//update callback for 1st project
+	            	$client->update_callback_url($project_id);
 	            }
 	            natcasesort($projects); //order by title (case-insensitive)
 	            $refresh_success['projects'] = TRUE;

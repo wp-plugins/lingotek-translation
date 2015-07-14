@@ -40,15 +40,34 @@ if (!empty($_POST)) {
 	<?php
 
 	printf(
-		'<p><input type="checkbox" name="%1$s" id="%1$s"/><label for="%1$s">%2$s</label></p>',
+		'<p><input type="checkbox" name="%1$s" id="%1$s" onclick="%3$s"/><label for="%1$s">%2$s</label></p>',
 		'utility_disassociate',
-		__('Disassociate all the content from Lingotek TMS.', 'wp-lingotek')
+		__('Disassociate all the content from Lingotek TMS.', 'wp-lingotek'),
+		"
+		if (this.checked == false) {
+			document.getElementById('utility_delete_documents').checked = false;
+		}"
+	);
+
+	printf(
+		'<p><input type="checkbox" name="%1$s" id="%1$s" onclick="%3$s"/><label for="%1$s">%2$s</label></p>',
+		'utility_delete_documents',
+		__('Delete all documents in Lingotek TMS.', 'wp-lingotek'),
+		"
+		if (this.checked == true) {
+			document.getElementById('utility_disassociate').checked = true;
+		}"
 	);
 
 	$confirm_disassociate = __('You are about to disassociate all your content from Lingotek TMS. Are you sure ?', 'wp-lingotek');
+	$confirm_delete = __('You are about to disassociate all your content and delete all documents in Lingotek TMS. Are you sure ?', 'wp-lingotek');
 
 	$confirm_js = "
 		d = document.getElementById('utility_disassociate');
+		dd = document.getElementById('utility_delete_documents');
+		if (dd.checked == true) {
+			return confirm('$confirm_delete');
+		}
 		if (d.checked == true) {
 			return confirm('$confirm_disassociate');
 		}";

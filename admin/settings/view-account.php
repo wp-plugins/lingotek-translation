@@ -5,7 +5,7 @@ if (!$community_id) {
   $ltk_num_communities = $ltk_communities->properties->total;
   if ($ltk_num_communities == 1) {
     $ltk_community_id = $ltk_communities->entities[0]->properties->id;
-    $this->set_community_resources($ltk_community_id);
+    $this->set_community_resources($ltk_community_id, TRUE);
     echo '<script type="text/javascript">document.body.innerHTML = ""; window.location = "admin.php?page=wp-lingotek_tutorial";</script>';
   }
 }

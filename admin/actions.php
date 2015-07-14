@@ -308,7 +308,7 @@ abstract class Lingotek_Actions {
 		}
 
 		// offers to disassociate translations
-		if (isset($document->source))
+		if (!empty($document->translations))
 			$actions['lingotek-delete'] = $this->get_action_link(array('document_id' => $document->document_id, 'action' => 'delete'));
 
 		return $actions;
