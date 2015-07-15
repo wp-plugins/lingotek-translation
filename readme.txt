@@ -24,7 +24,7 @@ WordPress administrators use Translation Profiles to categorize content by its r
 
 * __Community__ - If you're looking to save money by avoiding professional translation, you can take the do-it-yourself approach and have your bilingual employees, partners and/or users perform translations right within Wordpress. The plugin integrates with and provides use of the Lingotek Workbench, a professional-grade text editor used for translating, reviewing, and post-editing multilingual content.
 
-* __Free Automatic__ - Machine translation is an excellent option if you're on a tight budget, looking for near-instant results, and are okay with less-than-perfect quality. The plugin allows you to quickly and automatically translate your site by providing use of the commercial API for Microsoft Translator (the cost is covered by Lingotek for up to 100,000 words). Machine translations can be post-edited at any time using the Lingotek Workbench.
+* __Free Automatic__ - Machine translation is an excellent option if you're on a tight budget, looking for near-instant results, and are okay with less-than-perfect quality. The plugin allows you to quickly and automatically translate your site by providing use of the commercial API for Microsoft Translator (the cost is covered by Lingotek for up to 100,000 characters). Machine translations can be post-edited at any time using the Lingotek Workbench.
 
 = Cloud-Based Translation Management System =
 
@@ -69,7 +69,42 @@ Don't hesitate to [give your feedback](http://wordpress.org/support/view/plugin-
 
 == Frequently Asked Questions ==
 
-Visit the [Lingotek documentation site](https://lingotek.atlassian.net/wiki/display/PDOC/WordPress)
+= What does the Lingotek plugin do? =
+
+Lingotek has teamed up with [Polylang](https://wordpress.org/plugins/polylang/) to offer a simple way to make your WordPress site truly multilingual. Manage all your multilingual content in the same site. No need to have a different site for each language!
+
+= How can I add a language? =
+
+On the *translation dashboard,* click on the *Translate my site into...* textbox and choose from the list or start typing to quickly find a language.
+
+= How can I remove a language? =
+
+On the *translation dashboard,* click on the blue check mark for the language you would like to remove. *Note: if you have translated content in a language you will not be able to remove that language until that content has been deleted.*
+
+= Why can't I upload my existing content to Lingotek? =
+
+You must assign a language to content that existed before you installed the Polylang and Lingotek plugins. You can do this manually or use the Lingotek Language Utility to set all content that doesn't have an assigned language to the default language. This will allow you to upload your existing content to Lingotek.
+
+= Can I use my own translation agency with Lingotek? =
+
+Use your own translation agency or tap into Lingotek's network of more than 5,000+ in-country translators. Content transfer is fully automated between WordPress and Lingotek. You'll have full visibility into the translation process every step of the way. And once the translations are completed, they'll automatically download and publish to your website according to the preferences you've set.
+
+= How can I check the overall translation progress of my site? =
+
+On the *translation dashboard,* the bars under *Completed Percentage* show the translation progress of content for each language. You can filter by content type or show progress for all content.
+
+= Why are there two different shades of blue in the progress bar? =
+
+The *translation dashboard* not only shows how much of your content is translated, but also indicates the language that your source content was authored in.
+
+* *Dark Blue:* Indicates that this is a source language that the content was authored in.
+* *Light Blue:* Indicates that this is a target language that the content was translated into.
+
+= What happens when I Disassociate Translations? =
+
+When content is disassociated, the connection between WordPress and Lingotek is safely removed so that translations can be solely managed inside of WordPress.
+
+For more, visit the [Lingotek documentation site](https://lingotek.atlassian.net/wiki/display/PDOC/WordPress)
 
 == Screenshots ==
 
