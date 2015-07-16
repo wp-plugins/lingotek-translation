@@ -8,6 +8,7 @@ class Lingotek_Admin {
 	 * @since 0.1
 	 */
 	public function __construct() {
+
 		$plugin = Lingotek::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
 		$this->dashboard = new Lingotek_Dashboard($plugin);
@@ -25,84 +26,11 @@ class Lingotek_Admin {
 		add_action('load-translation_page_wp-lingotek_manage',  array(&$this, 'load_manage_page'));
 		add_filter('set-screen-option', array($this, 'set_screen_option'), 10, 3);
 
-    add_action('wp_ajax_'.$this->ajax_dashboard_language_endpoint, array(&$this->dashboard, 'ajax_language_dashboard'));
-    add_action('wp_ajax_get_current_status', array($this,'ajax_get_current_status'));
+		add_action('wp_ajax_'.$this->ajax_dashboard_language_endpoint, array(&$this->dashboard, 'ajax_language_dashboard'));
+
 		//Network admin menu
 		add_action('network_admin_menu', array($this, 'add_network_admin_menu'));
 	}
-  public function ajax_get_current_status(){
-    global $wpdb;
-    $languages = pll_languages_list(array('fields' => 'locale'));
-    $object_ids = $_POST['check_ids'];
-    if($object_ids === null){
-      return;
-    }
-    $terms = isset($_POST['terms_translations']);
-    $taxonomy = $terms ? 'term_translations'
-        : 'post_translations';
-    //this function allows for sanitization of a variable amount of sql IN values
-    $relationship_placeholders = $this->lingotek_get_placeholders($object_ids);
-
-    $terms_query = $wpdb->prepare("SELECT term_tax.*, terms.name AS doc_id, wp_tr.object_id FROM wp_term_taxonomy term_tax "
-        . "INNER JOIN wp_terms terms ON term_tax.term_id = terms.term_id "
-        . "INNER JOIN wp_term_relationships wp_tr ON term_tax.term_taxonomy_id = wp_tr.term_taxonomy_id "
-        . "WHERE taxonomy = '$taxonomy' "
-        . "AND wp_tr.object_id in ($relationship_placeholders)", $object_ids);
-    $results = $wpdb->get_results($terms_query);
-
-    //package up the db results into an associative array. The main array consists of
-    //ids and nonces. Each id has a source language, languages with statuses, and a workbench link
-    $content_metadata = [];
-    foreach($results as $group => $result){
-      $id = $result->object_id;
-      $post_data = unserialize($result->description)['lingotek'];
-
-      $source_language = $terms ? pll_get_term_language($post_data['source'], 'locale')
-        : pll_get_post_language($post_data['source'], 'locale');
-
-      $content_metadata[$id]['source'] = $source_language;
-      $content_metadata[$id]['doc_id'] = $result->doc_id;
-      $content_metadata[$id][$source_language]['status'] = $post_data['status'];
-      foreach($post_data['translations']as $locale => $translation_status){
-        $content_metadata[$id][$locale]['status'] = $translation_status;
-        $workbench_link = Lingotek_Actions::workbench_link($result->doc_id, $locale);
-        $content_metadata[$id][$locale]['workbench_link'] = $workbench_link;
-      }
-    }
-
-    //fills in missing languages to be able to update all the ones listed on Wordpress
-    foreach($languages as $language){
-      foreach($content_metadata as $group => $status){
-        if(!isset($status[$language])){
-          $content_metadata[$group][$language]['status'] = "none";
-        }
-      }
-    }
-    //get the nonces associated with the different actions
-    $content_metadata['request_nonce'] = $this->lingotek_get_matching_nonce('lingotek-request');
-    $content_metadata['download_nonce'] = $this->lingotek_get_matching_nonce('lingotek-download');
-    $content_metadata['upload_nonce'] = $this->lingotek_get_matching_nonce('lingotek-upload');
-    $content_metadata['status_nonce'] = $this->lingotek_get_matching_nonce('lingotek-status');
-
-    wp_send_json($content_metadata);
-  }
-
-  public function lingotek_get_matching_nonce($action){
-    $upload_link = wp_nonce_url(add_query_arg(array(
-              'action' => $action)),
-              $action);
-    $nonce_begin = strpos($upload_link, 'wpnonce=') + 8;
-    $nonce = substr($upload_link,$nonce_begin);
-    return $nonce;
-  }
-
-  public function lingotek_get_placeholders($items){
-    foreach($items as $item){
-      $placeholders .= '%s,';
-    }
-    $placeholders = rtrim($placeholders, ',');
-    return $placeholders;
-  }
 
 	public function get_dashboard_endpoint(){
 		return site_url("wp-admin/admin-ajax.php?action=".$this->ajax_dashboard_language_endpoint);
@@ -127,7 +55,6 @@ class Lingotek_Admin {
 		// FIXME: check if I can load more scripts in footer
 		$scripts = array(
 			'progress'	=> array(array('edit', 'upload', 'edit-tags', 'translation_page_wp-lingotek_manage', 'translation_page_wp-lingotek_settings'), array('jquery-ui-progressbar', 'jquery-ui-dialog', 'wp-ajax-response'), 1),
-			'updater'	=> array(array('edit', 'upload', 'edit-tags'), array('jquery-ui-progressbar', 'jquery-ui-dialog', 'wp-ajax-response'), 1),
 		);
 
 		$styles = array(
@@ -482,9 +409,8 @@ class Lingotek_Admin {
 	 * @since 0.2
 	 */
 	public function set_screen_option($status, $option, $value) {
-		if ('lingotek_strings_per_page' == $option) {
+		if ('lingotek_strings_per_page' == $option)
 			return $value;
-    }
 		return $status;
 	}
 

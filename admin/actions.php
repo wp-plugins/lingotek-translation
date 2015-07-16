@@ -86,7 +86,7 @@ abstract class Lingotek_Actions {
 			),
 
 			'current' => array(
-				'title' => __('Current', 'wp-lingotek'),
+				'title' => __('current', 'wp-lingotek'),
 				'icon'  => 'edit'
 			),
 

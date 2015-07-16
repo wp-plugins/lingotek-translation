@@ -25,7 +25,7 @@
 </p>
 
 <b><?php _e("Why can't I upload my existing content to Lingotek?", 'wp-lingotek') ?></b>
-<p><?php printf(__("You must assign a language to content that existed before you installed the <i>Polylang</i> and <i>Lingotek</i> plugins. You can do this manually or use the <a href='%s'><i>Lingotek Language Utility</i></a> to set all content that doesn't have an assigned language to the default language. This will allow you to upload your existing content to Lingotek.", 'wp-lingotek'), 'admin.php?page=wp-lingotek_settings&sm=utilities'); ?></p>
+<p><?php printf(__("You must assign a language to content that existed before you installed the <i>Polylang</i> and <i>Lingotek</i> plugins. You can do this manually or use the <a href='%s'><i>Lingotek Language Utility</i></a> to set all content that doesn't have an assigned language to the default language. This will allow you to upload your exisiting content to Lingotek.", 'wp-lingotek'), 'admin.php?page=wp-lingotek_settings&sm=utilities'); ?></p>
 
 <b><?php _e("Can I use my own translation agency with Lingotek?", 'wp-lingotek') ?></b>
 <p><?php _e( "Use your own translation agency or tap into Lingotek's network of more than 5,000+ in-country translators. Content transfer is fully automated between WordPress and Lingotek. You'll have full visibility into the translation process every step of the way. And once the translations are completed, they'll automatically download and publish to your website according to the preferences you've set." , 'wp-lingotek'); ?></p>
@@ -44,7 +44,7 @@
 </ul>
 
 <b><?php _e('What happens when I <i>Disassociate Translations</i>?', 'wp-lingotek') ?></b>
-<p><?php _e('When content is disassociated, the connection between WordPress and <i>Lingotek</i> is safely removed so that translations can be solely managed inside of WordPress.', 'wp-lingotek') ?></p>
+<p><?php _e('When content is disassociated the connection between WordPress and <i>Lingotek</i> safely disconnected from Lingotek, so that translations can be solely managed inside of WordPress.', 'wp-lingotek') ?></p>
 
 <b><?php _e("How do I translate strings within widgets or general WordPress settings (e.g., Site Title, Tagline)?", 'wp-lingotek') ?></b>
 <p><?php  printf(__( "Groups of strings can be sent for translation and managed using the <a href='%s'>String Groups</a> page. Individual strings may be viewed on the <a href='%s'>Strings</a> page." , 'wp-lingotek'),'admin.php?page=wp-lingotek_manage&sm=string-groups','admin.php?page=wp-lingotek_manage&sm=strings'); ?></p>

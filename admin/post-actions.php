@@ -94,7 +94,6 @@ class Lingotek_Post_actions extends Lingotek_Actions {
 	 */
 	public function manage_actions() {
 		global $typenow;
-    printf('<div id="auto-update" class="hidden"></div>');
 		$post_type = 'load-upload.php' == current_filter() ? 'attachment' : $typenow;
 
 		if (!$this->pllm->is_translated_post_type($post_type))

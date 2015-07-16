@@ -43,7 +43,7 @@ class Lingotek_Filters_Columns extends PLL_Admin_Filters_Columns {
 		}
 
 		foreach ($this->model->get_languages_list() as $language) {
-			$columns['language_'.$language->locale] = $language->flag ? $language->flag :
+			$columns['language_'.$language->slug] = $language->flag ? $language->flag :
 				sprintf('<a href="" title="%s">%s</a>',
 					esc_html("$language->name ($language->locale)"),
 					esc_html($language->slug)
@@ -70,19 +70,18 @@ class Lingotek_Filters_Columns extends PLL_Admin_Filters_Columns {
 			$this->model->get_language($_POST['inline_lang_choice']) :
 			call_user_func(array($this->model, 'get_' . $type . '_language'), $object_id);
 
-		if (false === strpos($column, 'language_') || !$lang) {
+		if (false === strpos($column, 'language_') || !$lang)
 			return '';
-    }
 
 		$language = $this->model->get_language(substr($column, 9));
 
 		// FIXME should I suppress quick edit?
 		// yes for uploaded posts, but I will need js as the field is built for all posts
 		// /!\ also take care not add this field two times when translations are managed by Polylang
+
 		// hidden field containing the post language for quick edit (used to filter categories since Polylang 1.7)
-		if ($column == $this->get_first_language_column()  /*&& !$this->model->get_translation_id('post', $post_id)*/) {
+		if ($column == $this->get_first_language_column() /*&& !$this->model->get_translation_id('post', $post_id)*/)
 			printf('<div class="hidden" id="lang_%d">%s</div>', esc_attr($object_id), esc_html($lang->slug));
-    }
 
 		$id = ($inline && $lang->slug != $this->model->get_language($_POST['old_lang'])->slug) ?
 			($language->slug == $lang->slug ? $object_id : 0) :
@@ -97,50 +96,42 @@ class Lingotek_Filters_Columns extends PLL_Admin_Filters_Columns {
 		$disabled = 'disabled' == $profile['profile'];
 
 		// post ready for upload
-		if ($this->lgtm->can_upload($type, $object_id) && $object_id == $id) {
+		if ($this->lgtm->can_upload($type, $object_id) && $object_id == $id)
 			return $disabled ?
-				('post' == $type ? parent::post_column($column, $object_id) 
-          : parent::term_column('', $column, $object_id)) 
-          :	$actions->upload_icon($object_id);
-    }
+				('post' == $type ? parent::post_column($column, $object_id) : parent::term_column('', $column, $object_id)) :
+				$actions->upload_icon($object_id);
 
 		// translation disabled
-		elseif (isset($document->source) && $document->is_disabled_target($language)) {
+		elseif (isset($document->source) && $document->is_disabled_target($language))
 			return 'post' == $type ? parent::post_column($column, $object_id) : parent::term_column('', $column, $object_id);
-    }
 
 		// source post is uploaded
 		elseif (isset($document->source) && $document->source == $id) {
 			// source ready for upload
-			if ($this->lgtm->can_upload($type, $id)) {
+			if ($this->lgtm->can_upload($type, $id))
 				return $actions->upload_icon($id);
-      }
 
 			// importing source
-			if ($id == $object_id && 'importing' == $document->status) {
+			if ($id == $object_id && 'importing' == $document->status)
 				return Lingotek_Actions::importing_icon($document);
-      }
 
 			// uploaded
 			return 'post' == $type ? Lingotek_Post_actions::uploaded_icon($id) : Lingotek_Term_actions::uploaded_icon($id);
 		}
 
 		// translations
-		elseif (isset($document->translations[$language->locale]) || (isset($document->source) && 'current' == $document->status)){
+		elseif (isset($document->translations[$language->locale]) || (isset($document->source) && 'current' == $document->status))
 			return Lingotek_Actions::translation_icon($document, $language);
-    }
 
 		// translations exist but are not managed by Lingotek TMS
-		elseif (empty($document->source)) {
-			return $object_id == $id && !$disabled ? $actions->upload_icon($object_id, true) 
-          : ('post' == $type ? parent::post_column($column, $object_id) 
-          : parent::term_column('', $column, $object_id));
-    }
+		elseif (empty($document->source))
+			return $object_id == $id && !$disabled ?
+				$actions->upload_icon($object_id, true) :
+				('post' == $type ? parent::post_column($column, $object_id) : parent::term_column('', $column, $object_id));
 
 		// no translation
-		else {
+		else
 			return  '<div class="lingotek-color dashicons dashicons-no"></div>';
-    }
 	}
 
 	/*

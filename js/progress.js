@@ -1,4 +1,5 @@
 jQuery(document).ready(function($) {
+
 	function lingotek_progress(i) {
 		if (i < lingotek_data.ids.length) {
 			var data = {

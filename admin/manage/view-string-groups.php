@@ -16,14 +16,12 @@ else {
 	$string_actions = $GLOBALS['wp_lingotek']->string_actions;
 	$table = new Lingotek_Strings_Table($string_actions);
 	$action = $table->current_action();
-	if (!empty($action)) {
+	if (!empty($action))
 		$string_actions->manage_actions($action);
-  }
 
 	$data = Lingotek_Model::get_strings();
-	foreach ($data as $key => $row) {
+	foreach ($data as $key => $row)
 		$data[$key]['row'] = $key; // store the row number for convenience
-  }
 
 	$table->prepare_items($data); ?>
 
@@ -32,8 +30,7 @@ else {
 	</form><?php
 
 	foreach (Lingotek_String_actions::$actions as $action => $strings) {
-		if (!empty($_GET['bulk-lingotek-' . $action])) {
+		if (!empty($_GET['bulk-lingotek-' . $action]))
 			printf('<div id="lingotek-progressdialog" title="%s"><div id="lingotek-progressbar"></div></div>', $strings['progress']);
-    }
 	}
 }
