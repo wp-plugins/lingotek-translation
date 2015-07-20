@@ -64,6 +64,7 @@ jQuery(document).ready(function($) {
         var td = $(tr).find('td.language_' + locale);
         switch(data[key][locale]['status']){
           case 'current':
+            $(td).find('.pll_icon_edit').remove();
             if(locale === data[key]['source']){
               $(td).find('.lingotek-color').remove();
               if(post_data['terms_translations'] === true){
@@ -92,6 +93,7 @@ jQuery(document).ready(function($) {
             }
             break;
           case 'pending':
+            $(td).find('.pll_icon_edit').remove();
             updateGenericBulkLink(tr, data, key, 'status' , 'Update translations status of this item in Lingotek TMS', 'Update translations status ');
             $(td).find('.lingotek-color').remove();
             var request_link = $('<a></a>').attr('href', data[key][locale]['workbench_link'])
@@ -101,10 +103,12 @@ jQuery(document).ready(function($) {
             $(td).append(request_link);
             break;
           case 'importing':
+            $(td).find('.pll_icon_edit').remove();
             updateGenericBulkLink(tr, data, key, 'status' , 'Update translations status of this item in Lingotek TMS', 'Update translations status ');
             updateIndicator(td, data, key, locale, 'status', 'Importing Source', 'clock');
             break;
           case 'not-current' :
+              $(td).find('.pll_icon_edit').remove();
               $(td).find('.lingotek-color').remove();
               var request_link = $('<a></a>').attr('href', data[key][locale]['workbench_link'])
                 .attr('title','The target translation is no longer current as the source content has been updated')
@@ -113,6 +117,7 @@ jQuery(document).ready(function($) {
               $(td).append(request_link);
             break;
           case 'edited':
+            $(td).find('.pll_icon_edit').remove();
             updateUploadBulkLink(tr, data, key, 'upload' , 'Upload this item to Lingotek TMS', 'Upload to Lingotek');
               $(td).find('.lingotek-color').remove();
               var request_link = $('<a></a>').attr('href', relative_url
@@ -130,21 +135,25 @@ jQuery(document).ready(function($) {
             updateIndicator(td, data, key, locale, 'download', 'Ready to download', 'download');
             break;
           default:
+            var source = data[key]['source'];
             if(locale === data[key]['source']){
               $(td).find('.lingotek-color').remove();
+              $(td).find('.pll_icon_edit').remove();
               updateIndicator(td, data, key, locale, 'upload', 'Upload Now', 'upload');
             }
             else if ($(td).find('.pll_icon_add').length > 0 && data[key][data[key]['source']]['status'] === 'none'){
               break;
             }
-            else if(data[key][data[key]['source']]['status'] === 'current'){
+            else if(source !== false && data[key][source]['status'] === 'current'){
               $(td).find('.pll_icon_add').remove();
+              $(td).find('.pll_icon_edit').remove();
               $(td).find('.lingotek-color').remove();
               updateIndicator(td, data, key, locale, 'request', 'Request a translation', 'plus');
               updateGenericBulkLink(tr, data, key, 'request' , 'Request translations of this item to Lingotek TMS', 'Request translations');
             }
             else {
               $(td).find('.pll_icon_add').remove();
+              $(td).find('.pll_icon_edit').remove();
               $(td).find('.lingotek-color').remove();
               var indicator = $('<div></div>').addClass('lingotek-color dashicons dashicons-no');
               $(td).append(indicator);

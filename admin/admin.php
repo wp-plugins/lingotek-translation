@@ -32,55 +32,41 @@ class Lingotek_Admin {
 	}
   public function ajax_get_current_status(){
     global $wpdb;
+    $lgtm = &$GLOBALS['wp_lingotek']->model;
     $languages = pll_languages_list(array('fields' => 'locale'));
     $object_ids = $_POST['check_ids'];
     if($object_ids === null){
       return;
     }
     $terms = isset($_POST['terms_translations']);
-    $taxonomy = $terms ? 'term_translations'
-        : 'post_translations';
-    //this function allows for sanitization of a variable amount of sql IN values
-    $relationship_placeholders = $this->lingotek_get_placeholders($object_ids);
+    $taxonomy = $terms ? 'term'
+        : 'post';
 
-    $terms_query = $wpdb->prepare("SELECT term_tax.*, terms.name AS doc_id, wp_tr.object_id FROM wp_term_taxonomy term_tax "
-        . "INNER JOIN wp_terms terms ON term_tax.term_id = terms.term_id "
-        . "INNER JOIN wp_term_relationships wp_tr ON term_tax.term_taxonomy_id = wp_tr.term_taxonomy_id "
-        . "WHERE taxonomy = '$taxonomy' "
-        . "AND wp_tr.object_id in ($relationship_placeholders)", $object_ids);
-    $results = $wpdb->get_results($terms_query);
-
-    //package up the db results into an associative array. The main array consists of
+    //The main array consists of
     //ids and nonces. Each id has a source language, languages with statuses, and a workbench link
     $content_metadata = [];
-    foreach($results as $group => $result){
-      $id = $result->object_id;
-      $post_data = unserialize($result->description)['lingotek'];
-
-      $source_language = $terms ? pll_get_term_language($post_data['source'], 'locale')
-        : pll_get_post_language($post_data['source'], 'locale');
-
+    foreach($object_ids as $object_id) {
+      $id = $object_id;
+      $document = $lgtm->get_group($taxonomy, $object_ids[$object_id]);
+      $source_language = $terms ? pll_get_term_language($document->source, 'locale')
+        : pll_get_post_language($document->source, 'locale');
       $content_metadata[$id]['source'] = $source_language;
-      $content_metadata[$id]['doc_id'] = $result->doc_id;
-      $content_metadata[$id][$source_language]['status'] = $post_data['status'];
-      foreach($post_data['translations']as $locale => $translation_status){
-        $content_metadata[$id][$locale]['status'] = $translation_status;
-        $workbench_link = Lingotek_Actions::workbench_link($result->doc_id, $locale);
-        $content_metadata[$id][$locale]['workbench_link'] = $workbench_link;
+      $content_metadata[$id]['doc_id'] = $document->document_id;
+      $content_metadata[$id][$source_language]['status'] = $document->status;
+      if(is_array($document->translations)){
+        foreach($document->translations as $locale => $translation_status){
+          $content_metadata[$id][$locale]['status'] = $translation_status;
+          $workbench_link = Lingotek_Actions::workbench_link($document->document_id, $locale);
+          $content_metadata[$id][$locale]['workbench_link'] = $workbench_link;
+        }
       }
     }
-
     //fills in missing languages to be able to update all the ones listed on Wordpress
     foreach($languages as $language){
       foreach($content_metadata as $group => $status){
         if(!isset($status[$language])){
           $content_metadata[$group][$language]['status'] = "none";
         }
-      }
-    }
-    foreach($object_ids as $object_id) {
-      if(!isset($content_metadata[$object_id])){
-        $content_metadata[$object_id]['source'] = false;
       }
     }
     //get the nonces associated with the different actions
@@ -132,7 +118,7 @@ class Lingotek_Admin {
 		// FIXME: check if I can load more scripts in footer
 		$scripts = array(
 			'progress'	=> array(array('edit', 'upload', 'edit-tags', 'translation_page_wp-lingotek_manage', 'translation_page_wp-lingotek_settings'), array('jquery-ui-progressbar', 'jquery-ui-dialog', 'wp-ajax-response'), 1),
-			//'updater'	=> array(array('edit', 'upload', 'edit-tags'), array('jquery-ui-progressbar', 'jquery-ui-dialog', 'wp-ajax-response'), 1),
+			'updater'	=> array(array('edit', 'upload', 'edit-tags'), array('jquery-ui-progressbar', 'jquery-ui-dialog', 'wp-ajax-response'), 1),
 		);
 
 		$styles = array(

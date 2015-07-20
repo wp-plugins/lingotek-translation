@@ -562,6 +562,16 @@ class Lingotek_Model {
 					}
 				}
 			}
+			// Remove category targets from being counted until they are downloaded. Fixed target categories being counted as source languages.
+			foreach ($groups as $group) {
+				$group = unserialize($group);
+				if (isset($group['lingotek']['translations'])) {
+					foreach ($group['lingotek']['translations'] as $locale => $status) {
+						if (('pending' == $status || 'ready' == $status) && $language = $this->pllm->get_language($locale))
+							$sources[$language->slug]--;
+					}
+				}
+			}
 		}
 
 		return $r[$taxonomy] = compact('sources', 'targets', 'total');
