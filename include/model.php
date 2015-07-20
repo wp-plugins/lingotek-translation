@@ -556,8 +556,11 @@ class Lingotek_Model {
 			$term_id = get_option('default_category');
 			$group = $this->get_group('term', $term_id);
 			foreach($this->pllm->get_languages_list() as $language) {
-				if (empty($group->source) || ($group->get_source_language()->slug != $language->slug && empty($group->translations[$language->locale])))
-					$sources[$language->slug]--;
+				if (empty($group->source) || ($group->get_source_language()->slug != $language->slug && empty($group->translations[$language->locale]))) {
+					if ($language->slug != $this->pllm->options['default_lang']) {
+						$sources[$language->slug]--;
+					}
+				}
 			}
 		}
 

@@ -251,7 +251,7 @@ abstract class Lingotek_Actions {
 		return sprintf(
 			'<a class="lingotek-color" title="%s" href="%s"%s>%s</a>',
 			self::$actions[$action]['description'],
-			wp_nonce_url(add_query_arg($args, defined('DOING_AJAX') && DOING_AJAX ? wp_get_referer() : ''), 'lingotek-' .$action),
+			wp_nonce_url(defined('DOING_AJAX') && DOING_AJAX ? add_query_arg($args, wp_get_referer()) : add_query_arg($args), 'lingotek-' .$action),
 			empty($warning) ? '' : self::$confirm_message,
 			self::$actions[$action]['action']
 		);

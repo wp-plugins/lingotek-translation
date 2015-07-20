@@ -1,5 +1,4 @@
 jQuery(document).ready(function($) {
-  var checkboxes = $('#the-list').find('input');
   var current_ids = {};
   var post_data = {"check_ids" : current_ids};
   var url = window.location.href;
@@ -8,23 +7,28 @@ jQuery(document).ready(function($) {
   var ajax_url = relative_url + '/admin-ajax.php?action=get_current_status';
   var page_params = '/edit.php?';
   var tr_id = '#post-';
+  var object_type = 'post';
   if(url.indexOf('taxonomy') > -1){
     var begin = url.indexOf('taxonomy=') + 'taxonomy='.length;
     var taxonomy_type = url.substring(begin);
   }
-  $(checkboxes).each(function(){
-    current_ids[$(this).val()] = $(this).val();
-  });
-  if(taxonomy_type === 'category'){
-    var uncategorized_id = 1;
-    current_ids[uncategorized_id] = uncategorized_id;
-  }
+  
+
   if($('.edit-tags-php').length > 0){
     post_data['terms_translations'] = true;
     page_params = '/edit-tags.php?taxonomy=' + taxonomy_type + '&';
     tr_id = '#tag-';
+    object_type = 'term';
   }
   setInterval(function(){
+    var rows = $('#the-list').find('tr');
+    $(rows).each(function(){
+      if($(this).attr('id').length > 1){
+        var id = $(this).attr('id');
+        var object_id = id.replace( /^\D+/g, '');
+        current_ids[object_id] = object_id;
+      }
+    });
     $.ajax({
       type: 'POST',
       url: ajax_url,
@@ -40,11 +44,19 @@ jQuery(document).ready(function($) {
   
 
   function update_indicators(data){
+    $('.lingotek-request').remove();
+    $('.lingotek-status').remove();
+    $('.lingotek-upload').remove();
+    $('.lingotek-download').remove();
     for(var key in data){
+      var tr = $(tr_id + key);
+      if(data[key]['source'] === false){
+        updateUploadBulkLink(tr, data, key, 'upload' , 'Upload this item to Lingotek TMS', 'Upload to Lingotek');
+        continue;
+      }
       if(key.indexOf('_nonce') > -1) {
         continue;
       }
-      var tr = $(tr_id + key);
       for(var locale in data[key]){
         if(locale === 'source' || locale === 'doc_id'){
           continue;
@@ -54,24 +66,20 @@ jQuery(document).ready(function($) {
           case 'current':
             if(locale === data[key]['source']){
               $(td).find('.lingotek-color').remove();
-              
               if(post_data['terms_translations'] === true){
                 var request_link = $('<a></a>').attr('href', relative_url
                       + '/edit-tags.php?action=edit'
                       + '&taxonomy=' + taxonomy_type
                       + '&tag_ID=' + key
-                      + '&post_type=post')
-                .attr('title','Source uploaded')
-                .addClass('lingotek-color dashicons dashicons-yes');
+                      + '&post_type=post');
               }
               else {
                 var request_link = $('<a></a>').attr('href', relative_url
                       + '/post.php?post= ' + key
-                      + '&action=edit')
-                .attr('title','Source uploaded')
-                .addClass('lingotek-color dashicons dashicons-yes');
+                      + '&action=edit');
               }
-
+              $(request_link).attr('title','Source uploaded')
+                .addClass('lingotek-color dashicons dashicons-yes');
               $(td).append(request_link);
             }
             else {
@@ -84,6 +92,7 @@ jQuery(document).ready(function($) {
             }
             break;
           case 'pending':
+            updateGenericBulkLink(tr, data, key, 'status' , 'Update translations status of this item in Lingotek TMS', 'Update translations status ');
             $(td).find('.lingotek-color').remove();
             var request_link = $('<a></a>').attr('href', data[key][locale]['workbench_link'])
               .attr('title','In Progress')
@@ -92,16 +101,8 @@ jQuery(document).ready(function($) {
             $(td).append(request_link);
             break;
           case 'importing':
-            $(td).find('.lingotek-color').remove();
-             var request_link = $('<a></a>').attr('href', relative_url
-                     + page_params + 'document_id=' + data[key]['doc_id']
-                     + '&locale=' + locale 
-                     + '&action=lingotek-status'
-                     + '&noheader=1'
-                     + '&_wpnonce=' + data['status_nonce'])
-                .attr('title','Importing source')
-                .addClass('lingotek-color dashicons dashicons-clock');
-              $(td).append(request_link);
+            updateGenericBulkLink(tr, data, key, 'status' , 'Update translations status of this item in Lingotek TMS', 'Update translations status ');
+            updateIndicator(td, data, key, locale, 'status', 'Importing Source', 'clock');
             break;
           case 'not-current' :
               $(td).find('.lingotek-color').remove();
@@ -112,41 +113,26 @@ jQuery(document).ready(function($) {
               $(td).append(request_link);
             break;
           case 'edited':
+            updateUploadBulkLink(tr, data, key, 'upload' , 'Upload this item to Lingotek TMS', 'Upload to Lingotek');
               $(td).find('.lingotek-color').remove();
               var request_link = $('<a></a>').attr('href', relative_url
-                      + page_params + 'post= ' + key
-                      + '&locale=' + locale
-                      + '&action=lingotek-upload'
-                      + '&noheader=1'
-                      + '&_wpnonce=' + data['upload_nonce'])
+                + page_params + 'post= ' + key
+                + '&locale=' + locale
+                + '&action=lingotek-upload'
+                + '&noheader=1'
+                + '&_wpnonce=' + data['upload_nonce'])
                 .attr('title','Upload Now')
                 .addClass('lingotek-color dashicons dashicons-upload');
               $(td).append(request_link);
             break;
           case 'ready':
-            $(td).find('.lingotek-color').remove();
-              var request_link = $('<a></a>').attr('href', relative_url
-                      + page_params + 'document_id=' + data[key]['doc_id']
-                      + '&locale=' + locale 
-                      + '&action=lingotek-download'
-                      + '&noheader=1'
-                      + '&_wpnonce='+data['download_nonce'])
-                .attr('title','Ready to download')
-                .addClass('lingotek-color dashicons dashicons-download');
-              $(td).append(request_link);
+            updateGenericBulkLink(tr, data, key, 'download' , 'Download translations of this item from Lingotek TMS', 'Download translations');
+            updateIndicator(td, data, key, locale, 'download', 'Ready to download', 'download');
             break;
           default:
             if(locale === data[key]['source']){
               $(td).find('.lingotek-color').remove();
-              var request_link = $('<a></a>').attr('href', relative_url
-                      + page_params + 'post= ' + key 
-                      + '&locale=' + locale 
-                      + '&action=lingotek-upload'
-                      + '&noheader=1'
-                      + '&_wpnonce=' + data['upload_nonce'])
-                .attr('title','Upload Now')
-                .addClass('lingotek-color dashicons dashicons-upload');
-              $(td).append(request_link);
+              updateIndicator(td, data, key, locale, 'upload', 'Upload Now', 'upload');
             }
             else if ($(td).find('.pll_icon_add').length > 0 && data[key][data[key]['source']]['status'] === 'none'){
               break;
@@ -154,14 +140,8 @@ jQuery(document).ready(function($) {
             else if(data[key][data[key]['source']]['status'] === 'current'){
               $(td).find('.pll_icon_add').remove();
               $(td).find('.lingotek-color').remove();
-              var request_link = $('<a></a>').attr('href', relative_url
-                      + page_params + 'document_id=' + data[key]['doc_id']
-                      + '&locale='+locale+'&action=lingotek-request'
-                      + '&noheader=1'
-                      + '&_wpnonce='+data['request_nonce'])
-                .attr('title','Request a translation')
-                .addClass('lingotek-color dashicons dashicons-plus');
-              $(td).append(request_link);
+              updateIndicator(td, data, key, locale, 'request', 'Request a translation', 'plus');
+              updateGenericBulkLink(tr, data, key, 'request' , 'Request translations of this item to Lingotek TMS', 'Request translations');
             }
             else {
               $(td).find('.pll_icon_add').remove();
@@ -173,5 +153,57 @@ jQuery(document).ready(function($) {
         }
       }
     }
+  }
+  function updateGenericBulkLink(tr, data, key, action, title, text){
+    var row_actions = $(tr).find('.row-actions');
+    if($(row_actions).find('.lingotek-' + action).length === 0){
+      var status_update_link = $('<span class="lingotek-'+ action +'"><a class="lingotek-color"'
+      + ' title="' + title + '" '
+      + 'href="?document_id=' + data[key]['doc_id']
+      + '&action=lingotek-' + action
+      + '&noheader=1'
+      + '&_wpnonce=' + data[action + '_nonce']
+      + '">' + text + '</a> | </span>');
+      var disassociate = $(row_actions).find('.lingotek-delete');
+      if($(disassociate).length > 0){
+        $(disassociate).before(status_update_link);
+      }
+      else {
+        $(row_actions).append(status_update_link);
+      }
+     }
+  }
+  function updateUploadBulkLink(tr, data, key, action, title, text){
+      var row_actions = $(tr).find('.row-actions');
+      if($(row_actions).find('.lingotek-' + action).length === 0){
+        var status_update_link = $('<span class="lingotek-'+ action +'"><a class="lingotek-color"'
+        + ' title="' + title + '" '
+        + 'href="?'
+        + 'taxonomy=' + taxonomy_type
+        + '&' + object_type + '=' + key
+        + '&action=lingotek-' + action
+        + '&noheader=1'
+        + '&_wpnonce=' + data[action + '_nonce']
+        + '">' + text + '</a> | </span>');
+        var disassociate = $(row_actions).find('.lingotek-delete');
+        if($(disassociate).length > 0){
+          $(disassociate).before(status_update_link);
+        }
+        else {
+          $(row_actions).append(status_update_link);
+        }
+     }
+  }
+  function updateIndicator(td, data, key, locale, action, title, dashicon){
+    $(td).find('.lingotek-color').remove();
+      var request_link = $('<a></a>').attr('href', relative_url
+              + page_params + 'document_id=' + data[key]['doc_id']
+              + '&locale=' + locale
+              + '&action=lingotek-' + action
+              + '&noheader=1'
+              + '&_wpnonce='+data[action + '_nonce'])
+        .attr('title', title)
+        .addClass('lingotek-color dashicons dashicons-' + dashicon);
+    $(td).append(request_link);
   }
 });

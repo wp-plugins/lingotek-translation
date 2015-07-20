@@ -1,6 +1,6 @@
 <?php
 
-$people = array(
+$team = array(
 	'fred'=>array(
 		'name'=>'Frédéric Demarle',
 		'title'=>'Lead Polylang Developer',
@@ -36,9 +36,24 @@ $people = array(
 		'title'=>'Tech Writer',
 		'image_url'=>'https://www.gravatar.com/avatar/56c44e12c3431aca766d06c6019201ff',
 		'url'=>'https://profiles.wordpress.org/laurakaysc'),
+	'seth'=>array(
+		'name'=>'Seth White',
+		'title'=>'Developer',
+		'image_url'=>'https://www.gravatar.com/avatar/53706ce5472909827db3e582bb4bccf2',
+		'url'=>'https://profiles.wordpress.org/sethwhite'),
 );
 
-shuffle($people);
+$contributors = array(
+	'larry'=>array(
+		'name'=>'Larry Furr',
+		'title'=>'',
+		'image_url'=>'https://www.gravatar.com/avatar/77447d8ad56b4ba5ea8f3900b3245c41',
+		'url'=>'https://profiles.wordpress.org/furrever'),
+
+);
+
+shuffle($team);
+shuffle($contributors);
 
 ?>
 
@@ -49,7 +64,23 @@ shuffle($people);
 <ul class="wp-people-group">
 	<?php
 
-	foreach($people as $person_key=>$person){
+	foreach($team as $person_key=>$person){
+		printf('<li class="wp-person" id="wp-person-%s">
+		<a href="%s" target="_blank"><img src="%s?s=60&d=mm&r=G" srcset="%s?s=120&d=mm&r=G 2x" class="gravatar" alt="%s"></a>
+		<a class="web" href="%s" target="_blank">%s</a>
+		<span class="title">%s</span>
+	</li>',$person_key,$person['url'],$person['image_url'],$person['image_url'],$person['name'],$person['url'],$person['name'],$person['title']);
+	}
+
+	?>
+</ul>
+
+<h4 class="wp-people-group"><?php _e('Contributors', 'wp-lingotek'); ?></h4>
+
+<ul class="wp-people-group">
+	<?php
+
+	foreach($contributors as $person_key=>$person){
 		printf('<li class="wp-person" id="wp-person-%s">
 		<a href="%s" target="_blank"><img src="%s?s=60&d=mm&r=G" srcset="%s?s=120&d=mm&r=G 2x" class="gravatar" alt="%s"></a>
 		<a class="web" href="%s" target="_blank">%s</a>

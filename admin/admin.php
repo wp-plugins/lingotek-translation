@@ -78,6 +78,11 @@ class Lingotek_Admin {
         }
       }
     }
+    foreach($object_ids as $object_id) {
+      if(!isset($content_metadata[$object_id])){
+        $content_metadata[$object_id]['source'] = false;
+      }
+    }
     //get the nonces associated with the different actions
     $content_metadata['request_nonce'] = $this->lingotek_get_matching_nonce('lingotek-request');
     $content_metadata['download_nonce'] = $this->lingotek_get_matching_nonce('lingotek-download');
@@ -127,7 +132,7 @@ class Lingotek_Admin {
 		// FIXME: check if I can load more scripts in footer
 		$scripts = array(
 			'progress'	=> array(array('edit', 'upload', 'edit-tags', 'translation_page_wp-lingotek_manage', 'translation_page_wp-lingotek_settings'), array('jquery-ui-progressbar', 'jquery-ui-dialog', 'wp-ajax-response'), 1),
-			'updater'	=> array(array('edit', 'upload', 'edit-tags'), array('jquery-ui-progressbar', 'jquery-ui-dialog', 'wp-ajax-response'), 1),
+			//'updater'	=> array(array('edit', 'upload', 'edit-tags'), array('jquery-ui-progressbar', 'jquery-ui-dialog', 'wp-ajax-response'), 1),
 		);
 
 		$styles = array(
