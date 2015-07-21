@@ -44,7 +44,7 @@ class Lingotek_Admin {
 
     //The main array consists of
     //ids and nonces. Each id has a source language, languages with statuses, and a workbench link
-    $content_metadata = [];
+    $content_metadata = array();
     foreach($object_ids as $object_id) {
       $id = $object_id;
       $document = $lgtm->get_group($taxonomy, $object_ids[$object_id]);
@@ -52,7 +52,9 @@ class Lingotek_Admin {
         : pll_get_post_language($document->source, 'locale');
       $content_metadata[$id]['source'] = $source_language;
       $content_metadata[$id]['doc_id'] = $document->document_id;
-      $content_metadata[$id][$source_language]['status'] = $document->status;
+      $content_metadata[$id]['source_id'] = $document->source;
+      $target_status = $document->status == 'edited' || $document->status == null ? 'edited' : 'current';
+      $content_metadata[$id][$source_language]['status'] = $document->source == $object_id ? $document->status : $target_status;
       if(is_array($document->translations)){
         foreach($document->translations as $locale => $translation_status){
           $content_metadata[$id][$locale]['status'] = $translation_status;

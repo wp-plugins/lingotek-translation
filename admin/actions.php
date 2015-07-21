@@ -272,6 +272,7 @@ abstract class Lingotek_Actions {
 			return $actions;
 
 		$document = $this->lgtm->get_group($this->type, $id);
+		$id = $document->desc_array['lingotek']['source'];
 
 		if ($this->lgtm->can_upload($this->type, $id) || (isset($document->source) && 'string' != $this->type && $this->lgtm->can_upload($this->type, $document->source))) {
 			$actions['lingotek-upload'] = $this->get_action_link(array($this->type => $id, 'action' => 'upload'));

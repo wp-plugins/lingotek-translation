@@ -63,7 +63,7 @@ class Lingotek_Filters_Columns extends PLL_Admin_Filters_Columns {
 	 * @param string $column column name
 	 * @param int $object_id id of the current object in row
 	 */
-	protected function _column($type, $column, $object_id) {
+	protected function _column($type, $column, $object_id, $custom_data = NULL) {
 		$action = 'post' == $type ? 'inline-save' : 'inline-save-tax';
 		$inline = defined('DOING_AJAX') && $_REQUEST['action'] == $action && isset($_POST['inline_lang_choice']);
 		$lang = $inline ?
@@ -71,7 +71,12 @@ class Lingotek_Filters_Columns extends PLL_Admin_Filters_Columns {
 			call_user_func(array($this->model, 'get_' . $type . '_language'), $object_id);
 
 		if (false === strpos($column, 'language_') || !$lang) {
-			return '';
+			if ($custom_data) {
+				return $custom_data;
+			}
+			else {
+				return '';
+			}
     }
 
 		$language = $this->model->get_language(substr($column, 9));
@@ -167,8 +172,13 @@ class Lingotek_Filters_Columns extends PLL_Admin_Filters_Columns {
 	 * @param string $column column name
 	 * @param int term_id
 	 */
-	public function term_column($empty, $column, $term_id) {
+	public function term_column($custom_data, $column, $term_id) {
 		$this->content_type = $GLOBALS['taxonomy'];
-		return $this->_column('term', $column, $term_id);
+		if (!$custom_data) {
+			return $this->_column('term', $column, $term_id);
+		}
+		else {
+			return $this->_column('term', $column, $term_id, $custom_data);
+		}
 	}
 }
