@@ -50,10 +50,13 @@ class Lingotek_Filters_Term extends PLL_Admin_Filters_Term {
 		if (!$this->model->is_translated_taxonomy($taxonomy))
 			return;
 
-		parent::save_term($term_id, $tt_id, $taxonomy);
+		if (!isset($_REQUEST['import'])) {
+			parent::save_term($term_id, $tt_id, $taxonomy);
 
-		if ('automatic' == Lingotek_Model::get_profile_option('upload', $taxonomy, $this->model->get_term_language($term_id)) && $this->lgtm->can_upload('term', $term_id))
-			$this->lgtm->upload_term($term_id, $taxonomy);
+			if ('automatic' == Lingotek_Model::get_profile_option('upload', $taxonomy, $this->model->get_term_language($term_id)) && $this->lgtm->can_upload('term', $term_id))
+				$this->lgtm->upload_term($term_id, $taxonomy); {
+			}
+		}
 	}
 
 	/*

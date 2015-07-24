@@ -55,10 +55,12 @@ class Lingotek_Filters_Post extends PLL_Admin_Filters_Post {
 		if (!$this->model->is_translated_post_type($post->post_type))
 			return;
 
-		parent::save_post($post_id, $post, $update);
+		if (!isset($_REQUEST['import'])) {
+			parent::save_post($post_id, $post, $update);
 
-		if (!wp_is_post_revision($post_id) && 'auto-draft' != $post->post_status && Lingotek_Group_Post::is_valid_auto_upload_post_status($post->post_status) && 'automatic' == Lingotek_Model::get_profile_option('upload', $post->post_type, $this->model->get_post_language($post_id)) && !(isset($_POST['action']) && 'heartbeat' == $_POST['action']) && $this->lgtm->can_upload('post', $post_id)) {
-			$this->lgtm->upload_post($post_id);
+			if (!wp_is_post_revision($post_id) && 'auto-draft' != $post->post_status && Lingotek_Group_Post::is_valid_auto_upload_post_status($post->post_status) && 'automatic' == Lingotek_Model::get_profile_option('upload', $post->post_type, $this->model->get_post_language($post_id)) && !(isset($_POST['action']) && 'heartbeat' == $_POST['action']) && $this->lgtm->can_upload('post', $post_id)) {
+				$this->lgtm->upload_post($post_id);
+			}
 		}
 	}
 

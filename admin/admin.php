@@ -33,6 +33,7 @@ class Lingotek_Admin {
   public function ajax_get_current_status(){
     global $wpdb;
     $lgtm = &$GLOBALS['wp_lingotek']->model;
+    $pllm = $GLOBALS['polylang']->model;
     $languages = pll_languages_list(array('fields' => 'locale'));
     $object_ids = $_POST['check_ids'];
     if($object_ids === null){
@@ -47,12 +48,22 @@ class Lingotek_Admin {
     $content_metadata = array();
     foreach($object_ids as $object_id) {
       $id = $object_id;
-      $document = $lgtm->get_group($taxonomy, $object_ids[$object_id]);
+      $document = $lgtm->get_group($taxonomy, $object_id);
+      if($document->source !== $object_id){
+        $document = $lgtm->get_group($taxonomy, $document->source);
+      }
+      $source_id = $document->source !== null ? $document->source : $object_id;
       $source_language = $terms ? pll_get_term_language($document->source, 'locale')
         : pll_get_post_language($document->source, 'locale');
+      $existing_translations = $pllm->get_translations($taxonomy, $source_id);
+      $content_metadata[$id]['existing_trans'] = false;
+      if(count($existing_translations) > 1){
+        $content_metadata[$id]['existing_trans'] = true;
+      }
       $content_metadata[$id]['source'] = $source_language;
       $content_metadata[$id]['doc_id'] = $document->document_id;
       $content_metadata[$id]['source_id'] = $document->source;
+      $content_metadata[$id]['source_status'] = $document->status;
       $target_status = $document->status == 'edited' || $document->status == null ? 'edited' : 'current';
       $content_metadata[$id][$source_language]['status'] = $document->source == $object_id ? $document->status : $target_status;
       if(is_array($document->translations)){
@@ -358,10 +369,23 @@ class Lingotek_Admin {
 	        }
 
 		$api_data = $client->get_workflows($community_id);
+		$default_workflows = array(
+			'c675bd20-0688-11e2-892e-0800200c9a66' => 'Machine Translation',
+			'ddf6e3c0-0688-11e2-892e-0800200c9a66' => 'Machine Translation + Post-Edit',
+			'6ff1b470-33fd-11e2-81c1-0800200c9a66' => 'Machine Translation + Translate',
+			'2b5498e0-f3c7-4c49-9afa-cca4b3345af7' => 'Translation + 1 review',
+			'814172a6-3744-4da7-b932-5857c1c20976' => 'Translation + 2 reviews',
+			'2210b148-0c44-4ae2-91d0-ca2ee47c069e' => 'Translation + 3 reviews',
+			'7993b4d7-4ada-46d0-93d5-858db46c4c7d' => 'Translation Only'
+		);
 		$workflows = array();
 		if ($api_data) {
 			foreach ($api_data->entities as $workflow) {
 				$workflows[$workflow->properties->id] = $workflow->properties->title;
+			}
+			$diff = array_diff_key($workflows, $default_workflows);
+			if (empty($diff)) {
+				$workflows = array('c675bd20-0688-11e2-892e-0800200c9a66' => 'Machine Translation');
 			}
 			natcasesort($workflows); //order by title (case-insensitive)
 			$refresh_success['workflows'] = TRUE;

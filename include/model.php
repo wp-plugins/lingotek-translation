@@ -572,6 +572,9 @@ class Lingotek_Model {
 					}
 				}
 			}
+			if (count($sources) == 1 && $total != $sources[$this->pllm->options['default_lang']]) {
+				$total = $sources[$this->pllm->options['default_lang']];
+			}
 		}
 
 		return $r[$taxonomy] = compact('sources', 'targets', 'total');

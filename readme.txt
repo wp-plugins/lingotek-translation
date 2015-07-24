@@ -4,11 +4,11 @@ Donate link: http://lingotek.com/
 Tags: automation, bilingual, international, language, Lingotek, localization, multilanguage, multilingual, translate, translation
 Requires at least: 3.8
 Tested up to: 4.2
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Lingotek Translation offers convenient cloud-based localization and translation for WordPress.
+Convenient cloud-based localization and translation for WordPress.
 
 == Description ==
 
@@ -114,6 +114,11 @@ For more, visit the [Lingotek documentation site](https://lingotek.atlassian.net
 4. Content type profiles. Manually choosing which content to upload and download is rarely what a content administrator wants to do, and automating the upload of every change is not workable because there are various types of content. Each type of translatable content can be assigned to a customizable profile. For example, by default, we like to have Posts use an Automatic profile so that content will automatically be uploaded for translation and the resulting translations automatically be downloaded back into WordPress.
 
 == Changelog ==
+
+
+= 1.0.5 (2015-07-23) =
+
+* Fixed dashboard reporting issue, reduced workflow select options for new users, and other usability improvements.
 
 = 1.0.4 (2015-07-21) =
 
