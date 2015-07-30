@@ -97,8 +97,8 @@ class Lingotek_Group_String extends Lingotek_Group {
 		$content = $this->get_content($group);
 
 		$params = array(
-			'title' => $title,
-			'content' => $this->get_content($content),
+			'title' => $group,
+			'content' => $content,
 			'external_url' => $external_url,
 		);
 		$params = array_merge($params, $filters);

@@ -272,7 +272,7 @@ abstract class Lingotek_Actions {
 			return $actions;
 
 		$document = $this->lgtm->get_group($this->type, $id);
-		if (isset($document->desc_array['lingotek']['source'])) {
+		if ($this->type != 'string' && isset($document->desc_array['lingotek']['source'])) {
 			$id = $document->desc_array['lingotek']['source'];
 		}
 

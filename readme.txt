@@ -4,7 +4,7 @@ Donate link: http://lingotek.com/
 Tags: automation, bilingual, international, language, Lingotek, localization, multilanguage, multilingual, translate, translation
 Requires at least: 3.8
 Tested up to: 4.2
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -115,6 +115,10 @@ For more, visit the [Lingotek documentation site](https://lingotek.atlassian.net
 
 == Changelog ==
 
+= 1.0.6 (2015-07-30) =
+
+* Enhanced String Groups functionality and removed unecessary statuses
+* Fixed incorrect counting and extra term_taxonomy creation when importing content
 
 = 1.0.5 (2015-07-23) =
 

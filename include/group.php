@@ -180,7 +180,8 @@ abstract class Lingotek_Group {
 		$workflow = Lingotek_Model::get_profile_option('workflow_id', $this->type, $this->get_source_language(), $language);
 		$args = $workflow ? array('workflow_id' => $workflow) : array();
 
-		if (!$this->is_disabled_target($language) && empty($this->translations[$language->locale]) && $client->request_translation($this->document_id, $language->locale, $args)) {
+		if (!$this->is_disabled_target($language) && empty($this->translations[$language->locale])) {
+			$client->request_translation($this->document_id, $language->locale, $args);
 			$this->status = 'current';
 			$this->translations[$language->locale] = 'pending';
 			$this->save();

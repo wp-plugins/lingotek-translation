@@ -85,7 +85,16 @@ class Lingotek_Dashboard {
 					$default_category = pll_get_term(get_option('default_category'), $lang->slug);
 					$polylang->model->delete_language((int) $lang->term_id);
 					wp_delete_term( $default_category, 'category' ); // delete the default category after the language
-					
+
+					// Deletes the translation status so when re-adding a language the string groups translations won't display as current
+					$lingotek_model = new Lingotek_Model();
+					$strings = $lingotek_model->get_strings();
+					foreach ($strings as $string) {
+						$group = $lingotek_model->get_group('string', $string['context']);
+						unset($group->translations[$lang->locale]);
+						$group->save();
+					}
+
 					$response = array (
 						'request' => sprintf('DELETE: remove language from CMS and project (%s)', $code),
 						'code' => $code,
