@@ -124,7 +124,7 @@ class Lingotek_Group_Term extends Lingotek_Group {
 
 			// translate parent
 			$term = get_term($this->source, $this->type);
-			$args['parent'] = ($term->parent && $tr_parent = $this->model->get_translation('term', $term->parent, $locale)) ? $tr_parent : 0;
+			$args['parent'] = ($term->parent && $tr_parent = $this->pllm->get_translation('term', $term->parent, $locale)) ? $tr_parent : 0;
 
 			// attempt to get a unique slug in case it already exists in another language
 			if (isset($args['slug']) && term_exists($args['slug'])) {

@@ -31,10 +31,29 @@
 		<p><?php _e( 'Content type profiles. Manually choosing which content to upload and download is rarely what a content administrator wants to do, and automating the upload of every change is not workable because there are various types of content. Each type of translatable content can be assigned to a customizable profile. For example, by default, we like to have Posts use an <i>Automatic</i> profile so that content will automatically be uploaded for translation and the resulting translations automatically be downloaded back into WordPress.', 'wp-lingotek'); ?></p>
 	</div>
 	<div class="last-feature">
-		<!-- <img style="" class="lingotek-bordered" src="<?php echo LINGOTEK_URL . '/admin/tutorial/img/pro-translation.png'; ?>"> -->
 		<img src="<?php echo LINGOTEK_URL . '/admin/tutorial/img/professional-translation.png'; ?>">
 		<h3><?php _e( 'Request professional translation', 'wp-lingotek'); ?></h3>
 		<p><?php _e( "Use your own translation agency or tap into Lingotek's network of more than 5,000+ in-country translators. Content transfer is fully automated between WordPress and Lingotek. You'll have full visibility into the translation process every step of the way. And once the translations are completed, they'll automatically download and publish to your website according to the preferences you've set.", 'wp-lingotek'); ?></p>
 		<a href="http://www.lingotek.com/wordpress/request-professional-translation" class="button button-primary" target="_blank"><?php _e('Request Translation', 'wp-lingotek'); ?></a>
+	</div>
+</div>
+
+
+<div class="changelog feature-section three-col">
+	<div>
+		<a href="admin.php?page=wp-lingotek_settings&amp;sm=profiles"><img src="<?php echo LINGOTEK_URL . '/admin/tutorial/img/translation-services.png'; ?>"></a>
+		<h3><?php _e( 'Need Extra Services?', 'wp-lingotek'); ?></h3>
+		<p><?php _e( 'Start the process of getting extra services.', 'wp-lingotek'); ?></p>
+		<ul style="list-style-type: circle;">
+			<li><?php _e('Do you need someone to run your localization project?', 'wp-lingotek'); ?></li>
+			<li><?php _e('Do you need customized workflows?', 'wp-lingotek'); ?></li>
+			<li><?php _e('Do you you have existing Translation Memories you would like to use?', 'wp-lingotek'); ?></li>
+			<li><?php _e('Do you need help creating glossaries and terminologies?', 'wp-lingotek'); ?></li>
+		</ul>
+		<a href="http://www.lingotek.com/wordpress/extra_services" class="button button-primary" target="_blank"><?php _e('Request Services', 'wp-lingotek'); ?></a>
+	</div>
+	<div>
+	</div>
+	<div class="last-feature">
 	</div>
 </div>

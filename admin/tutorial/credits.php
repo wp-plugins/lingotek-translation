@@ -41,6 +41,11 @@ $team = array(
 		'title'=>'Developer',
 		'image_url'=>'https://www.gravatar.com/avatar/53706ce5472909827db3e582bb4bccf2',
 		'url'=>'https://profiles.wordpress.org/sethwhite'),
+	'joey'=>array(
+		'name'=>'Joseph Hovik',
+   	'title'=>'Developer',
+  	'image_url'=>'https://www.gravatar.com/avatar/171f66a729d063bb6ee4e0e51135a120',
+   	'url'=>'https://profiles.wordpress.org/jbhovik'),
 );
 
 $contributors = array(

@@ -112,6 +112,9 @@ class Lingotek_Content_Table extends WP_List_Table {
 	protected function display_fields($labels, $values, $name) {
 		foreach ($labels as $key => $str) {
 			if (is_array($str)) {
+				if ($key === 'metas') {
+					continue;
+				}
 				$this->display_fields($str, isset($values[$key]) ? $values[$key] : array(), $name . "[$key]");
 			}
 			else {

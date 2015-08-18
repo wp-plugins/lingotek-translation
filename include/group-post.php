@@ -40,7 +40,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	 * @param string $post_type
 	 * @return array
 	 */
-	static public function get_content_type_fields($post_type) {
+	static public function get_content_type_fields($post_type, $post_ID = NULL) {
 		$arr = 'attachment' == $post_type ?
 			array(
 				'post_title'   => __('Title', 'wp-lingotek'),
@@ -55,20 +55,167 @@ class Lingotek_Group_Post extends Lingotek_Group {
 				'post_excerpt' => __('Excerpt', 'wp-lingotek')
 			);
 
-		// add the custom fields from wpml-config.xml <custom-fields> sections
-		$wpml_config = PLL_WPML_Config::instance();
+		// if the user hasn't visited the custom fields tab, and hasn't saved actions for custom 
+		// fields, and uploaded a post, check the wpml file for settings 
+		if ($post_ID) {
+			self::get_updated_meta_values($post_ID);
+		}
+		// add the custom fields from the lingotek_custom_fields option
+		$custom_fields = get_option('lingotek_custom_fields', array());
 
-		if (isset($wpml_config->tags['custom-fields'])) {
-			foreach ($wpml_config->tags['custom-fields'] as $context) {
-				foreach ($context['custom-field'] as $cf) {
-					if ('translate' == $cf['attributes']['action'])
-						$arr['metas'][$cf['value']] = $cf['value'];
-				}
+		if (isset($custom_fields)) {
+			foreach ($custom_fields as $cf => $setting) {
+				if ('translate' == $setting)
+					$arr['metas'][$cf] = $cf;
 			}
 		}
 
 		// allow plugins to modify the fields to translate
 		return apply_filters('lingotek_post_content_type_fields', $arr, $post_type);
+	}
+
+	/*
+	 * returns custom fields from the wpml-config.xml file
+	 *
+	 * @since 0.2
+	 *
+	 * @param string $post_type
+	 * @return array
+	 */
+	static public function get_custom_fields_from_wpml() {
+		$wpml_config = PLL_WPML_Config::instance();
+		$arr = array();
+
+		if (isset($wpml_config->tags['custom-fields'])) {
+			foreach ($wpml_config->tags['custom-fields'] as $context) {
+				foreach ($context['custom-field'] as $cf) {
+					$arr[$cf['value']] = $cf['attributes']['action'];
+				}
+			}
+		}
+
+		// allow plugins to modify the fields to translate
+		return apply_filters('lingotek_post_content_type_fields_from_wpml', $arr);
+	}
+
+	/*
+	 * returns meta (custom) fields from the wp-postmeta database table
+	 *
+	 * @since 0.2
+	 *
+	 * @return array
+	 */
+	static public function get_custom_fields_from_wp_postmeta($post_ID = NULL) {
+		$custom_fields = get_option('lingotek_custom_fields');
+		$arr = array();
+		$keys = array();
+
+		if ($post_ID) {
+			$p = get_post($post_ID);
+			$posts [] = $p;
+		}
+		else {
+			$posts = get_posts(array(
+				'posts_per_page' => -1,
+				'post_type' => 'post'
+			));
+			$pages = get_posts(array(
+				'posts_per_page' => -1,
+				'post_type' => 'page'
+			));
+			$posts = array_merge($posts, $pages);
+		}
+
+		foreach ($posts as $post) {
+			$metadata = has_meta($post->ID);
+			foreach ($metadata as $key => $value) {
+				if ($value['meta_key'] === '_encloseme' || $value['meta_key'] === '_edit_last' || $value['meta_key'] === '_edit_lock' || $value['meta_key'] === '_wp_trash_meta_status' || $value['meta_key'] === '_wp_trash_meta_time') {
+					unset($metadata[$key]);
+				}
+				if (in_array($value['meta_key'], $keys)) {
+					unset($metadata[$key]);
+				}
+				$keys [] = $value['meta_key'];
+			}
+			$arr = array_merge($arr, $metadata);
+		}
+		// allow plugins to modify the fields to translate
+		return apply_filters('lingotek_post_custom_fields', $arr);
+	}
+
+	/*
+	 * updates meta (custom) fields values in the lingotek_custom_fields option 
+	 *
+	 * @since 0.2
+	 *
+	 * @return array
+	 */
+	public static function get_updated_meta_values($post_ID = NULL) {
+		$custom_fields_from_wpml = self::get_custom_fields_from_wpml();
+		$custom_fields_from_postmeta = self::get_custom_fields_from_wp_postmeta($post_ID);
+		$custom_fields_from_lingotek = get_option('lingotek_custom_fields');
+		$custom_fields = array();
+		$items = array();
+
+		foreach ($custom_fields_from_postmeta as $cf) {
+  		// no lingotek setting
+  		if (!array_key_exists($cf['meta_key'], $custom_fields_from_lingotek)) {
+    		// no lingotek setting, but there's a wpml setting
+    		if (array_key_exists($cf['meta_key'], $custom_fields_from_wpml)) {
+      		$custom_fields[$cf['meta_key']] = $custom_fields_from_wpml[$cf['meta_key']];
+      		$arr = array(
+        		'meta_key' => $cf['meta_key'],
+        		'setting' => $custom_fields_from_wpml[$cf['meta_key']],
+      		);
+    		}
+    		// no lingotek setting, no wpml setting, so save default setting of ignore
+    		else {
+      		$custom_fields[$cf['meta_key']] = 'ignore';
+      		$arr = array(
+        		'meta_key' => $cf['meta_key'],
+        		'setting' => 'ignore',
+      		);
+    		}
+  		}
+  		// lingotek already has this field setting saved
+  		else {
+    		$custom_fields[$cf['meta_key']] = $custom_fields_from_lingotek[$cf['meta_key']]; 
+    		$arr = array(
+      		'meta_key' => $cf['meta_key'],
+      		'setting' => $custom_fields_from_lingotek[$cf['meta_key']],
+    		);
+  		}
+  		$items [] = $arr;
+		}
+
+		if ($post_ID) {
+			$custom_fields = array_merge($custom_fields_from_lingotek, $custom_fields);
+		}
+		update_option('lingotek_custom_fields', $custom_fields);
+		return $items;
+	}
+
+	/*
+	 * returns cached meta (custom) fields values in the lingotek_custom_fields option 
+	 *
+	 * @since 0.2
+	 *
+	 * @return array
+	 */
+
+	public static function get_cached_meta_values() {
+		$custom_fields_from_lingotek = get_option('lingotek_custom_fields', array());
+		$items = array();
+
+		foreach ($custom_fields_from_lingotek as $key => $setting) {
+			$arr = array(
+				'meta_key' => $key,
+				'setting' => $setting,
+			);
+
+			$items [] = $arr;
+		}
+		return $items;
 	}
 
 	/*
@@ -80,13 +227,13 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	 * @return string json encoded content to translate
 	 */
 	public static function get_content($post) {
-		$fields = self::get_content_type_fields($post->post_type);
+		$fields = self::get_content_type_fields($post->post_type, $post->ID);
 		$content_types = get_option('lingotek_content_type');
-
 		foreach (array_keys($fields) as $key) {
 			if ('metas' == $key) {
 				foreach (array_keys($fields['metas']) as $meta) {
-					if (empty($content_types[$post->post_type]['fields']['metas'][$meta]) && $value = get_post_meta($post->ID, $meta, true))
+					$value = get_post_meta($post->ID, $meta, true);
+					if ($value)
 						$arr['metas'][$meta] = $value;
 				}
 			}
@@ -102,7 +249,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 				$arr['post'][$key] = $post->$key;
 			}
 		}
-
+		
 		return json_encode($arr);
 	}
 
@@ -183,6 +330,18 @@ class Lingotek_Group_Post extends Lingotek_Group {
 
 				// assign terms and metas
 				$GLOBALS['polylang']->sync->copy_post_metas($this->source, $tr_id, $tr_lang->slug);
+
+				// copy or ignore metas
+				$custom_fields = get_option('lingotek_custom_fields');
+				foreach ($custom_fields as $key => $setting) {
+					if ('copy' === $setting) {
+						$source_meta = current(get_post_meta($post->ID, $key))	;
+						update_post_meta($tr_id, $key, $source_meta);
+					}
+					elseif ('ignore' === $setting) {
+						delete_post_meta($tr_id, $key);
+					}
+				}
 
 				// translate metas
 				if (!empty($translation['metas'])) {
