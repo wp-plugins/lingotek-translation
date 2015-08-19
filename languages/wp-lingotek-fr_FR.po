@@ -1,0 +1,1203 @@
+# Copyright (C) 2015 Lingotek Translation
+# This file is distributed under the same license as the Lingotek Translation package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Lingotek Translation 1.0.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/wp-lingotek\n"
+"POT-Creation-Date: 2015-06-29 15:40:38+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: admin/actions.php:21 admin/actions.php:354
+msgid "You are about to overwrite existing translations. Are you sure?"
+msgstr "Vous êtes sur le point d'écraser les traductions existantes. Es-tu sûr?"
+
+#: admin/actions.php:26
+msgid "Upload to Lingotek"
+msgstr "Télécharger sur Lingotek"
+
+#: admin/actions.php:27
+msgid "Uploading..."
+msgstr "Téléchargement..."
+
+#: admin/actions.php:28
+msgid "Upload this item to Lingotek TMS"
+msgstr "Téléchargez cet article sur Lingotek TMS"
+
+#: admin/actions.php:32
+msgid "Request translations"
+msgstr "Traductions de la demande"
+
+#: admin/actions.php:33
+msgid "Requesting translations..."
+msgstr "Demander des traductions..."
+
+#: admin/actions.php:34
+msgid "Request translations of this item to Lingotek TMS"
+msgstr "Demander des traductions de ce point de Lingotek TMS"
+
+#: admin/actions.php:38
+msgid "Update translations status"
+msgstr "Mise à jour de statut de la traduction"
+
+#: admin/actions.php:39
+msgid "Updating translations status..."
+msgstr "Mise à jour de statut de la traduction..."
+
+#: admin/actions.php:40
+msgid "Update translations status of this item in Lingotek TMS"
+msgstr "Mise à jour de statut de la traduction de ce point de Lingotek TMS"
+
+#: admin/actions.php:44 admin/admin.php:208
+msgid "Download translations"
+msgstr "Télécharger les traductions"
+
+#: admin/actions.php:45
+msgid "Downloading translations..."
+msgstr "Téléchargement des traductions..."
+
+#: admin/actions.php:46
+msgid "Download translations of this item from Lingotek TMS"
+msgstr "Télécharger les traductions de ce point de Lingotek TMS"
+
+#: admin/actions.php:50
+msgid "Disassociate translations"
+msgstr "Dissocier les traductions"
+
+#: admin/actions.php:51
+msgid "Disassociating translations..."
+msgstr "Association des traductions..."
+
+#: admin/actions.php:52
+msgid "Disassociate the translations of this item from Lingotek TMS"
+msgstr "Dissocier les traductions de ce point de Lingotek TMS"
+
+#: admin/actions.php:59
+msgid "Upload Now"
+msgstr "Télécharger maintenant"
+
+#: admin/actions.php:64
+msgid "Importing source"
+msgstr "Importation de source"
+
+#: admin/actions.php:69
+msgid "Source uploaded"
+msgstr "Source téléchargée"
+
+#: admin/actions.php:74
+msgid "Request a translation"
+msgstr "Une demande de traduction"
+
+#: admin/actions.php:79 admin/tutorial/content.php:72
+msgid "In Progress"
+msgstr "En cours"
+
+#: admin/actions.php:84
+msgid "Ready to download"
+msgstr "Prêt à télécharger"
+
+#: admin/actions.php:89
+msgid "current"
+msgstr "actuel"
+
+#: admin/actions.php:94
+msgid ""
+"The target translation is no longer current as the source content has been "
+"updated"
+msgstr "La traduction de cible n'est plus actuelle que le contenu de la source a été mis à jour"
+
+#: admin/admin.php:85 admin/admin.php:105 admin/settings.php:2
+msgid "Settings"
+msgstr "Paramètres"
+
+#: admin/admin.php:96
+msgid "Translation"
+msgstr "Traduction"
+
+#: admin/admin.php:103 admin/tutorial/faq.php:58
+msgid "Translation Dashboard"
+msgstr "Tableau de bord de traduction"
+
+#: admin/admin.php:103 admin/view-dashboard.php:2
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: admin/admin.php:104
+msgid "Translation Management"
+msgstr "Gestion des traductions"
+
+#: admin/admin.php:104 admin/view-manage.php:2
+msgid "Manage"
+msgstr "Gérer"
+
+#: admin/admin.php:105
+msgid "Translation Settings"
+msgstr "Paramètres de translation"
+
+#: admin/admin.php:106
+msgid "Lingotek Tutorial"
+msgstr "Tutoriel de Lingotek"
+
+#: admin/admin.php:106 admin/view-tutorial.php:5
+msgid "Tutorial"
+msgstr "Tutorial"
+
+#: admin/admin.php:130
+msgid "Your Lingotek account has been successfully connected."
+msgstr "Votre compte de Lingotek a été connecté avec succès."
+
+#: admin/admin.php:133
+msgid ""
+"Your Lingotek account was not connected.\tThe Access Token received was "
+"invalid."
+msgstr "Votre compte de Lingotek n'était pas connecté\t. Le jeton d'accès reçue n'était pas valide."
+
+#: admin/admin.php:147
+msgid "Your community has been successfully saved."
+msgstr "Votre collectivité a été enregistrée avec succès."
+
+#: admin/admin.php:152
+msgid "Select and save the community that you would like to use."
+msgstr "Sélectionnez et enregistrez la communauté que vous souhaitez utiliser."
+
+#: admin/admin.php:176
+msgid "Redirecting to Lingotek to connect your account..."
+msgstr "Redirection vers Lingotek pour vous connecter à votre compte..."
+
+#: admin/admin.php:197 lingotek.php:199
+msgid "Manual"
+msgstr "Manuelle"
+
+#: admin/admin.php:198 lingotek.php:193
+msgid "Automatic"
+msgstr "Automatique"
+
+#: admin/admin.php:203
+msgid "Upload content"
+msgstr "Télécharger du contenu"
+
+#: admin/admin.php:205
+msgid "How should new and modified content be uploaded to Lingotek?"
+msgstr "Comment les nouveaux et mis à jour le contenu doit être téléchargé de Lingotek ?"
+
+#: admin/admin.php:210
+msgid "How should completed translations be downloaded to WordPress?"
+msgstr "Comment les traductions dûment remplies doivent être téléchargées pour WordPress ?"
+
+#: admin/admin.php:213
+msgid "Default Project"
+msgstr "Projet par défaut"
+
+#: admin/admin.php:213
+msgid "Project"
+msgstr "Projet"
+
+#: admin/admin.php:215
+msgid "Changes will affect new entities only"
+msgstr "Changements affecteront les nouvelles entités seulement"
+
+#: admin/admin.php:218
+msgid "Default Workflow"
+msgstr "Flux de travail par défaut"
+
+#: admin/admin.php:218
+msgid "Workflow"
+msgstr "Flux de travail"
+
+#: admin/admin.php:222
+msgid "Primary Filter"
+msgstr "Filtre primaire"
+
+#: admin/admin.php:226
+msgid "Secondary Filter"
+msgstr "Filtre secondaire"
+
+#: admin/admin.php:286
+msgid "Your Community currently has no projects."
+msgstr "Votre collectivité n'a actuellement aucun projet."
+
+#: admin/admin.php:289
+msgid "Projects could not be refreshed"
+msgstr "Impossible d'actualiser des projets"
+
+#: admin/admin.php:302
+msgid "Workflows could not be refreshed"
+msgstr "Impossible d'actualiser les workflows"
+
+#: admin/admin.php:371
+msgid ""
+"Your <a href=\"%s\"><i>Defaults</i></a> have been updated to valid options "
+"for this community."
+msgstr "Vos <a href=\"%s\"><i>paramètres par défaut</i></a> ont été upgradés dans options valides pour cette communauté."
+
+#: admin/admin.php:398
+msgid "Strings groups"
+msgstr "Groupes de chaînes"
+
+#: admin/admin.php:486
+msgid "Lingotek Settings"
+msgstr "Paramètres de Lingotek"
+
+#: admin/content-table.php:61
+msgid "%s source"
+msgstr "%s source"
+
+#: admin/content-table.php:85
+msgid "Use content type default"
+msgstr "Utilisez la valeur par défaut du type de contenu"
+
+#: admin/content-table.php:153
+msgid "Content Type"
+msgstr "Type de contenu"
+
+#: admin/content-table.php:154
+msgid "Profile"
+msgstr "Profil"
+
+#: admin/content-table.php:155
+msgid "Fields"
+msgstr "Champs"
+
+#: admin/manage/view-string-groups.php:1 admin/view-manage.php:7
+msgid "String Groups"
+msgstr "Groupes de chaîne"
+
+#: admin/manage/view-string-groups.php:2
+msgid ""
+"Manage group translation of system, widget, and plugin-specific strings. "
+"View individual strings on the <a href=\"%s\"><b>Strings</b></a> page."
+msgstr "Gérer la traduction de groupe du système, widget et des chaînes spécifiques plugin. Affichage des chaînes individuelles sur la page <a href=\"%s\"><b>chaînes</b></a> ."
+
+#: admin/manage/view-string-groups.php:9
+msgid "The strings translation is disabled in %sContent Type Configuration%s."
+msgstr "La traduction de chaînes est désactivée dans %sla Configuration de Type de contenu%s."
+
+#: admin/manage/view-strings.php:1 admin/settings/view-content.php:29
+#: admin/view-manage.php:8
+msgid "Strings"
+msgstr "Chaînes"
+
+#: admin/manage/view-strings.php:1
+msgid "Edit on Polylang Strings Translation page"
+msgstr "Modifier sur la page de traduction de chaînes de Polylang"
+
+#: admin/manage/view-strings.php:45
+msgid "Search translations"
+msgstr "Recherche de traductions"
+
+#: admin/profiles-table.php:44
+msgid "No content types"
+msgstr "Aucun des types de contenu"
+
+#: admin/profiles-table.php:45
+msgid "1 content type"
+msgid_plural "%d content types"
+msgstr[0] "1 type de contenu"
+msgstr[1] "%d types de contenu"
+
+#: admin/profiles-table.php:63
+msgid "Edit"
+msgstr "Edit"
+
+#: admin/profiles-table.php:70 admin/settings/view-edit-profile.php:195
+msgid "You are about to permanently delete this profile. Are you sure?"
+msgstr "Vous êtes sur le point de supprimer définitivement ce profil. Es-tu sûr?"
+
+#: admin/profiles-table.php:71 admin/settings/view-edit-profile.php:196
+msgid "Delete"
+msgstr "Supprimer"
+
+#: admin/profiles-table.php:86 admin/settings/view-edit-profile.php:64
+msgid "Profile name"
+msgstr "Nom du profil"
+
+#: admin/profiles-table.php:87
+msgid "Usage"
+msgstr "Utilisation"
+
+#: admin/profiles-table.php:88
+msgid "Actions"
+msgstr "Actions"
+
+#: admin/settings/connect-account.php:16
+msgid "Connect Your Account"
+msgstr "Se connecter à votre compte"
+
+#: admin/settings/connect-account.php:19
+msgid ""
+"Get started by clicking the button below to connect your Lingotek account to "
+"this Wordpress installation."
+msgstr "Commencez en cliquant sur le bouton ci-dessous pour vous connecter à votre compte de Lingotek pour cette installation de Wordpress."
+
+#: admin/settings/connect-account.php:24
+msgid "Connect New Account"
+msgstr "Se connecter nouveau compte"
+
+#: admin/settings/connect-account.php:28
+msgid ""
+"Do you already have a Lingotek account? <a href=\"%s\">Connect Lingotek "
+"Account</a>"
+msgstr "Vous possédez déjà un compte de Lingotek? <a href=\"%s\">Connecter compte Lingotek</a>"
+
+#: admin/settings/connect-account.php:29
+msgid ""
+"Do you have a Lingotek sandbox account? <a href=\"%s\">Connect Sandbox "
+"Account</a>"
+msgstr "Vous avez un compte de bac à sable de Lingotek? <a href=\"%s\">Connecter compte Sandbox</a>"
+
+#: admin/settings/view-account.php:14 admin/settings.php:11
+#: admin/view-network.php:139
+msgid "Account"
+msgstr "Compte"
+
+#: admin/settings/view-account.php:15
+msgid "Lingotek account connection and community selection."
+msgstr "Sélection de connexion et de la communauté Lingotek compte."
+
+#: admin/settings/view-account.php:20 admin/settings/view-account.php:25
+msgid "Connected"
+msgstr "Connecté"
+
+#: admin/settings/view-account.php:25
+msgid "Yes"
+msgstr "Oui"
+
+#: admin/settings/view-account.php:30
+msgid "Login ID"
+msgstr "ID de connexion"
+
+#: admin/settings/view-account.php:42
+msgid "Access Token"
+msgstr "Jeton d'accès"
+
+#: admin/settings/view-account.php:57
+msgid "API Endpoint"
+msgstr "Point de terminaison API"
+
+#: admin/settings/view-account.php:72
+msgid ""
+"Are you sure you would like to disconnect your Lingotek account? \\n\\nAfter "
+"disconnecting, you will need to re-connect an account to continue using "
+"Lingotek."
+msgstr "Etes-vous sûr que vous souhaitez déconnecter votre compte Lingotek? \\n\\Anter déconnexion, vous aurez besoin de re-connecter un compte pour continuer à utiliser Lingotek."
+
+#: admin/settings/view-account.php:73
+msgid "Disconnect"
+msgstr "Déconnecter"
+
+#: admin/settings/view-account.php:87 admin/view-network.php:140
+msgid "Community"
+msgstr "Communauté"
+
+#: admin/settings/view-account.php:107
+msgid "Select"
+msgstr "Sélectionnez"
+
+#: admin/settings/view-account.php:119 admin/settings/view-content.php:90
+#: admin/settings/view-defaults.php:138
+#: admin/settings/view-edit-profile.php:188
+#: admin/settings/view-preferences.php:83
+msgid "Save Changes"
+msgstr "Enregistrer les modifications"
+
+#: admin/settings/view-content.php:68
+msgid "Your content types were sucessfully saved."
+msgstr "Vos types de contenu ont été correctement enregistrée."
+
+#: admin/settings/view-content.php:81 admin/settings.php:17
+msgid "Content Type Configuration"
+msgstr "Configuration du Type de contenu"
+
+#: admin/settings/view-content.php:82
+msgid ""
+"Content types can be configured to use any translation profile.  "
+"Additionally, translation profiles can be set based on the language the "
+"content was authored in."
+msgstr "Types de contenu peuvent être configurés pour utiliser n'importe quel profil de traduction.  En outre, les profils de traduction peuvent être définies basées sur la langue en que le contenu a été rédigé."
+
+#: admin/settings/view-defaults.php:13
+msgid ""
+"Resources from Lingotek were successfully updated for projects and workflows."
+msgstr "Ressources de Lingotek ont été mis à jour pour les projets et les workflows."
+
+#: admin/settings/view-defaults.php:16
+msgid "Resources from Lingotek were successfully updated for projects."
+msgstr "Ressources de Lingotek ont été mis à jour pour les projets."
+
+#: admin/settings/view-defaults.php:19
+msgid "Resources from Lingotek were successfully updated for workflows."
+msgstr "Ressources de Lingotek ont été mis à jour pour les workflows."
+
+#: admin/settings/view-defaults.php:31
+msgid "Your <i>Defaults</i> were sucessfully saved."
+msgstr "Vos <i>paramètres par défaut</i> ont été correctement enregistrée."
+
+#: admin/settings/view-defaults.php:36 admin/settings/view-profiles.php:77
+msgid "Your callback url was successfully updated."
+msgstr "Votre url de callback a été mis à jour."
+
+#: admin/settings/view-defaults.php:45 admin/view-network.php:98
+msgid "Your new project was successfully created."
+msgstr "Votre nouveau projet a été correctement créé."
+
+#: admin/settings/view-defaults.php:87 admin/settings.php:15
+#: admin/view-network.php:141
+msgid "Defaults"
+msgstr "Valeurs par défaut"
+
+#: admin/settings/view-defaults.php:88
+msgid ""
+"The default automation settings and resources that should be used for this "
+"site.  These settings can be overriden using translation profiles and "
+"content type configuration."
+msgstr "Les paramètres d'automation par défaut et les ressources qui doivent être utilisés pour ce site.  Ces paramètres peuvent être remplacé à l'aide de profils de traduction et de la configuration du type de contenu."
+
+#: admin/settings/view-defaults.php:110 admin/settings/view-defaults.php:114
+msgid "Enter new project name"
+msgstr "Entrez le nom du nouveau projet"
+
+#: admin/settings/view-defaults.php:116
+#: admin/settings/view-edit-profile.php:90
+msgid "Update the callback url for this project."
+msgstr "Mettre à jour l'url de callback pour ce projet."
+
+#: admin/settings/view-defaults.php:118
+msgid "Create New Project"
+msgstr "Créer le nouveau projet"
+
+#: admin/settings/view-defaults.php:126
+#: admin/settings/view-edit-profile.php:101
+msgid "Filters"
+msgstr "Filtres"
+
+#: admin/settings/view-defaults.php:126
+#: admin/settings/view-edit-profile.php:101
+msgid "Not configured"
+msgstr "Non configuré"
+
+#: admin/settings/view-defaults.php:139
+msgid "Refresh Resources"
+msgstr "Actualiser les ressources"
+
+#: admin/settings/view-edit-profile.php:6
+msgid "Use global default (%s)"
+msgstr "Utiliser par défaut global (%s)"
+
+#: admin/settings/view-edit-profile.php:15
+msgid "Use default settings"
+msgstr "Utiliser les paramètres par défaut"
+
+#: admin/settings/view-edit-profile.php:16
+msgid "Use custom settings"
+msgstr "Utiliser les paramètres personnalisés"
+
+#: admin/settings/view-edit-profile.php:17 lingotek.php:205
+msgid "Disabled"
+msgstr "Handicapés"
+
+#: admin/settings/view-edit-profile.php:74
+msgid "Default settings"
+msgstr "Paramètres par défaut"
+
+#: admin/settings/view-edit-profile.php:114
+msgid "Target languages"
+msgstr "Langues cibles"
+
+#: admin/settings/view-edit-profile.php:198
+msgid "Cancel"
+msgstr "Annuler"
+
+#: admin/settings/view-preferences.php:6
+msgid "Download translation status"
+msgstr "Télécharger le statut de la traduction"
+
+#: admin/settings/view-preferences.php:7
+msgid "The post status for newly downloaded translations"
+msgstr "Le statut de la poste pour les traductions nouvellement téléchargées"
+
+#: admin/settings/view-preferences.php:9
+msgid "Same as source post"
+msgstr "Identique au poste source"
+
+#: admin/settings/view-preferences.php:10
+#: admin/settings/view-preferences.php:21
+msgid "Draft"
+msgstr "Projet"
+
+#: admin/settings/view-preferences.php:11
+#: admin/settings/view-preferences.php:22
+msgid "Pending Review"
+msgstr "Examen en attente"
+
+#: admin/settings/view-preferences.php:12
+#: admin/settings/view-preferences.php:23
+msgid "Published"
+msgstr "Publié"
+
+#: admin/settings/view-preferences.php:14
+#: admin/settings/view-preferences.php:25
+msgid "Privately Published"
+msgstr "Privé publié"
+
+#: admin/settings/view-preferences.php:18
+msgid "Auto upload statuses"
+msgstr "Statuts de chargement automatique"
+
+#: admin/settings/view-preferences.php:19
+msgid ""
+"The post statuses checked above are enabled for automatic upload (when using "
+"automatic uploading translation profiles)."
+msgstr "Les statuts de la poste vérifiés ci-dessus sont activés pour téléchargement automatique (lors de l'utilisation de profils de traduction téléchargement automatique)."
+
+#: admin/settings/view-preferences.php:24
+msgid "Scheduled"
+msgstr "À la demande"
+
+#: admin/settings/view-preferences.php:40
+msgid "Your preferences were successfully updated."
+msgstr "Vos préférences ont été correctement mis à jour."
+
+#: admin/settings/view-preferences.php:48 admin/settings.php:18
+#: admin/view-network.php:145
+msgid "Preferences"
+msgstr "Préférences"
+
+#: admin/settings/view-preferences.php:49
+msgid "These are your preferred settings."
+msgstr "Ce sont vos réglages préférés."
+
+#: admin/settings/view-profiles.php:15
+msgid "Your translation profile was sucessfully deleted."
+msgstr "Votre profil de traduction a été correctement supprimé."
+
+#: admin/settings/view-profiles.php:28
+msgid "You must provide a name for your translation profile."
+msgstr "Vous devez fournir un nom pour votre profil de traduction."
+
+#: admin/settings/view-profiles.php:71
+msgid "Your translation profile was sucessfully saved."
+msgstr "Votre profil de traduction a été correctement enregistré."
+
+#: admin/settings/view-profiles.php:84 admin/settings.php:16
+msgid "Translation Profiles"
+msgstr "Traduction des profils"
+
+#: admin/settings/view-profiles.php:85
+msgid ""
+"Translation profiles allow you to quickly configure and re-use translation "
+"settings."
+msgstr "Profils de translation permettent de configurer rapidement et ré-utiliser les paramètres de translation."
+
+#: admin/settings/view-profiles.php:92
+msgid "Add New Profile"
+msgstr "Ajouter nouveau profil"
+
+#: admin/settings/view-utilities.php:11
+msgid "Disassociating content..."
+msgstr "Dissocier le contenu..."
+
+#: admin/settings/view-utilities.php:25 admin/settings.php:21
+msgid "Utilities"
+msgstr "Utilitaires"
+
+#: admin/settings/view-utilities.php:26
+msgid ""
+"These utilities are designed to help you prepare and maintain your "
+"multilingual content."
+msgstr "Ces utilitaires sont conçus pour vous aider à préparer et conserver votre contenu multilingue."
+
+#: admin/settings/view-utilities.php:28 admin/view-network.php:155
+msgid "Language"
+msgstr "Langue"
+
+#: admin/settings/view-utilities.php:35
+msgid ""
+"Set <i>default language</i> as the language for all content that has not "
+"been assigned a language."
+msgstr "Définir la <i>langue par défaut</i> comme langue de tout le contenu qui n'a pas reçu une langue."
+
+#: admin/settings/view-utilities.php:39
+msgid "Disassociation"
+msgstr "Dissociation"
+
+#: admin/settings/view-utilities.php:45
+msgid "Disassociate all the content from Lingotek TMS."
+msgstr "Dissocier tout le contenu de Lingotek TMS."
+
+#: admin/settings/view-utilities.php:55
+msgid "Delete all documents in Lingotek TMS."
+msgstr "Supprimez tous les documents de Lingotek TMS."
+
+#: admin/settings/view-utilities.php:62
+msgid ""
+"You are about to disassociate all your content from Lingotek TMS. Are you "
+"sure ?"
+msgstr "Vous êtes sur le point de dissocier tous vos contenus de Lingotek TMS. Es-tu sûr?"
+
+#: admin/settings/view-utilities.php:63
+msgid ""
+"You are about to disassociate all your content and delete all documents in "
+"Lingotek TMS. Are you sure ?"
+msgstr "Vous êtes sur le point de dissocier tous vos contenus et supprimer tous les documents de Lingotek TMS. Es-tu sûr?"
+
+#: admin/settings/view-utilities.php:75
+msgid "Run Utilities"
+msgstr "Exécutez les utilitaires"
+
+#: admin/strings-table.php:99
+msgid "Group"
+msgstr "Groupe"
+
+#: admin/strings-table.php:100
+msgid "Count"
+msgstr "Comte"
+
+#: admin/tutorial/content.php:25
+msgid "1. Create content"
+msgstr "1. créer un contenu"
+
+#: admin/tutorial/content.php:26
+msgid ""
+"Whether you write a blog post, create a page for your site, or have existing "
+"posts and pages, any of your Wordpress content can be uploaded to "
+"<i>Lingotek</i>."
+msgstr "Que vous écrivez un blog, créez une page pour votre site ou avez des pages et des postes existants, une partie de votre contenu de Wordpress peut être téléchargée sur <i>Lingotek</i>."
+
+#: admin/tutorial/content.php:27
+msgid ""
+"The examples shown below are for Pages but translation for other content "
+"types works the same way!"
+msgstr "Les exemples ci-dessous sont pour les Pages mais la traduction pour les autres types de contenu fonctionne de la même manière !"
+
+#: admin/tutorial/content.php:29
+msgid "Create a new page for translation."
+msgstr "Créez une nouvelle page pour la traduction."
+
+#: admin/tutorial/content.php:32
+msgid "2. Upload content to Lingotek"
+msgstr "2. Télécharger du contenu à Lingotek"
+
+#: admin/tutorial/content.php:33
+msgid ""
+"Your Wordpress content can be uploaded to <i>Lingotek</i> with the simple "
+"push of a button."
+msgstr "Le contenu de votre Wordpress peut être téléchargé vers <i>Lingotek</i> avec la simple pression d'un bouton."
+
+#: admin/tutorial/content.php:35
+msgid "Content has been created and is ready for upload to Lingotek."
+msgstr "Contenu a été créé et est prêt pour le téléchargement de Lingotek."
+
+#: admin/tutorial/content.php:38
+msgid "3. Request translations for target languages"
+msgstr "3. demander des traductions en langues cibles"
+
+#: admin/tutorial/content.php:39
+msgid ""
+"Request translation for a specific language by clicking on the orange plus "
+"icon, for all languages at once, or in bulk by using the <i>Bulk Actions</i> "
+"dropdown."
+msgstr "Demande de traduction pour une langue spécifique en cliquant sur l'icône, pour toutes les langues à la fois, ou en vrac, orange plus en utilisant le menu déroulant <i>Actions en vrac</i> ."
+
+#: admin/tutorial/content.php:41
+msgid "The source content is uploaded and ready for target languages."
+msgstr "Le contenu source est téléchargé et prêt pour les langues cibles."
+
+#: admin/tutorial/content.php:44
+msgid "4. Translate your content"
+msgstr "4. traduire votre contenu"
+
+#: admin/tutorial/content.php:45
+msgid ""
+"Your content will now be translated into your selected target languages by "
+"free machine translation or, if you contract with <i>Lingotek</i>, "
+"professional translation services."
+msgstr "Votre contenu sera maintenant traduit dans vos langues cibles sélectionnés par traduction machine libre ou, si vous contractez avec <i>Lingotek</i>, services de traduction professionnels."
+
+#: admin/tutorial/content.php:47
+msgid "Your translations are underway."
+msgstr "Vos traductions sont en cours."
+
+#: admin/tutorial/content.php:50
+msgid "5. Download translations"
+msgstr "5. Télécharger les traductions"
+
+#: admin/tutorial/content.php:51
+msgid ""
+"Once your translations are complete they will be marked ready for download. "
+"You can download translations for all languages, each language individually, "
+"or in bulk (using the <i>Bulk Actions</i> dropdown)."
+msgstr "Une fois que vos traductions sont faites elles seront marquées prêts pour le téléchargement. Vous pouvez télécharger les traductions en toutes langues, chaque langue, en bloc ou individuellement (en utilisant le menu déroulant <i>Actions en vrac</i> )."
+
+#: admin/tutorial/content.php:53
+msgid "Your translations are ready for download."
+msgstr "Vos traductions sont prêtes pour le téléchargement."
+
+#: admin/tutorial/content.php:56
+msgid "6. Your content is translated!"
+msgstr "6. votre contenu est traduit !"
+
+#: admin/tutorial/content.php:57
+msgid ""
+"The orange pencil icons indicate that your translations are finished, "
+"downloaded, and current within your Wordpress site. Clicking on any one of "
+"the pencils will direct you to the Lingotek Workbench for that specific "
+"language. Here you can make updates and changes to your translations if "
+"necessary."
+msgstr "Les icônes de crayon orange indiquent que vos traductions sont finis, téléchargé et actuelle au sein de votre site Wordpress. En cliquant sur l'un des crayons vous dirigera vers le Workbench de Lingotek pour la langue en question. Ici vous pouvez faire des mises à jour et modifications à vos traductions si nécessaire."
+
+#: admin/tutorial/content.php:59
+msgid "Your content has been translated."
+msgstr "Votre contenu a été traduit."
+
+#: admin/tutorial/content.php:62
+msgid "What do all the icons mean?"
+msgstr "Que signifient toutes les icônes ?"
+
+#: admin/tutorial/content.php:67
+msgid "Upload Source"
+msgstr "Télécharger la Source"
+
+#: admin/tutorial/content.php:68
+msgid "There is content ready to be uploaded to Lingotek."
+msgstr "Il y a contenu prêt à être transféré à Lingotek."
+
+#: admin/tutorial/content.php:73
+msgid ""
+"Content is importing to Lingotek or a target language is being added to "
+"source content."
+msgstr "Contenu consiste à importer de Lingotek ou un langage cible est ajouté au contenu source."
+
+#: admin/tutorial/content.php:77
+msgid "Source Uploaded"
+msgstr "Source téléchargée"
+
+#: admin/tutorial/content.php:78
+msgid "The source content has been uploaded to Lingotek."
+msgstr "Le contenu de la source a été téléchargé à Lingotek."
+
+#: admin/tutorial/content.php:82
+msgid "Request Translation"
+msgstr "Demande de traduction"
+
+#: admin/tutorial/content.php:83
+msgid "Request a translation of the source content. (Add a target language)"
+msgstr "Demander une traduction du contenu source. (Ajouter une langue cible)"
+
+#: admin/tutorial/content.php:87
+msgid "Download Translation"
+msgstr "Télécharger Translation"
+
+#: admin/tutorial/content.php:88
+msgid "Download the translated content to Wordpress."
+msgstr "Télécharger le contenu traduit pour Wordpress."
+
+#: admin/tutorial/content.php:92
+msgid "Translation Current"
+msgstr "Traduction actuelle"
+
+#: admin/tutorial/content.php:93
+msgid ""
+"The translation is complete. (Clicking on this icon will allow you to edit "
+"translations in the Lingotek Workbench)"
+msgstr "La traduction est terminée. (En cliquant sur cette icône vous permet d'éditer les traductions dans l'établi Lingotek)"
+
+#: admin/tutorial/credits.php:45
+msgid "The Lingotek plugin for WordPress is created with love."
+msgstr "Le plugin de Lingotek pour WordPress est créé avec amour."
+
+#: admin/tutorial/credits.php:47
+msgid "Team"
+msgstr "Équipe"
+
+#: admin/tutorial/faq.php:10
+msgid "Questions and answers..."
+msgstr "Questions et réponses..."
+
+#: admin/tutorial/faq.php:12
+msgid "How does this really work?"
+msgstr "Comment ça marche vraiment ?"
+
+#: admin/tutorial/faq.php:13
+msgid ""
+"<i>Polylang</i> puts in the framework to make WordPress multilingual and "
+"<i>Lingotek</i> leverages that framework to provide localization through "
+"machine translation and professional translation services."
+msgstr "<i>Polylang</i> place dans le cadre de faire WordPress multilingue et <i>Lingotek</i> s'appuie sur ce cadre afin de fournir une localisation à travers la traduction automatique et de services de traduction professionnels."
+
+#: admin/tutorial/faq.php:15
+msgid "What does the Lingotek plugin do?"
+msgstr "Que signifie le Lingotek plugin faire ?"
+
+#: admin/tutorial/faq.php:16
+msgid ""
+"<i>Lingotek</i> has teamed up with <i>Polylang</i> to offer a simple way to "
+"make your WordPress site truly multilingual. Manage all your multilingual "
+"content in the same site. No need to have a different site for each language!"
+msgstr "<i>Lingotek</i> collabore avec <i>Polylang</i> pour offrir un moyen simple de rendre votre site WordPress multilingue. Gérer tous vos contenus multilingues dans le même site. Pas besoin d'avoir un site différent pour chaque langue !"
+
+#: admin/tutorial/faq.php:18
+msgid "How can I add a language?"
+msgstr "Comment puis-je ajouter une langue ?"
+
+#: admin/tutorial/faq.php:19
+msgid ""
+"On the <i>translation dashboard</i>, click on the <i>Translate my site "
+"into...</i> textbox and choose from the list or start typing to quickly find "
+"a language."
+msgstr "Sur le <i>tableau de bord de traduction</i>, cliquez sur la zone de texte de <i>mon site dans la traduction...</i> et choisissez dans la liste ou commencez à taper pour trouver rapidement une langue."
+
+#: admin/tutorial/faq.php:21
+msgid "How can I remove a language?"
+msgstr "Comment puis-je supprimer une langue ?"
+
+#: admin/tutorial/faq.php:23
+msgid ""
+"On the <i>translation dashboard</i>, click on the blue check mark for the "
+"language you would like to remove."
+msgstr "Sur le <i>tableau de bord de traduction</i>, cliquez sur la coche bleue pour la langue que vous souhaitez supprimer."
+
+#: admin/tutorial/faq.php:24
+msgid ""
+"Note: If you have translated content in a language you will not be able to "
+"remove that language until that content has been deleted."
+msgstr "Remarque : Si vous avez traduit le contenu dans une langue vous ne serez pas en mesure de supprimer cette langue jusqu'à ce que le contenu a été supprimé."
+
+#: admin/tutorial/faq.php:27
+msgid "Can I use my own translation agency with Lingotek?"
+msgstr "Puis-je utiliser ma propre agence de traduction avec Lingotek ?"
+
+#: admin/tutorial/faq.php:28 admin/tutorial/features.php:37
+msgid ""
+"Use your own translation agency or tap into Lingotek's network of more than "
+"5,000+ in-country translators. Content transfer is fully automated between "
+"WordPress and Lingotek. You'll have full visibility into the translation "
+"process every step of the way. And once the translations are completed, "
+"they'll automatically download and publish to your website according to the "
+"preferences you've set."
+msgstr "Utilisez votre propre agence de traduction ou puiser dans réseau de Lingotek de plus de 5 000 + traducteurs dans le pays. Transfert de contenu est entièrement automatisé entre WordPress et Lingotek. Vous aurez une visibilité complète sur la traduction traiter chaque étape de la voie. Et une fois que les traductions sont terminées, ils vont automatiquement télécharger et publier sur votre site Web selon les préférences que vous avez défini."
+
+#: admin/tutorial/faq.php:30
+msgid "How can I check the overall translation progress of my site?"
+msgstr "Comment puis-je vérifier la progression globale de la traduction de mon site ?"
+
+#: admin/tutorial/faq.php:31
+msgid ""
+"On the <i>translation dashboard</i>, the bars under <i>Completed Percentage</"
+"i> show the translation progress of content for each language. You can "
+"filter by content type or show progress for all content."
+msgstr "Sur le <i>tableau de bord de translation</i>, les barres sous le <i>Pourcentage achevé</i> affichant l'avancement de la traduction de contenu pour chaque langue. Vous pouvez filtrer par type de contenu ou afficher la progression de tout le contenu."
+
+#: admin/tutorial/faq.php:34
+msgid "Why are there two different shades of blue in the progress bar?"
+msgstr "Pourquoi y a-t-il deux différentes nuances de bleu dans la barre de progression ?"
+
+#: admin/tutorial/faq.php:35
+msgid ""
+"The <i>translation dashboard</i> not only shows how much of your content is "
+"translated, but also indicates the language that your source content was "
+"authored in."
+msgstr "Le <i>tableau de bord traduction</i> montre non seulement combien de votre contenu est traduit, mais il indique également la langue votre contenu source créé dans."
+
+#: admin/tutorial/faq.php:38
+msgid ""
+"<i>Dark Blue:</i> Indicates that this is a source language that the content "
+"was authored in."
+msgstr "<i>Bleu foncé :</i> Indique qu'il s'agit d'une langue source le contenu créé dans."
+
+#: admin/tutorial/faq.php:39
+msgid ""
+"<i>Light Blue:</i> Indicates that this is a target language that the content "
+"was translated into."
+msgstr "<i>Bleu clair :</i> Indique qu'il s'agit d'une langue cible que le contenu a été traduit en."
+
+#: admin/tutorial/faq.php:43
+msgid "What happens when I <i>Disassociate Translations</i>?"
+msgstr "Que se passe-t-il lorsque je <i>Dissocier les traductions</i>?"
+
+#: admin/tutorial/faq.php:44
+msgid ""
+"When content is disassociated the connection between WordPress and "
+"<i>Lingotek</i> safely disconnected from Lingotek, so that translations can "
+"be solely managed inside of WordPress."
+msgstr "Lorsque le contenu est dissocié la connexion entre WordPress et <i>Lingotek</i> déconnecté en toute sécurité de Lingotek, afin que les traductions peuvent être gérées exclusivement à l'intérieur de WordPress."
+
+#: admin/tutorial/faq.php:46
+msgid ""
+"How do I translate strings within widgets or general WordPress settings (e."
+"g., Site Title, Tagline)?"
+msgstr "Comment traduire les chaînes dans les gadgets ou les paramètres généraux de WordPress (Site titre, slogan) ?"
+
+#: admin/tutorial/faq.php:47
+msgid ""
+"Groups of strings can be sent for translation and managed using the <a "
+"href='%s'>String Groups</a> page. Individual strings may be viewed on the <a "
+"href='%s'>Strings</a> page."
+msgstr "Groupes de chaînes peuvent être envoyés pour traduction et gérés à l'aide de la page <a href='%s'>Groupes de chaîne</a> . Chaînes individuelles peuvent être consultés sur la page <a href='%s'>chaînes</a> ."
+
+#: admin/tutorial/faq.php:53
+msgid "Lingotek Workbench"
+msgstr "Lingotek Workbench"
+
+#: admin/tutorial/faq.php:54
+msgid ""
+"Lingotek Translation is the only WordPress plugin to integrate a Translation "
+"Management System directly into WordPress, thus allowing the WordPress "
+"community to use professional-grade translation technologies (e.g. machine "
+"translation, translation memory, CAT tool) without ever having to leave the "
+"comfort of the WordPress environment."
+msgstr "Traduction de Lingotek est le seul plugin WordPress pour intégrer un système de gestion de traduction directement dans WordPress, permettant ainsi à la communauté WordPress d'utiliser les technologies de traduction de qualité professionnelle (p. ex., traduction automatique, mémoire de traduction, outil de TAO) sans jamais avoir à quitter le confort de l'environnement WordPress."
+
+#: admin/tutorial/faq.php:59
+msgid ""
+"The <i>translation dashboard</i> allows you to view your site languages, add "
+"and remove new languages, check the overall translation progress of your "
+"site, see site analytics, and connect with Lingotek support."
+msgstr "Le <i>tableau de bord de traduction</i> permet de voir votre site langues, ajouter et supprimer des nouvelles langues, vérifier la progression globale de traduction de votre site, voir analytique de site et se connecter avec l'aide Lingotek."
+
+#: admin/tutorial/features.php:5
+msgid "Translate into new languages"
+msgstr "Traduire dans nouvelles langues"
+
+#: admin/tutorial/features.php:6
+msgid ""
+"Easily translate your site into new languages by adding the desired language "
+"to your site.  Lingotek allows you to quickly add any of the most frequently "
+"used locales using the <a href=\"%s\" title=\"Translation &gt; Dashboard"
+"\">Translation Dashboard</a>."
+msgstr "Easily translate your site into new languages by adding the desired language to your site.  Lingotek allows you to quickly add any of the most frequently used locales using the <a href=\"%s\" title=\"Translation &gt; Dashboard\">Translation Dashboard</a>."
+
+#: admin/tutorial/features.php:10
+msgid "Automatically translate content"
+msgstr "Traduire automatiquement le contenu"
+
+#: admin/tutorial/features.php:11
+msgid ""
+"Machine translation is an excellent option if you're on a tight budget, "
+"looking for near-instant results, and are okay with less-than-perfect "
+"quality. The plugin allows you to quickly and automatically translate your "
+"site (the cost is covered by Lingotek for up to 100,000 characters)."
+msgstr "Traduction automatique est une excellente option si vous êtes sur un budget serré, vous cherchez des résultats quasi instantané et sont d'accord avec qualité de moins-que-parfait. Le plugin vous permet de rapidement et automatiquement traduire votre site (le coût est couvert par Lingotek pour jusqu'à 100 000 caractères)."
+
+#: admin/tutorial/features.php:15
+msgid "Fully compatible with Polylang"
+msgstr "Entièrement compatible avec Polylang"
+
+#: admin/tutorial/features.php:16
+msgid ""
+"Polylang and Lingotek work together seamlessly.  Continue to use Polylang "
+"for content that you want to translate inside WordPress, while sending other "
+"content to be translated by Lingotek. The <b style=\"color: %s\">orange</b> "
+"icons indicate Lingotek statuses/actions while the <b style=\"color: %s"
+"\">blue</b> icons continue to represent Polylang actions."
+msgstr "Polylang et Lingotek travaillent ensemble de façon transparente.  Continuer à utiliser Polylang pour le contenu que vous souhaitez traduire à l'intérieur de WordPress, lors de l'envoi de tout autre contenu à traduire par Lingotek. Les icônes <b style=\"color: %s\">orange</b> indiquent Lingotek statuts/actions alors que les icônes <b style=\"color: %s\">bleues</b> continuent de représenter les actions de Polylang."
+
+#: admin/tutorial/features.php:25
+msgid "Use translation profiles"
+msgstr "Utilisation des profils de traduction"
+
+#: admin/tutorial/features.php:26
+msgid ""
+"One of the most time-consuming activities of any multilingual web-site "
+"project is managing the ongoing flow of changes and additions to site "
+"content and configurations. Translation profiles were created to allow you "
+"to create and save and re-use your translation settings."
+msgstr "Une des activités plus fastidieuses de tout projet de site web multilingue gère le flux continu des changements et des ajouts au contenu du site et des configurations. Les profils de traduction ont été créés pour vous permettre de créer et d'enregistrer et de réutiliser vos paramètres de translation."
+
+#: admin/tutorial/features.php:30
+msgid "Content type profiles"
+msgstr "Profils de type de contenu"
+
+#: admin/tutorial/features.php:31
+msgid ""
+"Content type profiles. Manually choosing which content to upload and "
+"download is rarely what a content administrator wants to do, and automating "
+"the upload of every change is not workable because there are various types "
+"of content. Each type of translatable content can be assigned to a "
+"customizable profile. For example, by default, we like to have Posts use an "
+"<i>Automatic</i> profile so that content will automatically be uploaded for "
+"translation and the resulting translations automatically be downloaded back "
+"into WordPress."
+msgstr "Profils de type de contenu. Choisir manuellement quel contenu à télécharger est rarement ce qu'un administrateur de contenu veut faire, et automatiser le téléchargement de chaque changement n'est pas réalisable car il existe différents types de contenus. Chaque type de contenu traduisible peut être assignée à un profil personnalisable. Par exemple, par défaut, nous aimons avoir de messages utilisation profil un <i>automatique</i> afin que le contenu sera automatiquement téléchargé pour la traduction et les traductions qui en résulte automatiquement être téléchargé dans WordPress."
+
+#: admin/tutorial/features.php:36
+msgid "Request professional translation"
+msgstr "Demande de traduction professionnelle"
+
+#: admin/utilities.php:78
+msgid "The language update utility ran successfully."
+msgstr "L'utilitaire de mise à jour de langue a été correctement exécuté."
+
+#: admin/view-network.php:78
+msgid "The language utility ran successfully."
+msgstr "L'utilité de la langue a été correctement exécuté."
+
+#: admin/view-network.php:80
+msgid "Your chosen settings have updated successfully for all selected sites."
+msgstr "Vos paramètres choisis ont mis à jour avec succès pour tous les sites sélectionnés."
+
+#: admin/view-network.php:83
+msgid "Please choose at least one destination site."
+msgstr "Veuillez choisir au moins un site de destination."
+
+#: admin/view-network.php:95
+msgid "Your new projects were successfully created."
+msgstr "Vos nouveaux projets ont été créés avec succès."
+
+#: admin/view-network.php:112
+msgid "Lingotek Network Settings"
+msgstr "Paramètres réseau de Lingotek"
+
+#: admin/view-network.php:113
+msgid "Copy Lingotek settings from the source site to multiple sites"
+msgstr "Paramètres de Lingotek copie sur le site de la source à plusieurs sites"
+
+#: admin/view-network.php:119
+msgid "Source Site"
+msgstr "Source Site"
+
+#: admin/view-network.php:128
+msgid "Destination Site"
+msgstr "Site de destination"
+
+#: admin/view-network.php:137
+msgid "Settings to copy"
+msgstr "Pour copier les paramètres"
+
+#: admin/view-network.php:142
+msgid "Resources"
+msgstr "Ressources"
+
+#: admin/view-network.php:143
+msgid "Profiles"
+msgstr "Profils"
+
+#: admin/view-network.php:144
+msgid "Content Types"
+msgstr "Types de contenu"
+
+#: admin/view-network.php:149
+msgid "New Project"
+msgstr "Nouveau projet"
+
+#: admin/view-network.php:151
+msgid ""
+"Create a new project using the name of the selected site (Recommended for a "
+"newly created site)"
+msgstr "Créez un nouveau projet en utilisant le nom du site sélectionné (recommandé pour un site nouvellement créé)"
+
+#: admin/view-network.php:157
+msgid ""
+"Set <i>default language</i> as the language for all existing content that "
+"has not been assigned a language."
+msgstr "Définir la <i>langue par défaut</i> comme langue pour tout le contenu existant qui n'a pas reçu une langue."
+
+#: admin/view-network.php:163
+msgid "Update Options"
+msgstr "Options de mise à jour"
+
+#: admin/view-tutorial.php:4
+msgid "Features"
+msgstr "Caractéristiques"
+
+#: admin/view-tutorial.php:6
+msgid "FAQ"
+msgstr "FAQ"
+
+#: admin/view-tutorial.php:7
+msgid "Credits"
+msgstr "Crédits"
+
+#: admin/view-tutorial.php:15
+msgid "Welcome to Lingotek"
+msgstr "Bienvenue chez Lingotek"
+
+#: admin/view-tutorial.php:17
+msgid ""
+"Thank you for updating! Lingotek offers convenient cloud-based localization "
+"and translation."
+msgstr "Je vous remercie pour la mise à jour ! Lingotek offre de traduction et localisation commode de nuage."
+
+#: admin/view-tutorial.php:20
+msgid "Version %s"
+msgstr "Version %s"
+
+#: include/dashboard.php:79
+msgid "You must keep at least one language."
+msgstr "Vous devez conserver au moins une langue."
+
+#: include/dashboard.php:103
+msgid ""
+"The language can only be removed when no existing content is using it.  If "
+"you would like to remove this language from the site, then first remove any "
+"content assigned to this language."
+msgstr "La langue peut être supprimée uniquement lorsque aucun contenu existant n'est de l'utiliser.  Si vous souhaitez supprimer cette langue du site, puis désinstallez n'importe quel contenu assigné à cette langue."
+
+#: include/group-post.php:46 include/group-post.php:52
+msgid "Title"
+msgstr "Titre"
+
+#: include/group-post.php:47
+msgid "Caption"
+msgstr "Caption"
+
+#: include/group-post.php:48
+msgid "Alternative Text"
+msgstr "Texte de remplacement"
+
+#: include/group-post.php:49 include/group-term.php:47
+msgid "Description"
+msgstr "Description"
+
+#: include/group-post.php:53 include/group-term.php:46
+msgid "Slug"
+msgstr "Limace"
+
+#: include/group-post.php:54
+msgid "Content"
+msgstr "Contenu"
+
+#: include/group-post.php:55
+msgid "Excerpt"
+msgstr "Extrait"
+
+#: include/group-term.php:44
+msgid "Name"
+msgstr "Nom"
+
+#: lingotek.php:356
+msgid ""
+"Lingotek Translation requires Polylang to work. Please install Polylang."
+msgstr "Lingotek Traduction exige Polylang de travailler. S'il vous plaît installer Polylang."
+
+#: lingotek.php:369
+msgid ""
+"Lingotek Translation requires Polylang %s to work. Please upgrade Polylang."
+msgstr "Lingotek Traduction exige Polylang %s de travailler. Veuillez mettre à jour Polylang."
+
+#. Plugin Name of the plugin/theme
+msgid "Lingotek Translation"
+msgstr "Lingotek Traduction"
+
+#. Plugin URI of the plugin/theme
+msgid ""
+"http://lingotek.com/"
+"wordpress#utm_source=wpadmin&utm_medium=plugin&utm_campaign=wplingotektranslationplugin"
+msgstr "http://Lingotek.com/WordPress#utm_source=wpadmin&utm_medium=plugin&utm_campaign=wplingotektranslationplugin"
+
+#. Description of the plugin/theme
+msgid ""
+"Provides a seamless integration to the Lingotek Translation Management "
+"System (TMS)."
+msgstr "Fournit une intégration transparente à la Lingotek Translation Management System (TMS)."
+
+#. Author of the plugin/theme
+msgid "Lingotek and Frédéric Demarle"
+msgstr "Lingotek et Frédéric Demarle"
+
+#. Author URI of the plugin/theme
+msgid "http://lingotek.com"
+msgstr "http://Lingotek.com"
