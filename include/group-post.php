@@ -207,13 +207,14 @@ class Lingotek_Group_Post extends Lingotek_Group {
 		$custom_fields_from_lingotek = get_option('lingotek_custom_fields', array());
 		$items = array();
 
-		foreach ($custom_fields_from_lingotek as $key => $setting) {
-			$arr = array(
-				'meta_key' => $key,
-				'setting' => $setting,
-			);
-
-			$items [] = $arr;
+		if (is_array($custom_fields_from_lingotek)) {
+			foreach ($custom_fields_from_lingotek as $key => $setting) {
+				$arr = array(
+					'meta_key' => $key,
+					'setting' => $setting,
+				);
+				$items [] = $arr;
+			}
 		}
 		return $items;
 	}
@@ -281,6 +282,10 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	 * @param string $locale
 	 */
 	public function create_translation($locale) {
+		// Removes content sanitization so YouTube videos, links, etc don't get removed when inserting translations
+		remove_filter('content_save_pre', 'wp_filter_post_kses');
+		remove_filter('content_filtered_save_pre', 'wp_filter_post_kses');
+
 		$client = new Lingotek_API();
 
 		if (false === ($translation = $client->get_translation($this->document_id, $locale)))
@@ -298,6 +303,25 @@ class Lingotek_Group_Post extends Lingotek_Group {
 		// update existing translation
 		if ($tr_id = $this->pllm->get_post($this->source, $locale)) {
 			$tr_post['ID'] = $tr_id;
+
+			// copy or ignore metas
+			$custom_fields = get_option('lingotek_custom_fields', array());
+			foreach ($custom_fields as $key => $setting) {
+				if ('copy' === $setting) {
+					$source_meta = current(get_post_meta($post->ID, $key))	;
+					update_post_meta($tr_id, $key, $source_meta);
+				}
+				elseif ('ignore' === $setting) {
+					delete_post_meta($tr_id, $key);
+				}
+			}
+
+			// translate metas
+			if (!empty($translation['metas'])) {
+				foreach ($translation['metas'] as $key => $meta)
+					update_post_meta($tr_id, $key, $meta);
+			}
+
 			wp_update_post($tr_post);
 
 			$this->safe_translation_status_update($locale, 'current');
@@ -352,6 +376,10 @@ class Lingotek_Group_Post extends Lingotek_Group {
 		}
 
 		self::$creating_translation = false;
+
+		// Adds content sanitization back in after Lingotek saves the translation
+		add_filter('content_save_pre', 'wp_filter_post_kses');
+		add_filter('content_filtered_save_pre', 'wp_filter_post_kses');
 	}
 
 	/*

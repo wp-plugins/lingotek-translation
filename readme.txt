@@ -3,8 +3,8 @@ Contributors: chouby, smithworx, erichie
 Donate link: http://lingotek.com/
 Tags: automation, bilingual, international, language, Lingotek, localization, multilanguage, multilingual, translate, translation
 Requires at least: 3.8
-Tested up to: 4.2
-Stable tag: 1.0.8
+Tested up to: 4.3
+Stable tag: 1.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -114,6 +114,12 @@ For more, visit the [Lingotek documentation site](https://lingotek.atlassian.net
 4. Content type profiles. Manually choosing which content to upload and download is rarely what a content administrator wants to do, and automating the upload of every change is not workable because there are various types of content. Each type of translatable content can be assigned to a customizable profile. For example, by default, we like to have Posts use an Automatic profile so that content will automatically be uploaded for translation and the resulting translations automatically be downloaded back into WordPress.
 
 == Changelog ==
+
+= 1.0.9 (2015-08-19) =
+
+* Fixed error with YouTube videos not displaying in translations
+* Fixed a minor bug which prevented real-time translation status updates
+* Fixed custom fields settings page error
 
 = 1.0.8 (2015-08-19) =
 

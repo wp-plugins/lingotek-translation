@@ -94,7 +94,6 @@ class Lingotek_Custom_Fields_Table extends WP_List_Table {
    * @param array $data
    */
   function prepare_items($data = array()) {
-    $per_page = $this->get_items_per_page('lingotek_custom_fields_per_page');
     $this->_column_headers = array($this->get_columns(), array(), $this->get_sortable_columns());
 
     function usort_reorder($a, $b){
@@ -105,13 +104,6 @@ class Lingotek_Custom_Fields_Table extends WP_List_Table {
     if (!empty($_REQUEST['orderby'])) // no sort by default
       usort($data, 'usort_reorder');
 
-    $total_items = count($data);
-    $this->items = array_slice($data, ($this->get_pagenum() - 1) * $per_page, $per_page);
-   
-    $this->set_pagination_args(array(
-      'total_items' => $total_items,
-      'per_page'  => $per_page,
-      'total_pages' => ceil($total_items/$per_page)
-    ));
+    $this->items = $data;
   }
 } 

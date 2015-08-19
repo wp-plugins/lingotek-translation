@@ -49,28 +49,30 @@ class Lingotek_Admin {
     foreach($object_ids as $object_id) {
       $id = $object_id;
       $document = $lgtm->get_group($taxonomy, $object_id);
-      if($document->source !== $object_id){
-        $document = $lgtm->get_group($taxonomy, $document->source);
-      }
-      $source_id = $document->source !== null ? $document->source : $object_id;
-      $source_language = $terms ? pll_get_term_language($document->source, 'locale')
-        : pll_get_post_language($document->source, 'locale');
-      $existing_translations = $pllm->get_translations($taxonomy, $source_id);
-      $content_metadata[$id]['existing_trans'] = false;
-      if(count($existing_translations) > 1){
-        $content_metadata[$id]['existing_trans'] = true;
-      }
-      $content_metadata[$id]['source'] = $source_language;
-      $content_metadata[$id]['doc_id'] = $document->document_id;
-      $content_metadata[$id]['source_id'] = $document->source;
-      $content_metadata[$id]['source_status'] = $document->status;
-      $target_status = $document->status == 'edited' || $document->status == null ? 'edited' : 'current';
-      $content_metadata[$id][$source_language]['status'] = $document->source == $object_id ? $document->status : $target_status;
-      if(is_array($document->translations)){
-        foreach($document->translations as $locale => $translation_status){
-          $content_metadata[$id][$locale]['status'] = $translation_status;
-          $workbench_link = Lingotek_Actions::workbench_link($document->document_id, $locale);
-          $content_metadata[$id][$locale]['workbench_link'] = $workbench_link;
+      if ($document) {
+        if($document->source !== $object_id){
+          $document = $lgtm->get_group($taxonomy, $document->source);
+        }
+        $source_id = $document->source !== null ? $document->source : $object_id;
+        $source_language = $terms ? pll_get_term_language($document->source, 'locale')
+          : pll_get_post_language($document->source, 'locale');
+        $existing_translations = $pllm->get_translations($taxonomy, $source_id);
+        $content_metadata[$id]['existing_trans'] = false;
+        if(count($existing_translations) > 1){
+          $content_metadata[$id]['existing_trans'] = true;
+        }
+        $content_metadata[$id]['source'] = $source_language;
+        $content_metadata[$id]['doc_id'] = $document->document_id;
+        $content_metadata[$id]['source_id'] = $document->source;
+        $content_metadata[$id]['source_status'] = $document->status;
+        $target_status = $document->status == 'edited' || $document->status == null ? 'edited' : 'current';
+        $content_metadata[$id][$source_language]['status'] = $document->source == $object_id ? $document->status : $target_status;
+        if(is_array($document->translations)){
+          foreach($document->translations as $locale => $translation_status) {
+            $content_metadata[$id][$locale]['status'] = $translation_status;
+            $workbench_link = Lingotek_Actions::workbench_link($document->document_id, $locale);
+            $content_metadata[$id][$locale]['workbench_link'] = $workbench_link;
+          }
         }
       }
     }

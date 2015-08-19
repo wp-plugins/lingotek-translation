@@ -6,10 +6,8 @@ $items = array();
 
 if (!empty($_POST)) {
   check_admin_referer('lingotek-custom-fields', '_wpnonce_lingotek-custom-fields');
-
-  if (!empty($_POST['settings'])) {
-    update_option('lingotek_custom_fields', $_POST['settings']);
-  }
+  $arr = empty($_POST['settings']) ? array() : $_POST['settings'];
+  update_option('lingotek_custom_fields', $arr);
 
   if (!empty($_POST['refresh'])) {
     $items = Lingotek_Group_Post::get_updated_meta_values();
