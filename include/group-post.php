@@ -106,7 +106,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	 * @return array
 	 */
 	static public function get_custom_fields_from_wp_postmeta($post_ID = NULL) {
-		$custom_fields = get_option('lingotek_custom_fields');
+		$custom_fields = get_option('lingotek_custom_fields', array());
 		$arr = array();
 		$keys = array();
 
@@ -153,7 +153,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	public static function get_updated_meta_values($post_ID = NULL) {
 		$custom_fields_from_wpml = self::get_custom_fields_from_wpml();
 		$custom_fields_from_postmeta = self::get_custom_fields_from_wp_postmeta($post_ID);
-		$custom_fields_from_lingotek = get_option('lingotek_custom_fields');
+		$custom_fields_from_lingotek = get_option('lingotek_custom_fields', array());
 		$custom_fields = array();
 		$items = array();
 
@@ -332,7 +332,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 				$GLOBALS['polylang']->sync->copy_post_metas($this->source, $tr_id, $tr_lang->slug);
 
 				// copy or ignore metas
-				$custom_fields = get_option('lingotek_custom_fields');
+				$custom_fields = get_option('lingotek_custom_fields', array());
 				foreach ($custom_fields as $key => $setting) {
 					if ('copy' === $setting) {
 						$source_meta = current(get_post_meta($post->ID, $key))	;
