@@ -96,6 +96,9 @@ jQuery(document).ready(function($) {
               $(td).find('.pll_icon_edit').remove();
               updateUploadIndicator(td, data, key, locale);
             }
+            else if (data[key][locale]['status'] === 'disabled' || data[key]['source'] === 'disabled') {
+              $(td).find('.lingotek-color').remove();
+            }
             else if ($(td).find('.pll_icon_add').length > 0 && data[key][data[key]['source']]['status'] === 'none'){
               break;
             }

@@ -16,6 +16,9 @@ class Lingotek_Model {
 	 */
 	public function __construct() {
 		$this->pllm = $GLOBALS['polylang']->model;
+
+		register_taxonomy('lingotek_profile', null , array('label' => false, 'public' => false, 'query_var' => false, 'rewrite' => false));
+		register_taxonomy('lingotek_hash', null , array('label' => false, 'public' => false, 'query_var' => false, 'rewrite' => false));
 	}
 
 	/*
@@ -109,9 +112,20 @@ class Lingotek_Model {
 	 * @param object $language
 	 * @return array
 	 */
-	static public function get_profile($type, $language) {
+	static public function get_profile($type, $language, $post_id = null) {
 		$content_types = get_option('lingotek_content_type');
 		$profiles = get_option('lingotek_profiles');
+
+		// If a profile is set for a specific post/page get that first
+		if ($post_id) {
+			$terms = get_terms('lingotek_profile', 'orderby=count&hide_empty=0');
+			foreach ($terms as $term) {
+				$extracted_post_id = str_replace('lingotek_profile_', '', $term->name);
+				if ($extracted_post_id == $post_id) {
+					return $profiles[$term->description];
+				}
+			}
+		}
 
 		// default profile is manual except for post
 		$default = 'post' == $type ? 'automatic' : 'manual';
@@ -152,8 +166,8 @@ class Lingotek_Model {
 	 * @param object $target_language optional, needed to get custom target informations 'workflow_id' | 'download'
 	 * @return string | bool either the option or false if the translation is disabled
 	 */
-	static public function get_profile_option($item, $type, $source_language, $target_language = false) {
-		$profile = self::get_profile($type, $source_language);
+	static public function get_profile_option($item, $type, $source_language, $target_language = false, $post_id = null) {
+		$profile = self::get_profile($type, $source_language, $post_id);
 		if ('disabled' == $profile['profile'])
 			return false;
 
@@ -180,7 +194,7 @@ class Lingotek_Model {
 		if (empty($post) || empty($language))
 			return;
 
-		$profile = self::get_profile($post->post_type, $language);
+		$profile = self::get_profile($post->post_type, $language, $post_id);
 		if ('disabled' == $profile['profile'])
 			return;
 
@@ -191,17 +205,17 @@ class Lingotek_Model {
 			'title' => $post->post_title,
 			'content' => Lingotek_Group_Post::get_content($post),
 			'locale_code' => $language->lingotek_locale,
-			'project_id' => self::get_profile_option('project_id', $post->post_type, $language),
-			'workflow_id' => self::get_profile_option('workflow_id', $post->post_type, $language),
+			'project_id' => self::get_profile_option('project_id', $post->post_type, $language, false, $post_id),
+			'workflow_id' => self::get_profile_option('workflow_id', $post->post_type, $language, false, $post_id),
 			'external_url' => $external_url,
 		);
 
 		$filter_ids = array();
-		if (self::get_profile_option('primary_filter_id', $post->post_type, $language)) {
-			$filter_ids['fprm_id'] = self::get_profile_option('primary_filter_id',$post->post_type, $language);
+		if (self::get_profile_option('primary_filter_id', $post->post_type, $language, false, $post_id)) {
+			$filter_ids['fprm_id'] = self::get_profile_option('primary_filter_id',$post->post_type, $language, false, $post_id);
 		}
-		if (self::get_profile_option('secondary_filter_id', $post->post_type, $language)) {
-			$filter_ids['fprm_subfilter_id'] = self::get_profile_option('secondary_filter_id',$post->post_type, $language);
+		if (self::get_profile_option('secondary_filter_id', $post->post_type, $language, false, $post_id)) {
+			$filter_ids['fprm_subfilter_id'] = self::get_profile_option('secondary_filter_id',$post->post_type, $language, false, $post_id);
 		}
 		$params = array_merge($params, $filter_ids);
 
@@ -567,8 +581,11 @@ class Lingotek_Model {
 				$group = unserialize($group);
 				if (isset($group['lingotek']['translations'])) {
 					foreach ($group['lingotek']['translations'] as $locale => $status) {
-						if (('pending' == $status || 'ready' == $status) && $language = $this->pllm->get_language($locale))
-							$sources[$language->slug]--;
+						if (('pending' == $status || 'ready' == $status) && $language = $this->pllm->get_language($locale)) {
+							if ($sources[$language->slug] > 0) {
+								$sources[$language->slug]--;
+							}
+						}
 					}
 				}
 			}

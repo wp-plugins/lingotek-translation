@@ -59,14 +59,14 @@ class Lingotek_Profiles_Table extends WP_List_Table {
 		if ('disabled' != $item['profile'])
 			$actions[] = sprintf(
 				'<a href=%s>%s</a>',
-				esc_url(admin_url('admin.php?page=wp-lingotek_settings&sm=edit-profile&profile='.$item['profile'])),
+				esc_url(admin_url('admin.php?page=wp-lingotek_manage&sm=edit-profile&profile='.$item['profile'])),
 				__('Edit', 'wp-lingotek')
 			);
 
 		if (!in_array($item['profile'], array('automatic', 'manual', 'disabled')) && empty($item['usage']))
 			$actions[] = sprintf(
 				'<a href="%s" onclick = "return confirm(\'%s\');">%s</a>',
-				esc_url(wp_nonce_url('admin.php?page=wp-lingotek_settings&sm=profiles&lingotek_action=delete-profile&noheader=true&profile='.$item['profile'], 'delete-profile')),
+				esc_url(wp_nonce_url('admin.php?page=wp-lingotek_manage&sm=profiles&lingotek_action=delete-profile&noheader=true&profile='.$item['profile'], 'delete-profile')),
 				__('You are about to permanently delete this profile. Are you sure?', 'wp-lingotek'),
 				__('Delete', 'wp-lingotek')
 			);

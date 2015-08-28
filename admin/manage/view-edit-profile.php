@@ -55,7 +55,7 @@ unset($settings['primary_filter_id']['options'][$secondary_filter_id]);
 unset($settings['secondary_filter_id']['options'][$primary_filter_id]);
 ?>
 
-<form id="lingotek-edit-profile" method="post" action="admin.php?page=wp-lingotek_settings&sm=profiles" class="validate">
+<form id="lingotek-edit-profile" method="post" action="admin.php?page=wp-lingotek_manage&sm=profiles" class="validate">
 <?php wp_nonce_field('lingotek-edit-profile', '_wpnonce_lingotek-edit-profile');?>
 <input name="profile" type="hidden" value="<?php echo empty($profile['profile']) ? '' : esc_attr($profile['profile']); ?>">
 
@@ -63,11 +63,13 @@ unset($settings['secondary_filter_id']['options'][$primary_filter_id]);
 	<tr>
 		<th scope="row"><?php printf('<label for="%s">%s</label>', 'name' , __('Profile name', 'wp-lingotek')); ?></th>
 		<td><?php
-		$profile_name = $disabled ? __($profile['name'],'wp-lingotek') : $profile['name'];// localize canned profile names
-			printf('<input name="name" id="name" type="text" value="%s" %s>',
-				empty($profile['name']) ? '' : esc_attr($profile_name),
-				$disabled
-			); ?>
+		if (!empty($profile)) {
+			$profile_name = $disabled ? __($profile['name'],'wp-lingotek') : $profile['name']; // localize canned profile names
+		}
+		printf('<input name="name" id="name" type="text" value="%s" %s>',
+			empty($profile['name']) ? '' : esc_attr($profile_name),
+			$disabled
+		); ?>
 		</td>
 	</tr>
 </table>
@@ -174,6 +176,9 @@ unset($settings['secondary_filter_id']['options'][$primary_filter_id]);
 						<td><?php
 							printf('<select name="%1$s" id="%1$s" %2$s>', $custom_key, in_array($key, array('upload', 'download')) ? $disabled : '');
 								foreach ($setting['options'] as $id => $title) {
+									if ($id === 'default' && $key === 'workflow_id') {
+										$id = $defaults['workflow_id'];
+									}
 									$selected = isset($profile['custom'][$key][$language->slug]) && $profile['custom'][$key][$language->slug] == $id ? 'selected="selected"' : '';
 									echo "\n\t<option value='" . esc_attr($id) . "' $selected>" . esc_html($title) . '</option>';
 								} ?>
@@ -195,9 +200,9 @@ unset($settings['secondary_filter_id']['options'][$primary_filter_id]);
 if (!empty($profile['profile']) && !in_array($profile['profile'], array('automatic', 'manual', 'disabled')) && empty($profile['usage']))
 	printf(
 		'<a href="%s" class="button" onclick = "return confirm(\'%s\');">%s</a>',
-		esc_url(wp_nonce_url('admin.php?page=wp-lingotek_settings&sm=profiles&lingotek_action=delete-profile&noheader=true&profile='.$profile['profile'], 'delete-profile')),
+		esc_url(wp_nonce_url('admin.php?page=wp-lingotek_manage&sm=profiles&lingotek_action=delete-profile&noheader=true&profile='.$profile['profile'], 'delete-profile')),
 		__('You are about to permanently delete this profile. Are you sure?', 'wp-lingotek'),
 		__('Delete', 'wp-lingotek')
 	);
-?> <a href="admin.php?page=wp-lingotek_settings&amp;sm=profiles" class="button"> <?php _e('Cancel', 'wp-lingotek'); ?></a>
+?> <a href="admin.php?page=wp-lingotek_manage&amp;sm=profiles" class="button"> <?php _e('Cancel', 'wp-lingotek'); ?></a>
 </form>

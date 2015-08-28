@@ -37,7 +37,8 @@ class Lingotek_Filters_Columns extends PLL_Admin_Filters_Columns {
 	 * @return array modified list of columns
 	 */
 	protected function add_column($columns, $before) {
-		if ($n = array_search($before, array_keys($columns))) {
+		$n = array_search($before, array_keys($columns));
+		if ($n) {
 			$end = array_slice($columns, $n);
 			$columns = array_slice($columns, 0, $n);
 		}
@@ -98,7 +99,7 @@ class Lingotek_Filters_Columns extends PLL_Admin_Filters_Columns {
 		// FIXME not very clean
 		$actions = 'post' == $type ? $GLOBALS['wp_lingotek']->post_actions : $GLOBALS['wp_lingotek']->term_actions;
 
-		$profile = Lingotek_Model::get_profile($this->content_type, $language);
+		$profile = Lingotek_Model::get_profile($this->content_type, $language, $object_id);
 		$disabled = 'disabled' == $profile['profile'];
 
 		// post ready for upload

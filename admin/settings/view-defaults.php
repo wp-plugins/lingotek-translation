@@ -103,9 +103,8 @@ unset($settings['secondary_filter_id']['options'][$primary_filter_id]);
 				</select><?php
 				if ('project_id' == $key) { ?>
                                     <?php
-                                    $client = new Lingotek_API();
 
-                                    if ($client->get_projects($community_id) == 'empty') { ?>
+                                    if (empty($setting['options'])) { ?>
                                         <script> document.getElementById('project_id').style.display = 'none';</script>
                                         <input type="text" name="new_project" id="new_project" placeholder="<?php _e('Enter new project name', 'wp-lingotek') ?>" />
                                     <?php }

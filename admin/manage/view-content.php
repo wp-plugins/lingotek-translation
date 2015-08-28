@@ -81,7 +81,7 @@ foreach ($data as $key => $item) {
 <h3><?php _e('Content Type Configuration', 'wp-lingotek'); ?></h3>
 <p class="description"><?php _e('Content types can be configured to use any translation profile.  Additionally, translation profiles can be set based on the language the content was authored in.', 'wp-lingotek'); ?></p>
 
-<form id="lingotek-content-types" method="post" action="admin.php?page=wp-lingotek_settings&amp;sm=content" class="validate"><?php
+<form id="lingotek-content-types" method="post" action="admin.php?page=wp-lingotek_manage&amp;sm=content" class="validate"><?php
 wp_nonce_field('lingotek-content-types', '_wpnonce_lingotek-content-types');
 
 $table = new Lingotek_Content_Table($content_types);

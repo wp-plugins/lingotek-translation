@@ -265,7 +265,7 @@ class Lingotek_API extends Lingotek_HTTP {
 	public function get_projects($community_id) {
 		$response = $this->get(add_query_arg(array('community_id' => $community_id, 'limit' => 100), $this->api_url . '/project'));
 		if (wp_remote_retrieve_response_code($response) == 204) {
-			return 'empty';
+			return array();// there are currently no projects
 		}
 		return !is_wp_error($response) && 200 == wp_remote_retrieve_response_code($response) ? json_decode(wp_remote_retrieve_body($response)) : false;
 	}

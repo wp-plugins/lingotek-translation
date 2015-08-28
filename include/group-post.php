@@ -28,7 +28,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 			),
 			$language->slug => $object_id // for Polylang
 		);
-
+		self::save_hash_on_upload($object_id);
 		self::_create($object_id, $document_id, $data, 'post_translations');
 	}
 
@@ -107,6 +107,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	 */
 	static public function get_custom_fields_from_wp_postmeta($post_ID = NULL) {
 		$custom_fields = get_option('lingotek_custom_fields', array());
+		$meta_black_list = array('_encloseme', '_edit_last', '_edit_lock', '_wp_trash_meta_status', '_wp_trash_meta_time'); 
 		$arr = array();
 		$keys = array();
 
@@ -128,19 +129,27 @@ class Lingotek_Group_Post extends Lingotek_Group {
 
 		foreach ($posts as $post) {
 			$metadata = has_meta($post->ID);
-			foreach ($metadata as $key => $value) {
-				if ($value['meta_key'] === '_encloseme' || $value['meta_key'] === '_edit_last' || $value['meta_key'] === '_edit_lock' || $value['meta_key'] === '_wp_trash_meta_status' || $value['meta_key'] === '_wp_trash_meta_time') {
+			foreach ($metadata as $key => $meta) {
+				if (in_array($meta['meta_key'], $meta_black_list) || in_array($meta['meta_key'], $keys)) {
 					unset($metadata[$key]);
 				}
-				if (in_array($value['meta_key'], $keys)) {
-					unset($metadata[$key]);
-				}
-				$keys [] = $value['meta_key'];
+				$keys [] = $meta['meta_key'];
 			}
 			$arr = array_merge($arr, $metadata);
 		}
 		// allow plugins to modify the fields to translate
 		return apply_filters('lingotek_post_custom_fields', $arr);
+	}
+
+	/*
+	 * tests whether a meta belongs to the Advanced Custom Fields plugin
+	 *
+	 * @since 0.2
+	 *
+	 * @return bool
+	 */
+	protected static function is_advanced_custom_fields_meta($key, $value) {
+		return ((substr($key, 0, strlen('_')) === '_') && (substr($value, 0, strlen('field_')) === 'field_' )) ? TRUE : FALSE;
 	}
 
 	/*
@@ -158,41 +167,33 @@ class Lingotek_Group_Post extends Lingotek_Group {
 		$items = array();
 
 		foreach ($custom_fields_from_postmeta as $cf) {
+			// hide-copy means hide from user, and always copy to translations (Advanced Custom Fields plugin)
+			if (self::is_advanced_custom_fields_meta($cf['meta_key'], $cf['meta_value'])) {
+				$custom_fields[$cf['meta_key']] = 'hide-copy';
+				continue;
+			}
+
   		// no lingotek setting
   		if (!array_key_exists($cf['meta_key'], $custom_fields_from_lingotek)) {
     		// no lingotek setting, but there's a wpml setting
     		if (array_key_exists($cf['meta_key'], $custom_fields_from_wpml)) {
       		$custom_fields[$cf['meta_key']] = $custom_fields_from_wpml[$cf['meta_key']];
-      		$arr = array(
-        		'meta_key' => $cf['meta_key'],
-        		'setting' => $custom_fields_from_wpml[$cf['meta_key']],
-      		);
     		}
     		// no lingotek setting, no wpml setting, so save default setting of ignore
     		else {
-      		$custom_fields[$cf['meta_key']] = 'ignore';
-      		$arr = array(
-        		'meta_key' => $cf['meta_key'],
-        		'setting' => 'ignore',
-      		);
+					$custom_fields[$cf['meta_key']] = 'ignore';
     		}
-  		}
+			}
   		// lingotek already has this field setting saved
   		else {
-    		$custom_fields[$cf['meta_key']] = $custom_fields_from_lingotek[$cf['meta_key']]; 
-    		$arr = array(
-      		'meta_key' => $cf['meta_key'],
-      		'setting' => $custom_fields_from_lingotek[$cf['meta_key']],
-    		);
+				$custom_fields[$cf['meta_key']] = $custom_fields_from_lingotek[$cf['meta_key']];
   		}
-  		$items [] = $arr;
-		}
+    }
 
 		if ($post_ID) {
 			$custom_fields = array_merge($custom_fields_from_lingotek, $custom_fields);
 		}
 		update_option('lingotek_custom_fields', $custom_fields);
-		return $items;
 	}
 
 	/*
@@ -209,6 +210,9 @@ class Lingotek_Group_Post extends Lingotek_Group {
 
 		if (is_array($custom_fields_from_lingotek)) {
 			foreach ($custom_fields_from_lingotek as $key => $setting) {
+				if ($setting === 'hide-copy') {
+					continue;
+				}
 				$arr = array(
 					'meta_key' => $key,
 					'setting' => $setting,
@@ -305,25 +309,14 @@ class Lingotek_Group_Post extends Lingotek_Group {
 			$tr_post['ID'] = $tr_id;
 
 			// copy or ignore metas
-			$custom_fields = get_option('lingotek_custom_fields', array());
-			foreach ($custom_fields as $key => $setting) {
-				if ('copy' === $setting) {
-					$source_meta = current(get_post_meta($post->ID, $key))	;
-					update_post_meta($tr_id, $key, $source_meta);
-				}
-				elseif ('ignore' === $setting) {
-					delete_post_meta($tr_id, $key);
-				}
-			}
+			self::copy_or_ignore_metas($post->ID, $tr_id);
 
 			// translate metas
-			if (!empty($translation['metas'])) {
-				foreach ($translation['metas'] as $key => $meta)
-					update_post_meta($tr_id, $key, $meta);
+			if (isset($translation['metas'])) {
+				self::copy_translated_metas($translation['metas'], $tr_id);
 			}
 
 			wp_update_post($tr_post);
-
 			$this->safe_translation_status_update($locale, 'current');
 		}
 
@@ -348,7 +341,6 @@ class Lingotek_Group_Post extends Lingotek_Group {
 			if ($tr_id) {
 				$tr_lang = $this->pllm->get_language($locale);
 				$this->pllm->set_post_language($tr_id, $tr_lang);
-
 				$this->safe_translation_status_update($locale, 'current', array($tr_lang->slug => $tr_id));
 				wp_set_object_terms($tr_id, $this->term_id, 'post_translations');
 
@@ -356,21 +348,11 @@ class Lingotek_Group_Post extends Lingotek_Group {
 				$GLOBALS['polylang']->sync->copy_post_metas($this->source, $tr_id, $tr_lang->slug);
 
 				// copy or ignore metas
-				$custom_fields = get_option('lingotek_custom_fields', array());
-				foreach ($custom_fields as $key => $setting) {
-					if ('copy' === $setting) {
-						$source_meta = current(get_post_meta($post->ID, $key))	;
-						update_post_meta($tr_id, $key, $source_meta);
-					}
-					elseif ('ignore' === $setting) {
-						delete_post_meta($tr_id, $key);
-					}
-				}
+				self::copy_or_ignore_metas($post->ID, $tr_id);
 
 				// translate metas
-				if (!empty($translation['metas'])) {
-					foreach ($translation['metas'] as $key => $meta)
-						update_post_meta($tr_id, $key, $meta);
+				if (isset($translation['metas'])) {
+					self::copy_translated_metas($translation['metas'], $tr_id);
 				}
 			}
 		}
@@ -383,6 +365,38 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	}
 
 	/*
+	 * copies source meta strings to translations or deletes meta if set to ignore
+	 *
+	 * @since 1.0.9
+	 */
+
+	protected static function copy_or_ignore_metas($post_id, $tr_id) {
+		// copy or ignore metas
+		$custom_fields = get_option('lingotek_custom_fields', array());
+		foreach ($custom_fields as $key => $setting) {
+			if ('copy' === $setting || 'hide-copy' === $setting) {
+				$source_meta = current(get_post_meta($post_id, $key))	;
+				update_post_meta($tr_id, $key, $source_meta);
+			}
+			elseif ('ignore' === $setting) {
+				delete_post_meta($tr_id, $key);
+			}
+		}
+	}
+
+	/*
+	 * inserts translated meta values into translations
+	 *
+	 * @since 1.0.9
+	 */
+	protected static function copy_translated_metas($translation_metas, $tr_id) {
+		if (!empty($translation_metas)) {
+			foreach ($translation_metas as $key => $meta)
+			update_post_meta($tr_id, $key, $meta);
+		}
+	}
+
+	/*
 	 * checks if content should be automatically uploaded
 	 *
 	 * @since 0.2
@@ -390,7 +404,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	 * @return bool
 	 */
 	public function is_automatic_upload() {
-		return 'automatic' == Lingotek_Model::get_profile_option('upload', get_post_type($this->source), $this->get_source_language());
+		return 'automatic' == Lingotek_Model::get_profile_option('upload', get_post_type($this->source), $this->get_source_language(), false, $this->source);
 	}
 
 	/*
@@ -402,5 +416,19 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	 */
 	public function get_source_language() {
 		return $this->pllm->get_post_language($this->source);
+	}
+
+	/*
+	 * creates hash for lingotek_hash term
+	 *
+	 * @since 1.0.9
+	 */
+	protected static function save_hash_on_upload($object_id) {
+		$post = get_post($object_id);
+		$document_id = 'lingotek_hash_' . $post->ID;
+		$new_hash = md5(Lingotek_Group_Post::get_content($post));
+
+		wp_insert_term($document_id, 'lingotek_hash', array('description' => $new_hash));
+		wp_set_object_terms($post->ID, $document_id, 'lingotek_hash');
 	}
 }

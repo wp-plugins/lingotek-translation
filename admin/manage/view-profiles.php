@@ -14,7 +14,7 @@ if (isset($_GET['lingotek_action']) && 'delete-profile' == $_GET['lingotek_actio
 		update_option('lingotek_profiles', $profiles);
 		add_settings_error('lingotek_profile', 'default', __('Your translation profile was sucessfully deleted.', 'wp-lingotek'), 'updated');
 		set_transient('settings_errors', get_settings_errors(), 30);
-		wp_redirect(admin_url('admin.php?page=wp-lingotek_settings&sm=profiles&settings-updated=1'));
+		wp_redirect(admin_url('admin.php?page=wp-lingotek_manage&sm=profiles&settings-updated=1'));
 		exit;
 	}
 }
@@ -89,7 +89,7 @@ $table->prepare_items($profiles);
 $table->display();
 printf(
 	'<a href="%s" class="button button-primary">%s</a>',
-	admin_url('admin.php?page=wp-lingotek_settings&sm=edit-profile'),
+	admin_url('admin.php?page=wp-lingotek_manage&sm=edit-profile'),
 	__('Add New Profile', 'wp-lingotek')
 );
 

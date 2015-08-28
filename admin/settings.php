@@ -13,9 +13,6 @@
 
     $community_required_menu_items = array(
       'defaults' => __('Defaults', 'wp-lingotek'),
-      'profiles' => __('Translation Profiles', 'wp-lingotek'),
-      'content' => __('Content Type Configuration', 'wp-lingotek'),
-      'custom-fields' => __('Custom Fields', 'wp-lingotek'),
       'preferences' => __('Preferences', 'wp-lingotek'),
       //'advanced' => __('Advanced', 'wp-lingotek'),
       //'logging' => __('Logging', 'wp-lingotek'),

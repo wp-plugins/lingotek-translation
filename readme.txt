@@ -4,7 +4,7 @@ Donate link: http://lingotek.com/
 Tags: automation, bilingual, international, language, Lingotek, localization, multilanguage, multilingual, translate, translation
 Requires at least: 3.8
 Tested up to: 4.3
-Stable tag: 1.0.9
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,7 +58,7 @@ Wherever third party code has been used, credit has been given in the code’s c
 
 = Do you like Lingotek? =
 
-Don't hesitate to [give your feedback](http://wordpress.org/support/view/plugin-reviews/lingotek#postform). It will help make the plugin better. Other [contributions](http://lingotek.wordpress.com/documentation/contribute/) (helping other users on the support forum) are welcome!
+Don't hesitate to [give your feedback](https://wordpress.org/support/view/plugin-reviews/lingotek-translation). It will help make the plugin better. Other [contributions](https://wordpress.org/support/plugin/lingotek-translation) (helping other users on the support forum) are welcome!
 
 == Installation ==
 
@@ -114,6 +114,16 @@ For more, visit the [Lingotek documentation site](https://lingotek.atlassian.net
 4. Content type profiles. Manually choosing which content to upload and download is rarely what a content administrator wants to do, and automating the upload of every change is not workable because there are various types of content. Each type of translatable content can be assigned to a customizable profile. For example, by default, we like to have Posts use an Automatic profile so that content will automatically be uploaded for translation and the resulting translations automatically be downloaded back into WordPress.
 
 == Changelog ==
+
+= 1.1 (2015-08-28) =
+
+* Added the option to set a Translation Profile per Post/Page which will override the Content Type default Translation Profile
+* The selected Translation Profile is now displayed on bulk display of Posts/Pages
+* Minor fixes for real-time translation status updates
+* Fixed a bug that prevented updating of content
+* Custom fields enhancements and fixes
+* Moved Content Type Configuration, Translation Profiles, and Custom Fields tabs from the Settings Page to the Manage Page
+* Fixed Lingotek Dashboard counting error
 
 = 1.0.9 (2015-08-19) =
 

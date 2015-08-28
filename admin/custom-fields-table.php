@@ -104,6 +104,12 @@ class Lingotek_Custom_Fields_Table extends WP_List_Table {
     if (!empty($_REQUEST['orderby'])) // no sort by default
       usort($data, 'usort_reorder');
 
+    $total_items = count($data);
     $this->items = $data;
+
+    $this->set_pagination_args(array(
+      'total_items' => $total_items,
+      'per_page'  => count($data),
+    ));
   }
 } 

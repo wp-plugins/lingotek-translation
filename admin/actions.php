@@ -394,6 +394,11 @@ abstract class Lingotek_Actions {
 			case 'lingotek-delete':
 				check_admin_referer('lingotek-delete');
 				$document->disassociate();
+				if (isset($_GET['lingotek_redirect']) && $_GET['lingotek_redirect'] == true) {
+					$site_id = get_current_blog_id();
+					wp_redirect(get_site_url($site_id, '/wp-admin/edit.php?post_type=page'));
+					exit();
+				}
 				break;
 
 			default:

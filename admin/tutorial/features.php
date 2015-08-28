@@ -21,12 +21,12 @@
 
 <div class="changelog feature-section three-col">
 	<div>
-		<a href="admin.php?page=wp-lingotek_settings&amp;sm=profiles"><img src="<?php echo LINGOTEK_URL . '/admin/tutorial/img/translation-profiles.png'; ?>"></a>
+		<a href="admin.php?page=wp-lingotek_manage&amp;sm=profiles"><img src="<?php echo LINGOTEK_URL . '/admin/tutorial/img/translation-profiles.png'; ?>"></a>
 		<h3><?php _e( 'Use translation profiles', 'wp-lingotek'); ?></h3>
 		<p><?php _e( 'One of the most time-consuming activities of any multilingual web-site project is managing the ongoing flow of changes and additions to site content and configurations. Translation profiles were created to allow you to create and save and re-use your translation settings.', 'wp-lingotek'); ?></p>
 	</div>
 	<div>
-		<a href="admin.php?page=wp-lingotek_settings&amp;sm=content"><img src="<?php echo LINGOTEK_URL . '/admin/tutorial/img/content-types.png'; ?>"></a>
+		<a href="admin.php?page=wp-lingotek_manage&amp;sm=content"><img src="<?php echo LINGOTEK_URL . '/admin/tutorial/img/content-types.png'; ?>"></a>
 		<h3><?php _e( 'Content type profiles', 'wp-lingotek'); ?></h3>
 		<p><?php _e( 'Content type profiles. Manually choosing which content to upload and download is rarely what a content administrator wants to do, and automating the upload of every change is not workable because there are various types of content. Each type of translatable content can be assigned to a customizable profile. For example, by default, we like to have Posts use an <i>Automatic</i> profile so that content will automatically be uploaded for translation and the resulting translations automatically be downloaded back into WordPress.', 'wp-lingotek'); ?></p>
 	</div>
@@ -41,7 +41,7 @@
 
 <div class="changelog feature-section three-col">
 	<div>
-		<a href="admin.php?page=wp-lingotek_settings&amp;sm=profiles"><img src="<?php echo LINGOTEK_URL . '/admin/tutorial/img/translation-services.png'; ?>"></a>
+		<a href="admin.php?page=wp-lingotek_manage&amp;sm=profiles"><img src="<?php echo LINGOTEK_URL . '/admin/tutorial/img/translation-services.png'; ?>"></a>
 		<h3><?php _e( 'Need Extra Services?', 'wp-lingotek'); ?></h3>
 		<p><?php _e( 'Start the process of getting extra services.', 'wp-lingotek'); ?></p>
 		<ul style="list-style-type: circle;">

@@ -177,7 +177,7 @@ abstract class Lingotek_Group {
 	public function request_translation($locale) {
 		$client = new Lingotek_API();
 		$language = $this->pllm->get_language($locale);
-		$workflow = Lingotek_Model::get_profile_option('workflow_id', $this->type, $this->get_source_language(), $language);
+		$workflow = Lingotek_Model::get_profile_option('workflow_id', $this->type, $this->get_source_language(), $language, $this->source);
 		$args = $workflow ? array('workflow_id' => $workflow) : array();
 
 		if (!$this->is_disabled_target($language) && empty($this->translations[$language->locale])) {
@@ -200,7 +200,7 @@ abstract class Lingotek_Group {
 
 		foreach ($this->pllm->get_languages_list() as $lang) {
 			if ($source_language->slug != $lang->slug && !$this->is_disabled_target($lang) && empty($this->translations[$lang->locale])) {
-				$workflow = Lingotek_Model::get_profile_option('workflow_id', $this->type, $source_language, $lang);
+				$workflow = Lingotek_Model::get_profile_option('workflow_id', $this->type, $source_language, $lang, $this->source);
 				$args = $workflow ? array('workflow_id' => $workflow) : array();
 				$client->request_translation($this->document_id, $lang->lingotek_locale, $args);
 				$this->status = 'current';
@@ -283,7 +283,7 @@ abstract class Lingotek_Group {
 	 * @return bool
 	 */
 	public function is_automatic_download($locale) {
-		return 'automatic' == Lingotek_Model::get_profile_option('download', $this->type, $this->get_source_language(), $this->pllm->get_language($locale));
+		return 'automatic' == Lingotek_Model::get_profile_option('download', $this->type, $this->get_source_language(), $this->pllm->get_language($locale), $this->source);
 	}
 
 	/*
@@ -295,7 +295,7 @@ abstract class Lingotek_Group {
 	 * @param object $language
 	 */
 	public function is_disabled_target($language) {
-		$profile = Lingotek_Model::get_profile($this->type, $language);
+		$profile = Lingotek_Model::get_profile($this->type, $language, $this->source);
 		return isset($profile['targets'][$language->slug]) && 'disabled' == $profile['targets'][$language->slug];
 	}
 }

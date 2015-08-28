@@ -4,6 +4,9 @@
     <?php
 
     $menu_items = array(
+      'content' => __('Content Type Configuration', 'wp-lingotek'),
+      'profiles' => __('Translation Profiles', 'wp-lingotek'),
+      'custom-fields' => __('Custom Fields', 'wp-lingotek'),
       'string-groups' => __('String Groups', 'wp-lingotek'),
       'strings' => __('Strings', 'wp-lingotek'),
     );
