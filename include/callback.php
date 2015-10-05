@@ -36,7 +36,7 @@ class Lingotek_Callback {
 			// url for in context review
 			if (isset($_GET['locale']) && 'get' == $_GET['type']) {
 				$locale = Lingotek::map_to_wp_locale($_GET['locale']); // map to WP locale
-				
+
 				// posts
 				if (post_type_exists($document->type)) {
 				  if ($id = $document->pllm->get_post($document->source, $locale)) {
@@ -72,9 +72,9 @@ class Lingotek_Callback {
 				$polylang->sync = new PLL_Admin_Sync($polylang);
 
 				$locale = Lingotek::map_to_wp_locale($_GET['locale']); // map to WP locale
-				$document->is_automatic_download($locale) ? $document->create_translation($locale) : $document->translation_ready($locale);
+				$document->is_automatic_download($locale) ? $document->create_translation($locale, true) : $document->translation_ready($locale);
 			}
-			
+
 			status_header(200); // useless as it the default value
 			die();
 		}

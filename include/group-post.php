@@ -55,8 +55,8 @@ class Lingotek_Group_Post extends Lingotek_Group {
 				'post_excerpt' => __('Excerpt', 'wp-lingotek')
 			);
 
-		// if the user hasn't visited the custom fields tab, and hasn't saved actions for custom 
-		// fields, and uploaded a post, check the wpml file for settings 
+		// if the user hasn't visited the custom fields tab, and hasn't saved actions for custom
+		// fields, and uploaded a post, check the wpml file for settings
 		if ($post_ID) {
 			self::get_updated_meta_values($post_ID);
 		}
@@ -107,7 +107,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	 */
 	static public function get_custom_fields_from_wp_postmeta($post_ID = NULL) {
 		$custom_fields = get_option('lingotek_custom_fields', array());
-		$meta_black_list = array('_encloseme', '_edit_last', '_edit_lock', '_wp_trash_meta_status', '_wp_trash_meta_time'); 
+		$meta_black_list = array('_encloseme', '_edit_last', '_edit_lock', '_wp_trash_meta_status', '_wp_trash_meta_time');
 		$arr = array();
 		$keys = array();
 
@@ -153,7 +153,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	}
 
 	/*
-	 * updates meta (custom) fields values in the lingotek_custom_fields option 
+	 * updates meta (custom) fields values in the lingotek_custom_fields option
 	 *
 	 * @since 0.2
 	 *
@@ -197,7 +197,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	}
 
 	/*
-	 * returns cached meta (custom) fields values in the lingotek_custom_fields option 
+	 * returns cached meta (custom) fields values in the lingotek_custom_fields option
 	 *
 	 * @since 0.2
 	 *
@@ -254,7 +254,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 				$arr['post'][$key] = $post->$key;
 			}
 		}
-		
+
 		return json_encode($arr);
 	}
 
@@ -285,15 +285,16 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	 *
 	 * @param string $locale
 	 */
-	public function create_translation($locale) {
+	public function create_translation($locale, $automatic = false) {
 		// Removes content sanitization so YouTube videos, links, etc don't get removed when inserting translations
 		remove_filter('content_save_pre', 'wp_filter_post_kses');
 		remove_filter('content_filtered_save_pre', 'wp_filter_post_kses');
 
 		$client = new Lingotek_API();
 
-		if (false === ($translation = $client->get_translation($this->document_id, $locale)))
+		if (false === ($translation = $client->get_translation($this->document_id, $locale, $this->source))) {
 			return;
+		}
 
 		self::$creating_translation = true;
 		$prefs = Lingotek_Model::get_prefs(); // need an array by default
@@ -321,7 +322,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 		}
 
 		// create new translation
-		else {
+		else if ($this->translations[$locale] == 'ready' || $automatic) {
 			unset($post->post_name); // forces the creation of a new default slug if not translated by Lingotek
 			$tr_post = array_merge((array) $post , $tr_post); // copy all untranslated fields from the original post
 			$tr_post['ID'] = null; // will force the creation of a new post
@@ -370,7 +371,7 @@ class Lingotek_Group_Post extends Lingotek_Group {
 	 * @since 1.0.9
 	 */
 
-	protected static function copy_or_ignore_metas($post_id, $tr_id) {
+	public static function copy_or_ignore_metas($post_id, $tr_id) {
 		// copy or ignore metas
 		$custom_fields = get_option('lingotek_custom_fields', array());
 		foreach ($custom_fields as $key => $setting) {

@@ -1,4 +1,5 @@
 <h3><?php _e('String Groups', 'wp-lingotek'); ?></h3>
+
 <p class="description"><?php printf(__('Manage group translation of system, widget, and plugin-specific strings. View individual strings on the <a href="%s"><b>Strings</b></a> page.', 'wp-lingotek'), 'admin.php?page=wp-lingotek_manage&sm=strings'); ?></p>
 <?php
 
@@ -27,7 +28,7 @@ else {
 
 	$table->prepare_items($data); ?>
 
-	<form id="lingotek-strings" method="post" action="admin.php?page=wp-lingotek_manage&amp;noheader=true"><?php
+	<form id="lingotek-strings" method="post" action="admin.php?page=wp-lingotek_manage&amp;noheader=true&amp;sm=string-groups"><?php
 	$table->display(); ?>
 	</form><?php
 

@@ -14,6 +14,7 @@ foreach ($settings as $key => $setting) {
 $target_settings = array(
 	'default'  => __('Use default settings', 'wp-lingotek'),
 	'custom'   => __('Use custom settings', 'wp-lingotek'),
+	'copy'	   => __('Copy source language', 'wp-lingotek'),
 	'disabled' => __('Disabled', 'wp-lingotek')
 );
 
@@ -125,7 +126,7 @@ unset($settings['secondary_filter_id']['options'][$primary_filter_id]);
 
 	foreach ($this->pllm->get_languages_list() as $language) { ?>
 	<tr>
-		<th scope="row"><?php printf('<label for="%s">%s</label>', esc_attr($language->slug) , esc_html($language->name)); ?><?php
+		<th scope="row"><?php printf('<label for="%s">%s (%s)</label>', esc_attr($language->slug) , esc_html($language->name), esc_attr($language->locale)); ?><?php
 
 			printf('<a id="%1$s_details_link" %2$s class="dashicons dashicons-arrow-right" onclick="%3$s">%4$s</a>',
 				esc_attr($language->slug),

@@ -225,15 +225,23 @@ class Lingotek_Post_actions extends Lingotek_Actions {
 	 * @since 0.1
 	 */
 	public static function lingotek_edit_meta_box_html() {
+		wp_enqueue_script('lingotek_defaults', LINGOTEK_URL .'/js/defaults.js');
+
 		global $post;
 		$post_type = get_post_type($post->ID);
 		$lgtm = new Lingotek_Model();
 		$group = $lgtm->get_group('post', $post->ID);
 		$profiles = Lingotek::get_profiles();
 		$content_profiles = get_option('lingotek_content_type');
+		$language_profiles = self::retrieve_lang_Profiles($post_type, $profiles, $content_profiles);
+		$default_name = empty($content_profiles) == false ? $profiles[$content_profiles[$post->post_type]['profile']]['name'] : ($post_type == 'page' ? __('Manual', 'wp-lingotek') : __('Automatic', 'wp-lingotek'));
 		$content_default_profile = array('default' => array(
-			'name' => __('Content Default (', 'wp-lingotek') . $profiles[$content_profiles[$post->post_type]['profile']]['name'] . ')', // Adds in the name of the content type default profile
+			'name' => __('Content Default', 'wp-lingotek') . ' (' . $default_name . ')', // Adds in the name of the content type default profile
 		));
+		$language_profiles['defaults'] = array(
+			'content_default' => $default_name,
+			'title' => __('Content Default', 'wp-lingotek'),
+		);
 		$profiles = array_merge($content_default_profile, $profiles);
 		$post_profile = self::get_post_profile($post->ID);
 		if (isset($post_profile)) {
@@ -262,17 +270,18 @@ class Lingotek_Post_actions extends Lingotek_Actions {
 			printf('<strong>%s</strong><br><br>', __('Translation Profile', 'wp-lingotek'));
 			printf('<em>%s</em><br>', __('Disassociate this content to change the Translation Profile', 'wp-lingotek'));
 			printf(('<a class="button button-small" href="%s" %s>%s</a><br><br>'), esc_url($disassociate_url), $confirm_message, __('Disassociate', 'wp-lingotek'));
-			printf('<select disabled class="custom-field-setting" name="%1$s" id="%1$s">', 'lingotek_profile_meta');
+			printf('<select disabled class="lingotek-profile-setting" name="%1$s" id="%1$s">', 'lingotek_profile_meta');
 		}
 		else {
 			printf('<strong>%s</strong><br><br>', __('Translation Profile', 'wp-lingotek'));
-			printf('<select class="custom-field-setting" name="%1$s" id="%1$s">', 'lingotek_profile_meta');
+			printf('<select class="lingotek-profile-setting" name="%1$s" id="%1$s">', 'lingotek_profile_meta');
 		}
 
 		foreach ($profiles as $key => $profile) {
 			echo "\n\t<option value=" . esc_attr($key) . ">" . esc_attr($profile['name']) . '</option>';
 		}
 		echo '</select>';
+		echo '<div id="lingotek-language-profiles" style="display: none;">'.json_encode($language_profiles).'</div>';
 	}
 
 	public function lingotek_save_meta_boxes() {
@@ -287,9 +296,6 @@ class Lingotek_Post_actions extends Lingotek_Actions {
 		$post_language = $this->get_language($post->ID);
 		$content_profiles = get_option('lingotek_content_type');
 
-		if ($profile_choice == 'default' && isset($content_profiles[$post->post_type]['sources'][$post_language->slug])) {
-			$profile_choice = $content_profiles[$post->post_type]['sources'][$post_language->slug];
-		}
 		if ($profile_choice == 'default' && !empty($term)) {
 			wp_delete_term((int) $term->term_id, 'lingotek_profile');
 		}
@@ -314,5 +320,18 @@ class Lingotek_Post_actions extends Lingotek_Actions {
 		else {
 			return 'false';
 		}
+	}
+
+	public static function retrieve_lang_Profiles($post_type, $profiles, $content_profiles) {
+		$language_profiles = array();
+
+			if(isset($content_profiles[$post_type]['sources'])) {
+				$sources = $content_profiles[$post_type]['sources'];
+				foreach($sources as $lang_code => $profile) {
+					$language_profiles[$lang_code] = $profiles[$profile]['name'];
+				}
+		}
+
+		return $language_profiles;
 	}
 }

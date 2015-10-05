@@ -4,7 +4,7 @@ Donate link: http://lingotek.com/
 Tags: automation, bilingual, international, language, Lingotek, localization, multilanguage, multilingual, translate, translation
 Requires at least: 3.8
 Tested up to: 4.3
-Stable tag: 1.1
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,7 +65,10 @@ Don't hesitate to [give your feedback](https://wordpress.org/support/view/plugin
 1. Make sure you have [Polylang](https://wordpress.org/plugins/polylang/) installed as it provides the framework for the Lingotek plugin.
 1. Upload the `wp-lingotek` folder to the `/wp-content/plugins/` directory.
 1. Activate the Lingotek plugin through the 'Plugins' menu in Wordpress.
-1. Create a Lingotek account by going to the `Translation` menu that appears in your admin menu.
+1. Navigate to the `Translation` menu that appears in your admin menu.
+1. From here you can create a new Lingotek account if you do not have one, or you can connect to an existing Lingotek account.
+1. After creating a new account or connecting with your existing account you will be redirected to the Lingotek Translation tutorial and admin pages.
+1. For more information and help visit [Getting Started](https://lingotek.atlassian.net/wiki/pages/viewpage.action?pageId=28053814) in the Lingotek Translation Documentation or contact support@lingotek.com
 
 == Frequently Asked Questions ==
 
@@ -114,6 +117,30 @@ For more, visit the [Lingotek documentation site](https://lingotek.atlassian.net
 4. Content type profiles. Manually choosing which content to upload and download is rarely what a content administrator wants to do, and automating the upload of every change is not workable because there are various types of content. Each type of translatable content can be assigned to a customizable profile. For example, by default, we like to have Posts use an Automatic profile so that content will automatically be uploaded for translation and the resulting translations automatically be downloaded back into WordPress.
 
 == Changelog ==
+
+= 1.1.4 (2015-10-5) =
+
+* Fixed a bug that prevented the ability to add new Translation profiles
+
+= 1.1.3 (2015-10-2) =
+
+* Greatly improved API error reporting
+* Fixed a bug that caused existing profiles to be overwritten
+* Fixed a bug that prevented users from being notified that existing translations would be overwritten
+* Fixed a bug that caused blank posts being created upon download of translations
+
+= 1.1.2 (2015-09-18) =
+
+* Fix for copy feature
+* Fix for content status displays
+* Other minor fixes
+
+= 1.1.1 (2015-09-11) =
+
+* Added better logging and display of Lingotek API errors
+* New Translation Profile option to copy content from source language to target languages
+* Fixes for display of selected Profile
+* Minor fixes for real-time translation status updates
 
 = 1.1 (2015-08-28) =
 

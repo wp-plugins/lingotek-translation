@@ -59,6 +59,15 @@ class Lingotek_Strings_Table extends WP_List_Table {
 		// no translation
 		else
 			echo '<div class="lingotek-color dashicons dashicons-no"></div>';
+
+		$language_only = 'language_' . $language->slug;
+		$errors = get_option('lingotek_log_errors');
+		if ($language_only == $this->get_first_language_column()) {
+			if (isset($errors[$item['context']])) {
+				$api_error = Lingotek_Actions::retrieve_api_error($errors[$item['context']]);
+				echo Lingotek_Actions::display_error_icon('error', $api_error);
+			}
+		}
 	}
 
 	/*
@@ -166,5 +175,20 @@ class Lingotek_Strings_Table extends WP_List_Table {
 		foreach (Lingotek_String_actions::$actions as $action => $strings)
 			$arr['bulk-lingotek-' . $action] = $strings['action'];
 		return $arr;
+	}
+
+	/*
+	 * returns the first language column
+	 *
+	 * @since 1.2
+	 *
+	 * @return string first language column name
+	 */
+	protected function get_first_language_column() {
+		foreach ($this->pllm->get_languages_list() as $language) {
+			$columns[] = 'language_'.$language->slug;
+		}
+
+		return empty($columns) ? '' : reset($columns);
 	}
 }

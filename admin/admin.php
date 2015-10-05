@@ -31,7 +31,6 @@ class Lingotek_Admin {
 		add_action('network_admin_menu', array($this, 'add_network_admin_menu'));
 	}
   public function ajax_get_current_status(){
-    global $wpdb;
     $lgtm = &$GLOBALS['wp_lingotek']->model;
     $pllm = $GLOBALS['polylang']->model;
     $languages = pll_languages_list(array('fields' => 'locale'));
@@ -40,71 +39,86 @@ class Lingotek_Admin {
       return;
     }
     $terms = isset($_POST['terms_translations']);
-    $taxonomy = $terms ? 'term'
-        : 'post';
 
     //The main array consists of
     //ids and nonces. Each id has a source language, languages with statuses, and a workbench link
     $content_metadata = array();
     foreach($object_ids as $object_id) {
       $id = $object_id;
-      if ($taxonomy == 'post') {
-	$content_metadata[$id] = array(
-        'existing_trans' => false,
-        'source' => false,
-        'doc_id' => null,
-        'source_id' => null,
-        'source_status' => null,
-      );
-      }
-
-      $document = $lgtm->get_group($taxonomy, $object_id);
-      if ($document && isset($document->source) && isset($document->document_id) && isset($document->status) && isset($document->translations)) {
-        if($document->source !== $object_id){
-          $document = $lgtm->get_group($taxonomy, $document->source);
-        }
-        $source_id = $document->source !== null ? $document->source : $object_id;
-        $source_language = $terms ? pll_get_term_language($document->source, 'locale')
-          : pll_get_post_language($document->source, 'locale');
-        $existing_translations = $pllm->get_translations($taxonomy, $source_id);
-
-        if(count($existing_translations) > 1){
-          $content_metadata[$id]['existing_trans'] = true;
-        }
-        $content_metadata[$id]['source'] = $source_language;
-        $content_metadata[$id]['doc_id'] = $document->document_id;
-        $content_metadata[$id]['source_id'] = $document->source;
-        $content_metadata[$id]['source_status'] = $document->status;
-        $target_status = $document->status == 'edited' || $document->status == null ? 'edited' : 'current';
-        $content_metadata[$id][$source_language]['status'] = $document->source == $object_id ? $document->status : $target_status;
-
-        //fills in missing languages to be able to update all the ones listed on Wordpress
-        foreach ($languages as $language) {
-	      foreach ($content_metadata as $group => $status) {
-	        if (!isset($status[$language])) {
-	          $content_metadata[$group][$language]['status'] = "none";
-				if ($document->is_disabled_target($pllm->get_language($language))) {
-					$content_metadata[$group][$language]['status'] = 'disabled';
-				}
-	        }
-	      }
-	    }
-        if(is_array($document->translations)){
-          foreach($document->translations as $locale => $translation_status) {
-            $content_metadata[$id][$locale]['status'] = $translation_status;
-            $workbench_link = Lingotek_Actions::workbench_link($document->document_id, $locale);
-            $content_metadata[$id][$locale]['workbench_link'] = $workbench_link;
-          }
-        }
-      }
-		$language = pll_get_post_language($id);
-		$post_language = $pllm->get_language($language);
-		$taxonomy = get_post_type($id);
-		if ($post_language) {
-			$profile = Lingotek_Model::get_profile($taxonomy, $post_language, $id);
-			if ($profile['profile'] == 'disabled') {
-				$content_metadata[$id]['source'] = 'disabled';
+      $type = $terms ? 'term' : 'post';
+		if (isset($_POST['taxonomy'])) {
+			$taxonomy = $_POST['taxonomy'];
+			if (strpos($_POST['taxonomy'], '&')) {
+				$taxonomy = strstr($_POST['taxonomy'], '&', true);
 			}
+		}
+		else {
+			$taxonomy = get_post_type($id);
+		}
+        $content_metadata[$id] = array(
+          'existing_trans' => false,
+          'source' => false,
+          'doc_id' => null,
+          'source_id' => null,
+          'source_status' => null,
+        );
+
+		$document = $lgtm->get_group($type, $object_id);
+		if($document && !isset($document->source) && count($document->desc_array >= 3)) {
+			$content_metadata[$id]['existing_trans'] = true;
+		}
+		if ($document && isset($document->source) && isset($document->document_id) && isset($document->status) && isset($document->translations)) {
+	        if($document->source !== (int) $object_id){
+	          $document = $lgtm->get_group($type, $document->source);
+	        }
+	        $source_id = $document->source !== null ? $document->source : $object_id;
+	        $source_language = $terms ? pll_get_term_language($document->source, 'locale')
+	          : pll_get_post_language($document->source, 'locale');
+	        $existing_translations = $pllm->get_translations($type, $source_id);
+
+	        if(count($existing_translations) > 1){
+	          $content_metadata[$id]['existing_trans'] = true;
+	        }
+	        $content_metadata[$id]['source'] = $source_language;
+	        $content_metadata[$id]['doc_id'] = $document->document_id;
+	        $content_metadata[$id]['source_id'] = $document->source;
+	        $content_metadata[$id]['source_status'] = $document->status;
+	        $target_status = $document->status == 'edited' || $document->status == null ? 'edited' : 'current';
+	        $content_metadata[$id][$source_language]['status'] = $document->source == $object_id ? $document->status : $target_status;
+
+	        if(is_array($document->translations)){
+	          foreach($document->translations as $locale => $translation_status) {
+	            $content_metadata[$id][$locale]['status'] = $translation_status;
+	            $workbench_link = Lingotek_Actions::workbench_link($document->document_id, $locale);
+	            $content_metadata[$id][$locale]['workbench_link'] = $workbench_link;
+	          }
+	        }
+
+	        //fills in missing languages, makes life easier for the updater
+		    foreach ($languages as $language) {
+				foreach ($content_metadata as $group => $status) {
+					$language_obj = $pllm->get_language($source_language);
+					$target_lang_obj = $pllm->get_language($language);
+					$profile = Lingotek_Model::get_profile($taxonomy, $language_obj, $group);
+					if ($profile['profile'] != 'disabled' && $status['source'] != false) {
+						if (!isset($status[$language])) {
+							$content_metadata[$group][$language]['status'] = "none";
+							if ($document->is_disabled_target($pllm->get_language($source_language), $pllm->get_language($language)) || (isset($document->desc_array[$target_lang_obj->slug]) && !isset($document->source))) {
+								$content_metadata[$group][$language]['status'] = 'disabled';
+							}
+						}
+					}
+				}
+			}
+		}
+
+		$language = $type == 'post' ? pll_get_post_language($id) : pll_get_term_language($id);
+		$language = $pllm->get_language($language);
+		if ($language) {
+		  $profile = Lingotek_Model::get_profile($taxonomy, $language, $id);
+		  if ($profile['profile'] == 'disabled' && $content_metadata[$id]['source'] == false) {
+		    $content_metadata[$id]['source'] = 'disabled';
+		  }
 		}
     }
 
@@ -378,24 +392,18 @@ class Lingotek_Admin {
 
 		$api_data = $client->get_projects($community_id);
 		$projects = array();
-			if (empty($api_data)) {
-	            add_settings_error('lingotek_community_resources', 'error', __('Your Community currently has no projects.', 'wp-lingotek'), 'error');
-	        }
-	        else if ($api_data !== FALSE) {
-	            foreach ($api_data->entities as $project) {
-	                $projects[$project->properties->id] = $project->properties->title;
-	            }
-	            if ($api_data->properties->total == 1) {
-	                if (!$project->properties->callback_url) {
-	                    $client->update_callback_url($project->properties->id);
-	                }
-	            }
-	            natcasesort($projects); //order by title (case-insensitive)
-	            $refresh_success['projects'] = TRUE;
-	        }
-	        else {
-	            add_settings_error('lingotek_community_resources', 'error', __('Projects could not be refreshed', 'wp-lingotek'), 'error');
-	        }
+        if ($api_data !== FALSE) {
+            foreach ($api_data->entities as $project) {
+                $projects[$project->properties->id] = $project->properties->title;
+            }
+            if ($api_data->properties->total == 1) {
+                if (!$project->properties->callback_url) {
+                    $client->update_callback_url($project->properties->id);
+                }
+            }
+            natcasesort($projects); //order by title (case-insensitive)
+            $refresh_success['projects'] = TRUE;
+        }
 
 		$api_data = $client->get_workflows($community_id);
 		$default_workflows = array(
@@ -419,13 +427,10 @@ class Lingotek_Admin {
 			natcasesort($workflows); //order by title (case-insensitive)
 			$refresh_success['workflows'] = TRUE;
 		}
-		else {
-			add_settings_error('lingotek_community_resources', 'error', __('Workflows could not be refreshed', 'wp-lingotek'), 'error');
-		}
 
 		$api_data = $client->get_filters();
 		$filters = array();
-		if ($api_data->properties->total > 0) {
+		if ($api_data && $api_data->properties->total > 0) {
 			foreach ($api_data->entities as $filter) {
 				if (!$filter->properties->is_public) {
 					$filters[$filter->properties->id] = $filter->properties->title;

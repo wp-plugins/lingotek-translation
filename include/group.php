@@ -106,7 +106,7 @@ abstract class Lingotek_Group {
 		$prefs = Lingotek_Model::get_prefs();
 
 		if ($prefs['delete_document_from_tms']) {
-			$client->delete_document($this->document_id);
+			$client->delete_document($this->document_id, $this->source);
 			unset($this->desc_array['lingotek']);
 			$this->save();
 		}
@@ -114,6 +114,7 @@ abstract class Lingotek_Group {
 			unset($this->desc_array['lingotek']);
 			$this->save();
 		}
+
 	}
 
 	/*
@@ -134,7 +135,7 @@ abstract class Lingotek_Group {
 		);
 		$params = array_merge($params, $filters);
 
-		$res = $client->patch_document($this->document_id, $params);
+		$res = $client->patch_document($this->document_id, $params, $this->source);
 
 		if ($res) {
 			$this->status = 'importing';
@@ -151,7 +152,7 @@ abstract class Lingotek_Group {
  	public function source_status() {
 		$client = new Lingotek_API();
 
-		if ('importing' == $this->status && $client->document_exists($this->document_id)) {
+		if ('importing' == $this->status && $client->document_exists($this->document_id, $this->source)){
 			$this->status = 'current';
 			$this->save();
 		}
@@ -181,9 +182,12 @@ abstract class Lingotek_Group {
 		$args = $workflow ? array('workflow_id' => $workflow) : array();
 
 		if (!$this->is_disabled_target($language) && empty($this->translations[$language->locale])) {
-			$client->request_translation($this->document_id, $language->locale, $args);
-			$this->status = 'current';
-			$this->translations[$language->locale] = 'pending';
+			// don't change translations to pending if the api call failed
+			if ($client->request_translation($this->document_id, $language->locale, $args, $this->source)) {
+				$this->status = 'current';
+				$this->translations[$language->locale] = 'pending';
+			}
+
 			$this->save();
 		}
 	}
@@ -196,15 +200,25 @@ abstract class Lingotek_Group {
 	 * @param object $source_language language of the source
 	 */
 	protected function _request_translations($source_language) {
+		$type_id;
 		$client = new Lingotek_API();
 
 		foreach ($this->pllm->get_languages_list() as $lang) {
-			if ($source_language->slug != $lang->slug && !$this->is_disabled_target($lang) && empty($this->translations[$lang->locale])) {
+			if ($source_language->slug != $lang->slug && !$this->is_disabled_target($source_language, $lang) && empty($this->translations[$lang->locale])) {
 				$workflow = Lingotek_Model::get_profile_option('workflow_id', $this->type, $source_language, $lang, $this->source);
 				$args = $workflow ? array('workflow_id' => $workflow) : array();
-				$client->request_translation($this->document_id, $lang->lingotek_locale, $args);
-				$this->status = 'current';
-				$this->translations[$lang->locale] = 'pending';
+
+				if ($this->type == 'string') {
+					$type_id = $this->name;
+				}
+				else {
+					$type_id = $this->source;
+				}
+				// don't change translations to pending if the api call failed
+				if ($client->request_translation($this->document_id, $lang->locale, $args, $type_id)) {
+					$this->status = 'current';
+					$this->translations[$lang->locale] = 'pending';
+				}
 			}
 		}
 
@@ -218,13 +232,12 @@ abstract class Lingotek_Group {
 	 */
 	public function translations_status() {
 		$client = new Lingotek_API();
-		$translations = $client->get_translations_status($this->document_id); // key are Lingotek locales
+		$translations = $client->get_translations_status($this->document_id, $this->source); // key are Lingotek locales
 		foreach($this->translations as $locale => $status) {
 			$lingotek_locale = $this->pllm->get_language($locale)->lingotek_locale;
 			if ('current' != $status && isset($translations[$lingotek_locale]) && 100 == $translations[$lingotek_locale])
 				$this->translations[$locale] = 'ready';
 		}
-
 		$this->save();
 	}
 
@@ -294,8 +307,13 @@ abstract class Lingotek_Group {
 	 * @param string $type post type or taxonomy
 	 * @param object $language
 	 */
-	public function is_disabled_target($language) {
+	public function is_disabled_target($language, $target = null) {
 		$profile = Lingotek_Model::get_profile($this->type, $language, $this->source);
-		return isset($profile['targets'][$language->slug]) && 'disabled' == $profile['targets'][$language->slug];
+		if ($target) {
+			return isset($profile['targets'][$target->slug]) && ('disabled' == $profile['targets'][$target->slug] || 'copy' == $profile['targets'][$target->slug]);
+		}
+		else {
+			return isset($profile['targets'][$language->slug]) && ('disabled' == $profile['targets'][$language->slug] || 'copy' == $profile['targets'][$language->slug]);
+		}
 	}
 }

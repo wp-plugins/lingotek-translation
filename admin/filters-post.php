@@ -90,15 +90,23 @@ class Lingotek_Filters_Post extends PLL_Admin_Filters_Post {
 				$post_type = $_REQUEST['post_type'];
 			}
 
-			if (isset($content_profiles[$post_type]['sources'][$post_language->slug])) {
+			if ($post_profile) {
+				echo $profiles[$post_profile->description]['name'] . sprintf('<a title="%s">%s</a>', __('Not set to the content default profile', 'wp-lingotek'), '*');
+			}
+			else if ($post_language && isset($content_profiles[$post_type]['sources'][$post_language->slug])) {
 				$profile = $content_profiles[$post_type]['sources'][$post_language->slug];
 				echo $profiles[$profile]['name'];
 			}
-			else if ($post_profile) {
-				echo $profiles[$post_profile->description]['name'] . sprintf('<a title="%s">%s</a>', __('Not set to the content default profile', 'wp-lingotek'), '*');
+			else if (!empty($content_profiles)) {
+				echo $profiles[$content_profiles[$post_type]['profile']]['name'];
 			}
 			else {
-				echo $profiles[$content_profiles[$post_type]['profile']]['name'];
+				if ($post_type == 'post') {
+					_e('Automatic', 'wp-lingotek');
+				}
+				else if ($post_type == 'page') {
+					_e('Manual', 'wp-lingotek');
+				}
 			}
 		}
 	}

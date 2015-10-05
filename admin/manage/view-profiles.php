@@ -28,17 +28,17 @@ if (!empty($_POST)) {
 		add_settings_error('lingotek_profile', 'default', __('You must provide a name for your translation profile.', 'wp-lingotek'), 'error');
 	}
 	else {
-		$profile = sanitize_title(empty($_POST['profile']) ? $_POST['name'] : $_POST['profile']);
-		$profiles[$profile]['profile'] = $profile;
+		$profile_id = empty($_POST['profile']) ? uniqid(rand()) : $_POST['profile'];
+		$profiles[$profile_id]['profile'] = $profile_id;
 		if (!empty($_POST['name']))
-			$profiles[$profile]['name'] = strip_tags($_POST['name']);
+			$profiles[$profile_id]['name'] = strip_tags($_POST['name']);
 
 		foreach (array('upload', 'download', 'project_id', 'workflow_id') as $key) {
 			if (isset($_POST[$key]) && in_array($_POST[$key], array_keys($settings[$key]['options'])))
-				$profiles[$profile][$key] = $_POST[$key];
+				$profiles[$profile_id][$key] = $_POST[$key];
 
 			if (empty($_POST[$key]) || 'default' == $_POST[$key])
-				unset($profiles[$profile][$key]);
+				unset($profiles[$profile_id][$key]);
 		}
 
 		foreach ($this->pllm->get_languages_list() as $language) {
@@ -46,20 +46,21 @@ if (!empty($_POST)) {
 				case 'custom':
 					foreach (array('download', 'project_id', 'workflow_id') as $key) {
 						if (isset($_POST['custom'][$key][$language->slug]) && in_array($_POST['custom'][$key][$language->slug], array_keys($settings[$key]['options']))) {
-							$profiles[$profile]['custom'][$key][$language->slug] = $_POST['custom'][$key][$language->slug];
+							$profiles[$profile_id]['custom'][$key][$language->slug] = $_POST['custom'][$key][$language->slug];
 						}
 
 						if (empty($_POST['custom'][$key][$language->slug]) || 'default' == $_POST['custom'][$key][$language->slug]) {
-							unset($profiles[$profile]['custom'][$key][$language->slug]);
+							unset($profiles[$profile_id]['custom'][$key][$language->slug]);
 						}
 					}
 
 				case 'disabled':
-					$profiles[$profile]['targets'][$language->slug] = $_POST['targets'][$language->slug];
+				case 'copy':
+					$profiles[$profile_id]['targets'][$language->slug] = $_POST['targets'][$language->slug];
 					break;
 
 				case 'default':
-					unset($profiles[$profile]['targets'][$language->slug]);
+					unset($profiles[$profile_id]['targets'][$language->slug]);
 			}
 		}
 
@@ -72,7 +73,7 @@ if (!empty($_POST)) {
 		add_settings_error('lingotek_profile', 'default', __('Your translation profile was sucessfully saved.', 'wp-lingotek'), 'updated');
 
 		if (isset($_POST['update_callback'])) {
-			$project_id = isset($profiles[$profile]['project_id']) ? $profiles[$profile]['project_id'] : $defaults['project_id'];
+			$project_id = isset($profiles[$profile_id]['project_id']) ? $profiles[$profile_id]['project_id'] : $defaults['project_id'];
 			$client = new Lingotek_API();
 			if ($client->update_callback_url($project_id))
 				add_settings_error('lingotek_profile', 'default', __('Your callback url was successfully updated.', 'wp-lingotek'), 'updated');

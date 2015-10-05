@@ -1,4 +1,10 @@
 <?php
+$client = new Lingotek_API();
+$api_communities = $client->get_communities();
+if (!isset($api_communities->entities)) {
+  add_settings_error('lingotek_community_resources', 'error', __('The Lingotek TMS is currently unavailable. Please try again later. If the problem persists, contact Lingotek Support.', 'wp-lingotek'), 'error');
+  settings_errors();
+}
 if (!$community_id) {
   $ltk_client = new Lingotek_API();
   $ltk_communities = $ltk_client->get_communities();
@@ -90,25 +96,25 @@ if (!$community_id) {
           <?php
           $default_community_id = $community_id;
 
-          $client = new Lingotek_API();
-
           // Community
-          $api_communities = $client->get_communities();
-          $communities = array();
-          foreach ($api_communities->entities as $community) {
-            $communities[$community->properties->id] = $community->properties->title; // . ' (' . $community->properties->id . ')';
-          }
 
-          $num_communities = count($communities);
-          if($num_communities == 1 && !$community_id){
-            update_option('lingotek_community', current(array_keys($communities)));
-          }
-          if(!$community_id && $num_communities > 1) {
-            echo "\n\t" . '<option value="">'.__('Select', 'wp-lingotek').'...</option>';
-          }
-          foreach ($communities as $community_id_option => $community_title) {
-            $selected = ($default_community_id == $community_id_option) ? 'selected="selected"' : '';
-            echo "\n\t" . '<option value="' . esc_attr($community_id_option) . '" '.$selected.'>' . $community_title . '</option>';
+          $communities = array();
+          if (isset($api_communities->entities)) {
+            foreach ($api_communities->entities as $community) {
+              $communities[$community->properties->id] = $community->properties->title; // . ' (' . $community->properties->id . ')';
+            }
+
+            $num_communities = count($communities);
+            if($num_communities == 1 && !$community_id){
+              update_option('lingotek_community', current(array_keys($communities)));
+            }
+            if(!$community_id && $num_communities > 1) {
+              echo "\n\t" . '<option value="">'.__('Select', 'wp-lingotek').'...</option>';
+            }
+            foreach ($communities as $community_id_option => $community_title) {
+              $selected = ($default_community_id == $community_id_option) ? 'selected="selected"' : '';
+              echo "\n\t" . '<option value="' . esc_attr($community_id_option) . '" '.$selected.'>' . $community_title . '</option>';
+            }
           }
           ?>
         </select>

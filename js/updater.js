@@ -12,6 +12,7 @@ jQuery(document).ready(function($) {
   if(url.indexOf('taxonomy') > -1){
     var begin = url.indexOf('taxonomy=') + 'taxonomy='.length;
     taxonomy_type = url.substring(begin);
+    post_data['taxonomy'] = taxonomy_type;
   }
 
   if($('.edit-tags-php').length > 0){
@@ -43,10 +44,18 @@ jQuery(document).ready(function($) {
   },10000);
 
   function update_indicators(data){
-    $('.lingotek-request').remove();
-    $('.lingotek-status').remove();
-    $('.lingotek-upload').remove();
-    $('.lingotek-download').remove();
+    var doc_id_present = false;
+    for(var key in data){
+      if(data[key].doc_id !== null && data[key].doc_id !== undefined){
+        doc_id_present = true;
+      }
+    }
+    if(doc_id_present === true){
+      $('.lingotek-request').remove();
+      $('.lingotek-status').remove();
+      $('.lingotek-upload').remove();
+      $('.lingotek-download').remove();
+    }
     for(var key in data){
       var source_id = key != data[key]['source_id'] && data[key]['source_id'] !== null
         ? data[key]['source_id']
@@ -76,9 +85,6 @@ jQuery(document).ready(function($) {
             $(td).find('.pll_icon_edit').remove();
             updateGenericBulkLink(tr, data, key, 'status' , 'Update translations status of this item in Lingotek TMS', 'Update translations status ');
             updateIndicator(td, data, key, locale, 'status', 'Importing Source', 'clock');
-            break;
-          case 'not-current' :
-            updateWorkbenchIcon(td, data, key, locale, 'The target translation is no longer current as the source content has been updated', 'edit');
             break;
           case 'edited':
             $(td).find('.pll_icon_edit').remove();
@@ -114,7 +120,7 @@ jQuery(document).ready(function($) {
               $(td).find('.pll_icon_edit').remove();
               $(td).find('.lingotek-color').remove();
               var indicator = $('<div></div>').addClass('lingotek-color dashicons dashicons-no');
-              $(td).append(indicator);
+              $(td).prepend(indicator);
             }
             break;
         }
@@ -129,7 +135,7 @@ jQuery(document).ready(function($) {
       .attr('title',title)
       .attr('target','_blank')
       .addClass('lingotek-color dashicons dashicons-' + icon);
-    $(td).append(request_link);
+    $(td).prepend(request_link);
   }
 
   function updateGenericBulkLink(tr, data, key, action, title, text){
@@ -155,6 +161,7 @@ jQuery(document).ready(function($) {
   function updateUploadBulkLink(tr, data, key, action, title, text){
       var row_actions = $(tr).find('.row-actions');
       if($(row_actions).find('.lingotek-' + action).length === 0){
+        var pipe_separator = data[key].doc_id == null ? '">' + text + '</a> </span>' : '">' + text + '</a> | </span>';
         var status_update_link = $('<span class="lingotek-'+ action +'"><a class="lingotek-color"'
         + ' title="' + title + '" '
         + 'href="?'
@@ -163,7 +170,7 @@ jQuery(document).ready(function($) {
         + '&action=lingotek-' + action
         + '&noheader=1'
         + '&_wpnonce=' + data[action + '_nonce']
-        + '">' + text + '</a> | </span>');
+        + pipe_separator);
         var disassociate = $(row_actions).find('.lingotek-delete');
         if($(disassociate).length > 0){
           $(disassociate).before(status_update_link);
@@ -189,7 +196,7 @@ jQuery(document).ready(function($) {
       + '&_wpnonce=' + data['upload_nonce'])
       .attr('title','Upload Now')
       .addClass('lingotek-color dashicons dashicons-upload');
-    $(td).append(request_link);
+    $(td).prepend(request_link);
   }
 
   function updateIndicator(td, data, key, locale, action, title, dashicon){
@@ -202,7 +209,7 @@ jQuery(document).ready(function($) {
               + '&_wpnonce='+data[action + '_nonce'])
         .attr('title', title)
         .addClass('lingotek-color dashicons dashicons-' + dashicon);
-    $(td).append(request_link);
+    $(td).prepend(request_link);
   }
 
   function updateCurrentIndicator(td,data,key,locale, source_id){
@@ -223,7 +230,7 @@ jQuery(document).ready(function($) {
       }
       $(request_link).attr('title','Source uploaded')
         .addClass('lingotek-color dashicons dashicons-yes');
-      $(td).append(request_link);
+      $(td).prepend(request_link);
     }
     else {
       updateWorkbenchIcon(td, data, key, locale, 'Current', 'edit');

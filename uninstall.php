@@ -41,6 +41,8 @@ class Lingotek_Uninstall {
 		delete_option('lingotek_profiles');
 		delete_option('lingotek_token');
 		delete_option('lingotek_community_resources');
+		delete_option('lingotek_custom_fields');
+		delete_option('lingotek_log_errors');
 	}
 }
 

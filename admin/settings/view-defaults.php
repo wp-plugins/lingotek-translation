@@ -6,7 +6,6 @@ wp_enqueue_script('defaults', LINGOTEK_URL . '/js/defaults.js');
 
 if (!empty($_POST)) {
 	check_admin_referer($page_key, '_wpnonce_' . $page_key);
-
 	if (array_key_exists('refresh', $_POST)) {
             $refresh_success = $this->set_community_resources($community_id);
             if ($refresh_success['projects'] == TRUE && $refresh_success['workflows'] == TRUE) {
@@ -17,6 +16,9 @@ if (!empty($_POST)) {
             }
             else if ($refresh_success['workflows'] == TRUE) {
                 add_settings_error('lingotek_community_resources', 'error', __('Resources from Lingotek were successfully updated for workflows.', 'wp-lingotek'), 'updated');
+            }
+            else if ($refresh_success['workflows'] == FALSE || $refresh_success['projects'] == FALSE) {
+                add_settings_error('lingotek_community_resources', 'error', __('The Lingotek TMS is currently unavailable. Please try again later. If the problem persists, contact Lingotek Support.', 'wp-lingotek'), 'error');
             }
 	}
 	else {

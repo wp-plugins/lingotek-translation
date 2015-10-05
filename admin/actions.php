@@ -94,6 +94,11 @@ abstract class Lingotek_Actions {
 				'title' => __('The target translation is no longer current as the source content has been updated', 'wp-lingotek'),
 				'icon'  => 'edit'
 			),
+
+			'error' => array(
+				'title' => __('There was an error contacting Lingotek', 'wp-lingotek'),
+				'icon'  => 'warning'
+			),
 		);
 
 		$this->type = $type;
@@ -182,6 +187,19 @@ abstract class Lingotek_Actions {
 	}
 
 	/*
+	 * outputs an API error icon
+	 *
+	 * @since 1.2
+	 *
+	 * @param string $name
+	 * @param string $additional parameters to add (js, target)
+	 */
+	public static function display_error_icon($name, $api_error, $additional = '') {
+		return sprintf('<span class="lingotek-error dashicons dashicons-%s" title="%s"></span>',
+			self::$icons[$name]['icon'], self::$icons[$name]['title'] . "\n" . $api_error, $additional);
+	}
+
+	/*
 	 * outputs an upload icon
 	 *
 	 * @since 0.2
@@ -221,6 +239,9 @@ abstract class Lingotek_Actions {
 			if ('ready' == $document->translations[$language->locale]) {
 				$link = wp_nonce_url(add_query_arg(array('document_id' => $document->document_id, 'locale' => $language->locale, 'action' => 'lingotek-download', 'noheader' => true)), 'lingotek-download');
 				return self::display_icon($document->translations[$language->locale], $link);
+			}
+			else if ('not-current' == $document->translations[$language->locale]) {
+				return  '<div class="lingotek-color dashicons dashicons-no"></div>';
 			}
 			else {
 				$link = self::workbench_link($document->document_id, $language->lingotek_locale);
@@ -277,7 +298,19 @@ abstract class Lingotek_Actions {
 		}
 
 		if ($this->lgtm->can_upload($this->type, $id) || (isset($document->source) && 'string' != $this->type && $this->lgtm->can_upload($this->type, $document->source))) {
-			$actions['lingotek-upload'] = $this->get_action_link(array($this->type => $id, 'action' => 'upload'));
+			if ($document) {
+				$desc_array = $document->desc_array;
+				unset($desc_array['lingotek']);
+				if (count($desc_array) >= 2) {
+					$actions['lingotek-upload'] = $this->get_action_link(array($this->type => $id, 'action' => 'upload'), true);
+				}
+				else {
+					$actions['lingotek-upload'] = $this->get_action_link(array($this->type => $id, 'action' => 'upload'));
+				}
+			}
+			else {
+				$actions['lingotek-upload'] = $this->get_action_link(array($this->type => $id, 'action' => 'upload'));
+			}
 		}
 
 		elseif (isset($document->translations)) {
@@ -294,8 +327,14 @@ abstract class Lingotek_Actions {
 
 			// remove disabled target language from untranslated languages list
 			foreach ($untranslated as $k => $v) {
-				if ($document->is_disabled_target($this->pllm->get_language($k)))
+				if ($this->type == 'term') {
+					if ($document->is_disabled_target($language, $this->pllm->get_language($k)))
 					unset($untranslated[$k]);
+				}
+				else {
+					if ($document->is_disabled_target($language, $this->pllm->get_language($k)))
+					unset($untranslated[$k]);
+				}
 			}
 
 			if ('current' == $document->status && !empty($untranslated))
@@ -418,8 +457,9 @@ abstract class Lingotek_Actions {
 
 		if ($document = $this->lgtm->get_group($this->type, $_POST['id'])) {
 			foreach ($document->translations as $locale => $status) {
-				if ('pending' == $status || 'ready' == $status)
+				if ('pending' == $status || 'ready' == $status) {
 					$document->create_translation($locale);
+				}
 			}
 		}
 		die();
@@ -432,8 +472,9 @@ abstract class Lingotek_Actions {
 	 */
 	public function ajax_request() {
 		check_ajax_referer('lingotek_progress', '_lingotek_nonce');
-		if ($document = $this->lgtm->get_group($this->type, $_POST['id']))
+		if ($document = $this->lgtm->get_group($this->type, $_POST['id'])) {
 			$document->request_translations();
+		}
 		die();
 	}
 
@@ -458,8 +499,39 @@ abstract class Lingotek_Actions {
 	 */
 	public function ajax_delete() {
 		check_ajax_referer('lingotek_progress', '_lingotek_nonce');
-		if ($document = $this->lgtm->get_group($this->type, $_POST['id']))
-		$document->disassociate();
+		if ($document = $this->lgtm->get_group($this->type, $_POST['id'])) {
+			$document->disassociate();
+		}
 		die();
+	}
+
+	/*
+	 * collects and returns all API errors
+	 *
+	 * @since 1.1
+	 *
+	 * @param string errors
+	 */
+	public static function retrieve_api_error($errors) {
+		$api_error = "\n";
+
+		foreach($errors as $error => $error_message) {
+
+			if ($error === 'request_translation') {
+				foreach($errors['request_translation'] as $locale => $message) {
+					$api_error = $api_error . $message . "\n";
+				}
+			}
+			else if ($error === 'get_translation') {
+				foreach($errors['get_translation'] as $locale => $message) {
+					$api_error = $api_error . $message . "\n";
+				}
+			}
+			else {
+				$api_error = $api_error . $error_message . "\n";
+			}
+		}
+
+		return $api_error;
 	}
 }

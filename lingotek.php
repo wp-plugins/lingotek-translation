@@ -2,7 +2,7 @@
 /*
 Plugin name: Lingotek Translation
 Plugin URI: http://lingotek.com/wordpress#utm_source=wpadmin&utm_medium=plugin&utm_campaign=wplingotektranslationplugin
-Version: 1.1
+Version: 1.1.4
 Author: Lingotek and Frédéric Demarle
 Author uri: http://lingotek.com
 Description: Lingotek offers convenient cloud-based localization and translation.
@@ -15,7 +15,7 @@ GitHub Plugin URI: https://github.com/lingotek/wp-lingotek
 if (!function_exists('add_action'))
 	exit();
 
-define('LINGOTEK_VERSION', '1.1'); // plugin version (should match above meta)
+define('LINGOTEK_VERSION', '1.1.4'); // plugin version (should match above meta)
 define('LINGOTEK_MIN_PLL_VERSION', '1.7.4.2');
 define('LINGOTEK_BASENAME', plugin_basename(__FILE__)); // plugin name as known by WP
 define('LINGOTEK_PLUGIN_SLUG', 'wp-lingotek');// plugin slug (should match above meta: Text Domain)
@@ -231,7 +231,32 @@ class Lingotek {
 	 * @return array
 	 */
 	public static function get_profiles() {
+		$default_profiles = array(
+			'automatic' => array(
+				'profile'  => 'automatic',
+				'name'     => __('Automatic', 'wp-lingotek'),
+				'upload'   => 'automatic',
+				'download' => 'automatic'
+			),
+			'manual' => array(
+				'profile'  => 'manual',
+				'name'     => __('Manual', 'wp-lingotek'),
+				'upload'   => 'manual',
+				'download' => 'manual'
+			),
+			'disabled' => array(
+				'profile'  => 'disabled',
+				'name'     => __('Disabled', 'wp-lingotek'),
+			),
+		);
+
 		$profiles = get_option('lingotek_profiles');
+		if (is_array($profiles)) {
+			$profiles = array_merge($default_profiles, $profiles);
+		}
+		else {
+			$profiles = $default_profiles;
+		}
 
 		//localize canned profile names
 		foreach($profiles as $k=>$v){
@@ -241,6 +266,7 @@ class Lingotek {
 			}
 		}
 
+		update_option('lingotek_profiles', $profiles);
 		return $profiles;
 	}
 
@@ -382,9 +408,21 @@ class Lingotek {
 	 * @since 0.1
 	 */
 	public function pll_inactive_notice() {
+		$action = 'install-plugin';
+		$slug = 'polylang';
+		$url = wp_nonce_url(
+		    add_query_arg(
+		        array(
+		            'action' => $action,
+		            'plugin' => $slug
+		        ),
+		        admin_url( 'update.php' )
+		    ),
+		    $action.'_'.$slug
+		);
 		printf(
-			'<div class="error"><p>%s</p></div>',
-			__('Lingotek Translation requires Polylang to work. Please install Polylang.', 'wp-lingotek')
+			'<div class="error" style="height:55px"><p style="font-size:1.5em">%s<a href="%s">%s</a></p></div>',
+			__('Lingotek Translation requires Polylang to work. ', 'wp-lingotek'), $url, __('Install Polylang', 'wp-lingotek')
 		);
 	}
 

@@ -76,7 +76,7 @@ class Lingotek_Group_String extends Lingotek_Group {
 		$prefs = Lingotek_Model::get_prefs();
 
 		if ($prefs['delete_document_from_tms']) {
-			$client->delete_document($this->document_id);
+			$client->delete_document($this->document_id, $this->name);
 			wp_delete_term($this->term_id, 'post_translations');
 		}
 		else {
@@ -103,7 +103,7 @@ class Lingotek_Group_String extends Lingotek_Group {
 		);
 		$params = array_merge($params, $filters);
 
-		$res = $client->patch_document($this->document_id, $params);
+		$res = $client->patch_document($this->document_id, $params, $group);
 
 		if ($res) {
 			$this->md5 = md5($content);
@@ -150,7 +150,7 @@ class Lingotek_Group_String extends Lingotek_Group {
 	public function create_translation($locale) {
 		$client = new Lingotek_API();
 
-		if (false === ($translation = $client->get_translation($this->document_id, $locale)))
+		if (false === ($translation = $client->get_translation($this->document_id, $locale, $this->name)))
 			return;
 
 		$strings = wp_list_pluck(PLL_Admin_Strings::get_strings(), 'name', 'string'); // get the strings name for the filter

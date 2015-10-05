@@ -102,7 +102,7 @@ class Lingotek_Group_Term extends Lingotek_Group {
 	public function create_translation($locale) {
 		$client = new Lingotek_API();
 
-		if (false === ($translation = $client->get_translation($this->document_id, $locale)))
+		if (false === ($translation = $client->get_translation($this->document_id, $locale, $this->source)))
 			return;
 
 		self::$creating_translation = true;
