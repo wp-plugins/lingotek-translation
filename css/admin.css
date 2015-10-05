@@ -1,0 +1,97 @@
+/* progress dialog */
+#lingotek-progressbar {
+	margin: 20px;
+	height: 2em;
+	background-color: #dddddd;
+}
+
+#lingotek-progressbar .ui-progressbar-value {
+	margin: -1px;
+	height: 100%;
+	background-color: #0074a2;
+}
+
+#lingotek-progressdialog .ui-dialog-titlebar-close {
+	display: none;
+}
+.ui-dialog {
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24),0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    padding: 10px;
+    font-weight: 700;
+}
+.ui-dialog button {
+  position:absolute;
+  right: 0;
+  top: 0;
+  float: right;
+  background-color: #0091CD;
+  color: white;
+  border:none;
+  outline:none;
+}
+.ui-dialog button:hover {
+  background-color: #007fb4;
+}
+/* icons color */
+.lingotek-color {
+	color: #ff7b12; /* lingotek color */
+}
+a.lingotek-color {
+	color: #ff7b12; /* lingotek color */
+}
+
+a.lingotek-color:hover {
+	color: #ffab42; /* lighter orange */
+}
+
+a.dashicons {
+  cursor: pointer;
+}
+
+/* content type configuration */
+.lingotek-content .column-name, .lingotek-content .column-profile {
+	width: 25%;
+}
+
+.sources-name {
+	margin: 0 0 0 20px;
+}
+
+.sources-profile {
+	margin: 0;
+}
+
+.content-type-name, .content-type-profile, .custom-field-setting {
+	margin-bottom: 6px;
+}
+
+.content-type-name, .sources-name li, .lingotek-content .dashicons {
+	line-height: 28px;
+	height: 28px;
+	padding: 2px;
+	vertical-align: middle;
+}
+
+.content-type-fields li {
+	display: inline-block;
+	width: 150px;
+}
+
+.pref-statuses li {
+	display: inline-block;
+	padding-right: 15px;
+}
+
+.lingotek-bordered {
+	border: 1px solid #e5e5e5;
+}
+
+.lingotek-error {
+  color: #999999;
+}
+
+/* utilities */
+
+#utility_delete_documents {
+	margin-left: 20px;
+}
