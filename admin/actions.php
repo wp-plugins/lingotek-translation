@@ -516,15 +516,11 @@ abstract class Lingotek_Actions {
 		$api_error = "\n";
 
 		foreach($errors as $error => $error_message) {
-
-			if ($error === 'request_translation') {
-				foreach($errors['request_translation'] as $locale => $message) {
-					$api_error = $api_error . $message . "\n";
-				}
-			}
-			else if ($error === 'get_translation') {
-				foreach($errors['get_translation'] as $locale => $message) {
-					$api_error = $api_error . $message . "\n";
+			if (is_array($error_message)) {
+				if (!empty($error_message)) {
+					foreach ($error_message as $locale => $message) {
+						$api_error = $api_error . $message . "\n";
+					}
 				}
 			}
 			else {

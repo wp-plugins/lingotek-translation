@@ -64,7 +64,7 @@ class Lingotek_Admin {
         );
 
 		$document = $lgtm->get_group($type, $object_id);
-		if($document && !isset($document->source) && count($document->desc_array >= 3)) {
+		if($document && !isset($document->source) && count($document->desc_array) >= 3) {
 			$content_metadata[$id]['existing_trans'] = true;
 		}
 		if ($document && isset($document->source) && isset($document->document_id) && isset($document->status) && isset($document->translations)) {

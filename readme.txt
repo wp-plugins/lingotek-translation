@@ -4,7 +4,7 @@ Donate link: http://lingotek.com/
 Tags: automation, bilingual, international, language, Lingotek, localization, multilanguage, multilingual, translate, translation
 Requires at least: 3.8
 Tested up to: 4.3
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,10 @@ Don't hesitate to [give your feedback](https://wordpress.org/support/view/plugin
 
 Lingotek has teamed up with [Polylang](https://wordpress.org/plugins/polylang/) to offer a simple way to make your WordPress site truly multilingual. Manage all your multilingual content in the same site. No need to have a different site for each language!
 
+= Why won't the plugin connect to my Lingotek account? =
+
+The Lingotek plugin requires access to a third party API server. Your hosting provider may have a firewall in place that could be blocking those requests to outside servers. Please check with your host to allow access to Lingotek's API server. Contact support@lingotek.com for more help.
+
 = How can I add a language? =
 
 On the *translation dashboard,* click on the *Translate my site into...* textbox and choose from the list or start typing to quickly find a language.
@@ -117,6 +121,10 @@ For more, visit the [Lingotek documentation site](https://lingotek.atlassian.net
 4. Content type profiles. Manually choosing which content to upload and download is rarely what a content administrator wants to do, and automating the upload of every change is not workable because there are various types of content. Each type of translatable content can be assigned to a customizable profile. For example, by default, we like to have Posts use an Automatic profile so that content will automatically be uploaded for translation and the resulting translations automatically be downloaded back into WordPress.
 
 == Changelog ==
+
+= 1.1.5 (2015-10-9) =
+
+* Fixed some minor bugs related to error reporting
 
 = 1.1.4 (2015-10-5) =
 

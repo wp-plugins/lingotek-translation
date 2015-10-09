@@ -107,7 +107,9 @@ class Lingotek_API extends Lingotek_HTTP {
 			$arr = get_option('lingotek_log_errors');
 
 			if (202 == wp_remote_retrieve_response_code($response)) {
-				unset($arr[$wp_id]);
+				if (isset($arr[$wp_id])) {
+					unset($arr[$wp_id]);
+				}
 			}
 			else if (is_wp_error($response)) {
 				$arr[$wp_id]['wp_error'] = __('Make sure you have internet connectivity');
@@ -143,7 +145,9 @@ class Lingotek_API extends Lingotek_HTTP {
 			$arr = get_option('lingotek_log_errors');
 
 			if (202 == wp_remote_retrieve_response_code($response)) {
-				unset($arr[$wp_id]);
+				if (isset($arr[$wp_id])) {
+					unset($arr[$wp_id]);
+				}
 			}
 			else if (is_wp_error($response)) {
 				$arr[$wp_id]['wp_error'] = __('Make sure you have internet connectivity');
@@ -169,8 +173,10 @@ class Lingotek_API extends Lingotek_HTTP {
 
 		if ($wp_id) {
 			$arr = get_option('lingotek_log_errors');
-			unset($arr[$wp_id]);
-			update_option('lingotek_log_errors', $arr);
+			if (isset($arr[$wp_id])) {
+				unset($arr[$wp_id]);
+				update_option('lingotek_log_errors', $arr);
+			}
 		}
 
 		return !is_wp_error($response) && 204 == wp_remote_retrieve_response_code($response);
@@ -210,7 +216,9 @@ class Lingotek_API extends Lingotek_HTTP {
 			$arr = get_option('lingotek_log_errors');
 
 			if (200 == wp_remote_retrieve_response_code($response)) {
-				unset($arr[$wp_id]	);
+				if (isset($arr[$wp_id])) {
+					unset($arr[$wp_id]	);
+				}
 			}
 			else if (is_wp_error($response)) {
 				$arr[$wp_id]['wp_error'] = __('Make sure you have internet connectivity');
@@ -245,7 +253,9 @@ class Lingotek_API extends Lingotek_HTTP {
 			$arr = get_option('lingotek_log_errors');
 
 			if (200 == wp_remote_retrieve_response_code($response)) {
-				unset($arr[$wp_id]);
+				if (isset($arr[$wp_id])) {
+					unset($arr[$wp_id]);
+				}
 			}
 			else if (is_wp_error($response)) {
 				$arr[$wp_id]['wp_error'] = __('Make sure you have internet connectivity');
@@ -278,10 +288,12 @@ class Lingotek_API extends Lingotek_HTTP {
 			$arr = get_option('lingotek_log_errors');
 
 			if (201 == wp_remote_retrieve_response_code($response)) {
-				unset($arr[$wp_id]['wp_error']);
-				unset($arr[$wp_id]['request_translation'][$locale]);
-				if (empty($arr[$wp_id])){
-					unset($arr[$wp_id]);
+				if (isset($arr[$wp_id])) {
+					unset($arr[$wp_id]['wp_error']);
+					unset($arr[$wp_id]['request_translation'][$locale]);
+					if (empty($arr[$wp_id])){
+						unset($arr[$wp_id]);
+					}
 				}
 			}
 			else if (is_wp_error($response)) {
@@ -312,10 +324,12 @@ class Lingotek_API extends Lingotek_HTTP {
 			$arr = get_option('lingotek_log_errors');
 
 			if (200 == wp_remote_retrieve_response_code($response)) {
-				unset($arr[$wp_id]['wp_error']);
-				unset($arr[$wp_id]['get_translation'][$locale]);
-				if (empty($arr[$wp_id])) {
-					unset($arr[$wp_id]);
+				if (isset($arr[$wp_id])) {
+					unset($arr[$wp_id]['wp_error']);
+					unset($arr[$wp_id]['get_translation'][$locale]);
+					if (empty($arr[$wp_id])) {
+						unset($arr[$wp_id]);
+					}
 				}
 			}
 			else if (is_wp_error($response)) {
@@ -343,23 +357,11 @@ class Lingotek_API extends Lingotek_HTTP {
 
 		if ($wp_id) {
 			$arr = get_option('lingotek_log_errors');
-
-			if (204 == wp_remote_retrieve_response_code($response)) {
-				unset($arr[$wp_id]['wp_error']);
-				unset($arr[$wp_id]['delete_translation'][$locale]);
-				if (empty($arr[$wp_id])) {
-					unset($arr[$wp_id]);
-				}
+			if (isset($arr[$wp_id])) {
+				unset($arr[$wp_id]);
+				update_option('lingotek_log_errors', $arr);
 			}
-			else if (is_wp_error($response)) {
-				$arr[$wp_id]['wp_error'] = __('Make sure you have internet connectivity');
-			}
-			else if (400 == wp_remote_retrieve_response_code($response) || 404 == wp_remote_retrieve_response_code($response)) {
-				$arr[$wp_id]['delete_translation'][$locale] =  __('There was an error deleting translation ') . $locale .  __(' for WordPress item ') . $wp_id;
-			}
-			update_option('lingotek_log_errors', $arr);
 		}
-
 		// FIXME send a response
 	}
 
